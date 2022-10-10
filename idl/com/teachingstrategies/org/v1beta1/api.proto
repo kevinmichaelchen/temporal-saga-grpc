@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package com.teachingstrategies.org.v1beta1;
+
+service OrgService {
+  rpc CreateOrg(CreateOrgRequest) returns (CreateOrgResponse) {}
+}
+
+message CreateOrgRequest {
+  string name = 1;
+}
+
+message CreateOrgResponse {}

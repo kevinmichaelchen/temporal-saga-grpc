@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package com.teachingstrategies.profile.v1beta1;
+
+service ProfileService {
+  rpc CreateProfile(CreateProfileRequest) returns (CreateProfileResponse) {}
+}
+
+message CreateProfileRequest {
+  string name = 1;
+}
+
+message CreateProfileResponse {}
