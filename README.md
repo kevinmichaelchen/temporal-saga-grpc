@@ -28,8 +28,8 @@ docker-compose up
 ### Step 2: Start Temporal Workflow
 ```shell
 # Start Temporal Workflow
-go run saga/start/main.go
+go run cmd/saga/start/main.go
 
 # Start Temporal Worker
-go run saga/worker/main.go
+go run cmd/saga/worker/main.go
 ```
