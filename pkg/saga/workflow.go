@@ -27,6 +27,10 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) (err e
 
 	ctx = workflow.WithActivityOptions(ctx, options)
 
+	//////////////
+	// WITHDRAW //
+	//////////////
+
 	err = workflow.ExecuteActivity(ctx, Withdraw, transferDetails).Get(ctx, nil)
 	if err != nil {
 		return err
@@ -38,6 +42,10 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) (err e
 			err = multierr.Append(err, errCompensation)
 		}
 	}()
+
+	/////////////
+	// DEPOSIT //
+	/////////////
 
 	err = workflow.ExecuteActivity(ctx, Deposit, transferDetails).Get(ctx, nil)
 	if err != nil {
@@ -54,6 +62,7 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) (err e
 		// workflow.Sleep(ctx, 10*time.Second)
 	}()
 
+	// Trigger an error to simulate failure
 	err = workflow.ExecuteActivity(ctx, StepWithError, transferDetails).Get(ctx, nil)
 	if err != nil {
 		return err
