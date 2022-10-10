@@ -1,5 +1,9 @@
 # temporal-saga-grpc
 
+<p align="center">
+<img width="400" src="https://raw.githubusercontent.com/kevinmichaelchen/temporal-saga-grpc/main/docs/design.png" />
+</p>
+
 This project demonstrates using <a target="_blank" href="https://temporal.io/">Temporal</a>
 to orchestrate a <a target="_blank" href="https://microservices.io/patterns/data/saga.html">saga</a>
 (effectively a distributed transaction) that interacts with multiple services
