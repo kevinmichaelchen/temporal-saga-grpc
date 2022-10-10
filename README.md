@@ -1,5 +1,7 @@
 # temporal-saga-grpc
 
+[![Lines Of Code](https://tokei.rs/b1/github/kevinmichaelchen/temporal-saga-grpc?category=code)](https://github.com/kevinmichaelchen/temporal-saga-grpc)
+
 <p align="center">
 <img width="400" src="./docs/design.png" />
 </p>
@@ -16,6 +18,10 @@ Inspiration:
 * <a target="_blank" href="https://github.com/temporalio/samples-go/blob/main/saga/workflow.go">temporalio/samples-go</a>
 * <a target="_blank" href="https://github.com/temporalio/money-transfer-project-template-go/blob/main/workflow.go">money-transfer-project-template-go</a>
 
+## TODOs
+- `cmd/saga/start` should serve TemporalService gRPC API
+- The TemporalService gRPC API should be reachable via `curl`
+
 ## Getting started
 
 ### Step 1: Temporal Server
@@ -24,6 +30,7 @@ git clone https://github.com/temporalio/docker-compose.git temporal-docker-compo
 cd  temporal-docker-compose
 docker-compose up
 ```
+This may take a minute or two to pull all the Docker image layers.
 
 ### Step 2: Start Temporal Workflow
 ```shell
