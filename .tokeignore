@@ -1,0 +1,12 @@
+docs
+idl
+*.yaml
+*.yml
+go.mod
+go.sum
+*.pb.go
+*.json
+*.toml
+*_test.go
+*.md
+Makefile
