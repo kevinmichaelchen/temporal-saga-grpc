@@ -1,7 +1,7 @@
 # temporal-saga-grpc
 
 <p align="center">
-<img width="400" src="https://raw.githubusercontent.com/kevinmichaelchen/temporal-saga-grpc/main/docs/design.png" />
+<img width="400" src="./docs/design.png" />
 </p>
 
 This project demonstrates using <a target="_blank" href="https://temporal.io/">Temporal</a>
