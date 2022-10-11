@@ -79,6 +79,14 @@ func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) worker.W
 		},
 	})
 
+	w.RegisterWorkflow(saga.CreateLicense)
+
+	// RegisterActivity - register an activity function or a pointer to a
+	// structure with the worker.
+	// The activity struct is a structure with all its exported methods treated
+	// as activities. The default name of each activity is the method name.
+	w.RegisterActivity(ctrl)
+
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			// Start the worker in a non-blocking fashion.
@@ -89,14 +97,6 @@ func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) worker.W
 			return nil
 		},
 	})
-
-	w.RegisterWorkflow(saga.CreateLicense)
-
-	// RegisterActivity - register an activity function or a pointer to a
-	// structure with the worker.
-	// The activity struct is a structure with all its exported methods treated
-	// as activities. The default name of each activity is the method name.
-	w.RegisterActivity(ctrl)
 
 	return w
 }
