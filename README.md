@@ -12,6 +12,8 @@ to orchestrate a <a target="_blank" href="https://microservices.io/patterns/data
 and has a robust, edge-case-proof rollback strategy, as well as durable function
 execution.
 
+**Temporal abstracts away failures.**
+
 The upstream microservices that are called during the workflow all use gRPC.
 
 Inspiration:
@@ -38,7 +40,14 @@ go run cmd/saga/worker/main.go
 go run cmd/saga/start/main.go
 ```
 
-### Step 4: Start Temporal Workflow
+### Step 4: Start upstream gRPC Services
+```shell
+go run cmd/svc/license/main.go
+go run cmd/svc/org/main.go
+go run cmd/svc/profile/main.go
+```
+
+### Step 5: Start Temporal Workflow
 ```shell
 curl -v http://localhost:8081/com.teachingstrategies.temporal.v1beta1.TemporalService/CreateLicense \
   -H "Content-Type: application/json" \
@@ -50,3 +59,7 @@ http POST \
     org:='{"name": "Org1"}' \
     profile:='{"name": "Kevin Chen"}'
 ```
+
+### Step 6: Check the Temporal UI
+Open [localhost:8080](http://localhost:8080) in your browser to see the
+workflow.

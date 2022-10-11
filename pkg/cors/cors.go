@@ -1,11 +1,11 @@
-package connect
+package cors
 
 import (
 	"github.com/rs/cors"
 	"net/http"
 )
 
-func newCORS() *cors.Cors {
+func NewCORS() *cors.Cors {
 	// To let web developers play with the demo service from browsers, we need a
 	// very permissive CORS setup.
 	return cors.New(cors.Options{

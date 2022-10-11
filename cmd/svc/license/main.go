@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/worker/app"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/license/app"
 	"go.uber.org/fx"
 )
 

@@ -3,13 +3,11 @@ package saga
 import (
 	"time"
 
-	"go.uber.org/multierr"
-
 	"go.temporal.io/sdk/temporal"
 	"go.temporal.io/sdk/workflow"
 )
 
-func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) (err error) {
+func CreateLicense(ctx workflow.Context, transferDetails CreateLicenseInputArgs) (err error) {
 	retryPolicy := &temporal.RetryPolicy{
 		InitialInterval:    time.Second,
 		BackoffCoefficient: 2.0,
@@ -27,43 +25,27 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) (err e
 
 	ctx = workflow.WithActivityOptions(ctx, options)
 
-	//////////////
-	// WITHDRAW //
-	//////////////
+	// This nil pointer is deliberately nil!
+	// From the docs:
+	// https://pkg.go.dev/go.temporal.io/sdk/workflow#ExecuteActivity
+	// To call an activity that is a member of a structure use the function
+	// reference with nil receiver.
+	var ctrl *Controller
 
-	err = workflow.ExecuteActivity(ctx, Withdraw, transferDetails).Get(ctx, nil)
+	// Step 1: Create Org
+	err = workflow.ExecuteActivity(ctx, ctrl.CreateOrg, transferDetails).Get(ctx, nil)
 	if err != nil {
 		return err
 	}
 
-	defer func() {
-		if err != nil {
-			errCompensation := workflow.ExecuteActivity(ctx, WithdrawCompensation, transferDetails).Get(ctx, nil)
-			err = multierr.Append(err, errCompensation)
-		}
-	}()
-
-	/////////////
-	// DEPOSIT //
-	/////////////
-
-	err = workflow.ExecuteActivity(ctx, Deposit, transferDetails).Get(ctx, nil)
+	// Step 2: Create Profile
+	err = workflow.ExecuteActivity(ctx, ctrl.CreateProfile, transferDetails).Get(ctx, nil)
 	if err != nil {
 		return err
 	}
 
-	defer func() {
-		if err != nil {
-			errCompensation := workflow.ExecuteActivity(ctx, DepositCompensation, transferDetails).Get(ctx, nil)
-			err = multierr.Append(err, errCompensation)
-		}
-
-		// uncomment to have time to shut down worker to simulate worker rolling update and ensure that compensation sequence preserves after restart
-		// workflow.Sleep(ctx, 10*time.Second)
-	}()
-
-	// Trigger an error to simulate failure
-	err = workflow.ExecuteActivity(ctx, StepWithError, transferDetails).Get(ctx, nil)
+	// Step 3: Create License
+	err = workflow.ExecuteActivity(ctx, ctrl.CreateLicense, transferDetails).Get(ctx, nil)
 	if err != nil {
 		return err
 	}

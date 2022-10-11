@@ -3,11 +3,10 @@ package service
 import (
 	"context"
 	"github.com/bufbuild/connect-go"
-	"github.com/google/uuid"
 	temporalv1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/temporal/v1beta1"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
+	"github.com/sirupsen/logrus"
 	"go.temporal.io/sdk/client"
-	"log"
 )
 
 type Service struct {
@@ -26,24 +25,23 @@ func (s *Service) CreateLicense(
 
 	options := client.StartWorkflowOptions{
 		ID:        req.Msg.GetWorkflowOptions().GetWorkflowId(),
-		TaskQueue: saga.TransferMoneyTaskQueue,
+		TaskQueue: saga.CreateLicenseTaskQueue,
 	}
-	transferDetails := saga.TransferDetails{
-		Amount:      54.99,
-		FromAccount: "001-001",
-		ToAccount:   "002-002",
-		ReferenceID: uuid.New().String(),
+	args := saga.CreateLicenseInputArgs{
+		OrgName:     req.Msg.GetOrg().GetName(),
+		ProfileName: req.Msg.GetProfile().GetName(),
+		LicenseName: req.Msg.GetLicense().GetName(),
 	}
 	we, err := c.ExecuteWorkflow(
 		context.Background(),
 		options,
-		saga.TransferMoney,
-		transferDetails)
+		saga.CreateLicense,
+		args)
 	if err != nil {
-		log.Fatalln("error starting TransferMoney workflow", err)
+		logrus.WithError(err).Fatal("error starting CreateLicense workflow")
 	}
 
-	printResults(transferDetails, we.GetID(), we.GetRunID())
+	printResults(args, we.GetID(), we.GetRunID())
 
 	// TODO edge case - what happens if server crashes before response gets sent?
 	//  or if client crashes before they receive a response?
@@ -58,17 +56,12 @@ func (s *Service) CreateLicense(
 	return out, nil
 }
 
-func printResults(transferDetails saga.TransferDetails, workflowID, runID string) {
-	log.Printf(
-		"\nTransfer of $%f from account %s to account %s is processing. ReferenceID: %s\n",
-		transferDetails.Amount,
-		transferDetails.FromAccount,
-		transferDetails.ToAccount,
-		transferDetails.ReferenceID,
-	)
-	log.Printf(
-		"\nWorkflowID: %s RunID: %s\n",
-		workflowID,
-		runID,
-	)
+func printResults(args saga.CreateLicenseInputArgs, workflowID, runID string) {
+	logrus.WithFields(logrus.Fields{
+		"org_name":             args.OrgName,
+		"profile_name":         args.ProfileName,
+		"license_name":         args.LicenseName,
+		"temporal.workflow_id": workflowID,
+		"temporal.run_id":      runID,
+	}).Info("Successfully completed Workflow")
 }
