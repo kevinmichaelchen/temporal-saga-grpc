@@ -40,7 +40,14 @@ go run cmd/saga/worker/main.go
 go run cmd/saga/start/main.go
 ```
 
-### Step 4: Start Temporal Workflow
+### Step 4: Start upstream gRPC Services
+```shell
+go run cmd/svc/license/main.go
+go run cmd/svc/org/main.go
+go run cmd/svc/profile/main.go
+```
+
+### Step 5: Start Temporal Workflow
 ```shell
 curl -v http://localhost:8081/com.teachingstrategies.temporal.v1beta1.TemporalService/CreateLicense \
   -H "Content-Type: application/json" \
