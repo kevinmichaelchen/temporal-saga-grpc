@@ -7,12 +7,12 @@ import (
 	"go.temporal.io/sdk/workflow"
 )
 
-func CreateLicense(ctx workflow.Context, transferDetails CreateLicenseInputArgs) (err error) {
+func CreateLicense(ctx workflow.Context, args CreateLicenseInputArgs) (err error) {
 	retryPolicy := &temporal.RetryPolicy{
 		InitialInterval:    time.Second,
 		BackoffCoefficient: 2.0,
-		MaximumInterval:    time.Minute,
-		MaximumAttempts:    3,
+		MaximumInterval:    time.Second * 15,
+		MaximumAttempts:    5,
 	}
 
 	options := workflow.ActivityOptions{
@@ -33,19 +33,19 @@ func CreateLicense(ctx workflow.Context, transferDetails CreateLicenseInputArgs)
 	var ctrl *Controller
 
 	// Step 1: Create Org
-	err = workflow.ExecuteActivity(ctx, ctrl.CreateOrg, transferDetails).Get(ctx, nil)
+	err = workflow.ExecuteActivity(ctx, ctrl.CreateOrg, args).Get(ctx, nil)
 	if err != nil {
 		return err
 	}
 
 	// Step 2: Create Profile
-	err = workflow.ExecuteActivity(ctx, ctrl.CreateProfile, transferDetails).Get(ctx, nil)
+	err = workflow.ExecuteActivity(ctx, ctrl.CreateProfile, args).Get(ctx, nil)
 	if err != nil {
 		return err
 	}
 
 	// Step 3: Create License
-	err = workflow.ExecuteActivity(ctx, ctrl.CreateLicense, transferDetails).Get(ctx, nil)
+	err = workflow.ExecuteActivity(ctx, ctrl.CreateLicense, args).Get(ctx, nil)
 	if err != nil {
 		return err
 	}

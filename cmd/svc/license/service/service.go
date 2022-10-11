@@ -22,7 +22,7 @@ func (s *Service) CreateLicense(
 	simulated.Sleep()
 
 	// Simulate a potential error to test retry logic
-	err := simulated.PossibleError()
+	err := simulated.PossibleError(simulated.MediumHigh)
 	if err != nil {
 		return nil, err
 	}
