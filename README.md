@@ -1,5 +1,7 @@
 # temporal-saga-grpc
 
+[![Lines Of Code](https://tokei.rs/b1/github/kevinmichaelchen/temporal-saga-grpc?category=code)](https://github.com/kevinmichaelchen/temporal-saga-grpc)
+
 <p align="center">
 <img width="400" src="./docs/design.png" />
 </p>
@@ -24,12 +26,27 @@ git clone https://github.com/temporalio/docker-compose.git temporal-docker-compo
 cd  temporal-docker-compose
 docker-compose up
 ```
+This may take a minute or two to pull all the Docker image layers.
 
-### Step 2: Start Temporal Workflow
+### Step 2: Start Temporal Worker
 ```shell
-# Start Temporal Workflow
-go run saga/start/main.go
+go run cmd/saga/worker/main.go
+```
 
-# Start Temporal Worker
-go run saga/worker/main.go
+### Step 3: Start Temporal Workflow gRPC Server
+```shell
+go run cmd/saga/start/main.go
+```
+
+### Step 4: Start Temporal Workflow
+```shell
+curl -v http://localhost:8081/com.teachingstrategies.temporal.v1beta1.TemporalService/CreateLicense \
+  -H "Content-Type: application/json" \
+  -d '{"license": {"name": "L1"}, "org": {"name": "Org1"}, "profile": {"name": "Kevin Chen"}}'
+
+http POST \
+  http://localhost:8081/com.teachingstrategies.temporal.v1beta1.TemporalService/CreateLicense \
+    license:='{"name": "L1"}' \
+    org:='{"name": "Org1"}' \
+    profile:='{"name": "Kevin Chen"}'
 ```
