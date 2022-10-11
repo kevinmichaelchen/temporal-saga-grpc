@@ -20,11 +20,12 @@ func Test_Workflow(t *testing.T) {
 		ToAccount:   "002-002",
 		ReferenceID: "1234",
 	}
-	env.OnActivity(Withdraw, mock.Anything, testDetails).Return(nil)
-	env.OnActivity(WithdrawCompensation, mock.Anything, testDetails).Return(nil)
-	env.OnActivity(Deposit, mock.Anything, testDetails).Return(nil)
-	env.OnActivity(DepositCompensation, mock.Anything, testDetails).Return(nil)
-	env.OnActivity(StepWithError, mock.Anything, testDetails).Return(errors.New("some error"))
+	var ctrl *Controller
+	env.OnActivity(ctrl.Withdraw, mock.Anything, testDetails).Return(nil)
+	env.OnActivity(ctrl.WithdrawCompensation, mock.Anything, testDetails).Return(nil)
+	env.OnActivity(ctrl.Deposit, mock.Anything, testDetails).Return(nil)
+	env.OnActivity(ctrl.DepositCompensation, mock.Anything, testDetails).Return(nil)
+	env.OnActivity(ctrl.StepWithError, mock.Anything, testDetails).Return(errors.New("some error"))
 	env.ExecuteWorkflow(TransferMoney, testDetails)
 	require.True(t, env.IsWorkflowCompleted())
 	require.Error(t, env.GetWorkflowError())

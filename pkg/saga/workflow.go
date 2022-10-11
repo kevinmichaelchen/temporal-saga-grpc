@@ -27,6 +27,11 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) (err e
 
 	ctx = workflow.WithActivityOptions(ctx, options)
 
+	// This nil pointer is deliberately nil!
+	// From the docs:
+	// https://pkg.go.dev/go.temporal.io/sdk/workflow#ExecuteActivity
+	// To call an activity that is a member of a structure use the function
+	// reference with nil receiver.
 	var ctrl *Controller
 
 	//////////////
