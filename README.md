@@ -18,10 +18,6 @@ Inspiration:
 * <a target="_blank" href="https://github.com/temporalio/samples-go/blob/main/saga/workflow.go">temporalio/samples-go</a>
 * <a target="_blank" href="https://github.com/temporalio/money-transfer-project-template-go/blob/main/workflow.go">money-transfer-project-template-go</a>
 
-## TODOs
-- `cmd/saga/start` should serve TemporalService gRPC API
-- The TemporalService gRPC API should be reachable via `curl`
-
 ## Getting started
 
 ### Step 1: Temporal Server
@@ -32,11 +28,25 @@ docker-compose up
 ```
 This may take a minute or two to pull all the Docker image layers.
 
-### Step 2: Start Temporal Workflow
+### Step 2: Start Temporal Worker
 ```shell
-# Start Temporal Workflow
-go run cmd/saga/start/main.go
-
-# Start Temporal Worker
 go run cmd/saga/worker/main.go
+```
+
+### Step 3: Start Temporal Workflow gRPC Server
+```shell
+go run cmd/saga/start/main.go
+```
+
+### Step 4: Start Temporal Workflow
+```shell
+curl -v http://localhost:8081/com.teachingstrategies.temporal.v1beta1.TemporalService/CreateLicense \
+  -H "Content-Type: application/json" \
+  -d '{"license": {"name": "L1"}, "org": {"name": "Org1"}, "profile": {"name": "Kevin Chen"}}'
+
+http POST \
+  http://localhost:8081/com.teachingstrategies.temporal.v1beta1.TemporalService/CreateLicense \
+    license:='{"name": "L1"}' \
+    org:='{"name": "Org1"}' \
+    profile:='{"name": "Kevin Chen"}'
 ```

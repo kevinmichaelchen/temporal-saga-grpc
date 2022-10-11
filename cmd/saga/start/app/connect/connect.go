@@ -31,7 +31,7 @@ type Config struct {
 
 type NestedConfig struct {
 	Host string `env:"HOST,default=localhost"`
-	Port int    `env:"PORT,default=8080"`
+	Port int    `env:"PORT,default=8081"`
 }
 
 func NewConfig() (cfg Config, err error) {
