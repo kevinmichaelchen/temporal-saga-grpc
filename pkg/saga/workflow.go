@@ -7,7 +7,7 @@ import (
 	"go.temporal.io/sdk/workflow"
 )
 
-func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) (err error) {
+func CreateLicense(ctx workflow.Context, transferDetails CreateLicenseInputArgs) (err error) {
 	retryPolicy := &temporal.RetryPolicy{
 		InitialInterval:    time.Second,
 		BackoffCoefficient: 2.0,
@@ -32,20 +32,20 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) (err e
 	// reference with nil receiver.
 	var ctrl *Controller
 
-	//////////////
-	// WITHDRAW //
-	//////////////
-
-	err = workflow.ExecuteActivity(ctx, ctrl.Withdraw, transferDetails).Get(ctx, nil)
+	// Step 1: Create Org
+	err = workflow.ExecuteActivity(ctx, ctrl.CreateOrg, transferDetails).Get(ctx, nil)
 	if err != nil {
 		return err
 	}
 
-	/////////////
-	// DEPOSIT //
-	/////////////
+	// Step 2: Create Profile
+	err = workflow.ExecuteActivity(ctx, ctrl.CreateProfile, transferDetails).Get(ctx, nil)
+	if err != nil {
+		return err
+	}
 
-	err = workflow.ExecuteActivity(ctx, ctrl.Deposit, transferDetails).Get(ctx, nil)
+	// Step 3: Create License
+	err = workflow.ExecuteActivity(ctx, ctrl.CreateLicense, transferDetails).Get(ctx, nil)
 	if err != nil {
 		return err
 	}

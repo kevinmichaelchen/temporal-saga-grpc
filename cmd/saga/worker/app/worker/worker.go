@@ -90,7 +90,7 @@ func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) worker.W
 		},
 	})
 
-	w.RegisterWorkflow(saga.TransferMoney)
+	w.RegisterWorkflow(saga.CreateLicense)
 
 	// RegisterActivity - register an activity function or a pointer to a
 	// structure with the worker.
