@@ -12,6 +12,8 @@ to orchestrate a <a target="_blank" href="https://microservices.io/patterns/data
 and has a robust, edge-case-proof rollback strategy, as well as durable function
 execution.
 
+**Temporal abstracts away failures.**
+
 The upstream microservices that are called during the workflow all use gRPC.
 
 Inspiration:
