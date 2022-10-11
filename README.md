@@ -59,3 +59,7 @@ http POST \
     org:='{"name": "Org1"}' \
     profile:='{"name": "Kevin Chen"}'
 ```
+
+### Step 6: Check the Temporal UI
+Open [localhost:8080](http://localhost:8080) in your browser to see the
+workflow.
