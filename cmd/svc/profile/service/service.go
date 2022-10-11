@@ -22,7 +22,7 @@ func (s *Service) CreateProfile(
 	simulated.Sleep()
 
 	// Simulate a potential error to test retry logic
-	err := simulated.PossibleError()
+	err := simulated.PossibleError(simulated.MediumLow)
 	if err != nil {
 		return nil, err
 	}
