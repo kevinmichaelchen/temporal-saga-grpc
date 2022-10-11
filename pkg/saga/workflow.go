@@ -3,8 +3,6 @@ package saga
 import (
 	"time"
 
-	"go.uber.org/multierr"
-
 	"go.temporal.io/sdk/temporal"
 	"go.temporal.io/sdk/workflow"
 )
@@ -43,34 +41,11 @@ func TransferMoney(ctx workflow.Context, transferDetails TransferDetails) (err e
 		return err
 	}
 
-	defer func() {
-		if err != nil {
-			errCompensation := workflow.ExecuteActivity(ctx, ctrl.WithdrawCompensation, transferDetails).Get(ctx, nil)
-			err = multierr.Append(err, errCompensation)
-		}
-	}()
-
 	/////////////
 	// DEPOSIT //
 	/////////////
 
 	err = workflow.ExecuteActivity(ctx, ctrl.Deposit, transferDetails).Get(ctx, nil)
-	if err != nil {
-		return err
-	}
-
-	defer func() {
-		if err != nil {
-			errCompensation := workflow.ExecuteActivity(ctx, ctrl.DepositCompensation, transferDetails).Get(ctx, nil)
-			err = multierr.Append(err, errCompensation)
-		}
-
-		// uncomment to have time to shut down worker to simulate worker rolling update and ensure that compensation sequence preserves after restart
-		// workflow.Sleep(ctx, 10*time.Second)
-	}()
-
-	// Trigger an error to simulate failure
-	err = workflow.ExecuteActivity(ctx, ctrl.StepWithError, transferDetails).Get(ctx, nil)
 	if err != nil {
 		return err
 	}
