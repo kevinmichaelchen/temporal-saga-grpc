@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func Withdraw(ctx context.Context, transferDetails TransferDetails) error {
+func (c *Controller) Withdraw(ctx context.Context, transferDetails TransferDetails) error {
 	fmt.Printf(
 		"\nWithdrawing $%f from account %s. ReferenceId: %s\n",
 		transferDetails.Amount,
@@ -17,7 +17,7 @@ func Withdraw(ctx context.Context, transferDetails TransferDetails) error {
 	return nil
 }
 
-func WithdrawCompensation(ctx context.Context, transferDetails TransferDetails) error {
+func (c *Controller) WithdrawCompensation(ctx context.Context, transferDetails TransferDetails) error {
 	fmt.Printf(
 		"\nWithdrawing compensation $%f from account %s. ReferenceId: %s\n",
 		transferDetails.Amount,
@@ -28,7 +28,7 @@ func WithdrawCompensation(ctx context.Context, transferDetails TransferDetails) 
 	return nil
 }
 
-func Deposit(ctx context.Context, transferDetails TransferDetails) error {
+func (c *Controller) Deposit(ctx context.Context, transferDetails TransferDetails) error {
 	fmt.Printf(
 		"\nDepositing $%f into account %s. ReferenceId: %s\n",
 		transferDetails.Amount,
@@ -39,7 +39,7 @@ func Deposit(ctx context.Context, transferDetails TransferDetails) error {
 	return nil
 }
 
-func DepositCompensation(ctx context.Context, transferDetails TransferDetails) error {
+func (c *Controller) DepositCompensation(ctx context.Context, transferDetails TransferDetails) error {
 	fmt.Printf(
 		"\nDepositing compensation $%f into account %s. ReferenceId: %s\n",
 		transferDetails.Amount,
@@ -50,7 +50,7 @@ func DepositCompensation(ctx context.Context, transferDetails TransferDetails) e
 	return nil
 }
 
-func StepWithError(ctx context.Context, transferDetails TransferDetails) error {
+func (c *Controller) StepWithError(ctx context.Context, transferDetails TransferDetails) error {
 	fmt.Printf(
 		"\nSimulate failure to trigger compensation. ReferenceId: %s\n",
 		transferDetails.ReferenceID,

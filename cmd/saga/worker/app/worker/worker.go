@@ -69,7 +69,7 @@ func NewConnToProfile() (*grpc.ClientConn, error) {
 		grpc.WithTransportCredentials(insecure.NewCredentials()))
 }
 
-func NewWorker(lc fx.Lifecycle, c client.Client) worker.Worker {
+func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) worker.Worker {
 	// This worker hosts both Workflow and Activity functions
 	w := worker.New(c, saga.CreateLicenseTaskQueue, worker.Options{
 		// worker.Start() only return errors on start, so we need to catch
@@ -91,11 +91,12 @@ func NewWorker(lc fx.Lifecycle, c client.Client) worker.Worker {
 	})
 
 	w.RegisterWorkflow(saga.TransferMoney)
-	w.RegisterActivity(saga.Withdraw)
-	w.RegisterActivity(saga.WithdrawCompensation)
-	w.RegisterActivity(saga.Deposit)
-	w.RegisterActivity(saga.DepositCompensation)
-	w.RegisterActivity(saga.StepWithError)
+
+	// RegisterActivity - register an activity function or a pointer to a
+	// structure with the worker.
+	// The activity struct is a structure with all its exported methods treated
+	// as activities. The default name of each activity is the method name.
+	w.RegisterActivity(ctrl)
 
 	return w
 }
