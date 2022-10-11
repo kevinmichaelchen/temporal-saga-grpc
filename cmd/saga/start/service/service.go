@@ -26,7 +26,7 @@ func (s *Service) CreateLicense(
 
 	options := client.StartWorkflowOptions{
 		ID:        req.Msg.GetWorkflowOptions().GetWorkflowId(),
-		TaskQueue: saga.TransferMoneyTaskQueue,
+		TaskQueue: saga.CreateLicenseTaskQueue,
 	}
 	transferDetails := saga.TransferDetails{
 		Amount:      54.99,

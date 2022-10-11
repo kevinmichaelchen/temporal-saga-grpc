@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 	grpchealth "github.com/bufbuild/connect-grpchealth-go"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/start/service"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/temporal/v1beta1/temporalv1beta1connect"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/license/service"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/license/v1beta1/licensev1beta1connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/cors"
 	"github.com/sethvargo/go-envconfig"
 	"github.com/sirupsen/logrus"
@@ -32,7 +32,7 @@ type Config struct {
 
 type NestedConfig struct {
 	Host string `env:"HOST,default=localhost"`
-	Port int    `env:"PORT,default=8081"`
+	Port int    `env:"PORT,default=9090"`
 }
 
 func NewConfig() (cfg Config, err error) {
@@ -73,14 +73,14 @@ func NewServer(lc fx.Lifecycle, cfg Config) *http.ServeMux {
 
 func RegisterServer(mux *http.ServeMux, svc *service.Service) {
 	// Register our Connect-Go server
-	path, handler := temporalv1beta1connect.NewTemporalServiceHandler(
+	path, handler := licensev1beta1connect.NewLicenseServiceHandler(
 		svc,
 	)
 	checker := grpchealth.NewStaticChecker(
 		// protoc-gen-connect-go generates package-level constants
 		// for these fully-qualified protobuf service names, so we'd be able
 		// to reference foov1beta1.FooService as opposed to foo.v1beta1.FooService.
-		"com.teachingstrategies.temporalv1beta1.TemporalService",
+		"com.teachingstrategies.licensev1beta1.LicenseService",
 	)
 	mux.Handle(grpchealth.NewHandler(checker))
 	mux.Handle(path, handler)
