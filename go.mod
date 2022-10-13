@@ -6,6 +6,7 @@ require (
 	github.com/99designs/gqlgen v0.17.20
 	github.com/bufbuild/connect-go v1.0.0
 	github.com/bufbuild/connect-grpchealth-go v1.0.0
+	github.com/google/uuid v1.3.0
 	github.com/graphql-go/graphql v0.8.0
 	github.com/graphql-go/handler v0.2.3
 	github.com/rs/cors v1.8.2
@@ -30,7 +31,6 @@ require (
 	github.com/gogo/status v1.1.1 // indirect
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
-	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect

@@ -6,6 +6,7 @@ package graph
 import (
 	"context"
 	"fmt"
+
 	"github.com/google/uuid"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/start/graph/generated"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/start/graph/model"
@@ -14,9 +15,10 @@ import (
 // CreateTodo is the resolver for the createTodo field.
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
 	return &model.Todo{
-		ID:   uuid.New().String(),
-		Text: input.Text,
-		Done: false,
+		ID:      uuid.New().String(),
+		Text:    input.Text,
+		Subtext: input.Subtext,
+		Done:    false,
 		User: &model.User{
 			ID:   input.UserID,
 			Name: "Kevin Chen",

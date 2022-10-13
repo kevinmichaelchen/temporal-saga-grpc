@@ -7,6 +7,7 @@ type Todo {
   text: String!
   done: Boolean!
   user: User!
+  subtext: String
 }
 
 type User {
@@ -20,6 +21,7 @@ type Query {
 
 input NewTodo {
   text: String!
+  subtext: String
   userId: String!
 }
 
