@@ -6,13 +6,22 @@ package graph
 import (
 	"context"
 	"fmt"
+	"github.com/google/uuid"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/start/graph/generated"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/start/graph/model"
 )
 
 // CreateTodo is the resolver for the createTodo field.
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: CreateTodo - createTodo"))
+	return &model.Todo{
+		ID:   uuid.New().String(),
+		Text: input.Text,
+		Done: false,
+		User: &model.User{
+			ID:   input.UserID,
+			Name: "Kevin Chen",
+		},
+	}, nil
 }
 
 // Todos is the resolver for the todos field.
