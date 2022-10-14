@@ -8,6 +8,7 @@ type NewTodo struct {
 	UserID  string  `json:"userId"`
 }
 
+// A Todo
 type Todo struct {
 	ID      string  `json:"id"`
 	Text    string  `json:"text"`
@@ -16,6 +17,7 @@ type Todo struct {
 	Subtext *string `json:"subtext"`
 }
 
+// A user
 type User struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`
