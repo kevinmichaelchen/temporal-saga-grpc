@@ -2,6 +2,7 @@ package temporal
 
 import (
 	"context"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal"
 	"go.temporal.io/sdk/client"
 	"go.uber.org/fx"
 )
@@ -13,7 +14,14 @@ var Module = fx.Module("temporal",
 )
 
 func NewClient(lc fx.Lifecycle) (client.Client, error) {
-	c, err := client.Dial(client.Options{})
+	interceptors, err := temporal.ClientInterceptors()
+	if err != nil {
+		return nil, err
+	}
+
+	c, err := client.Dial(client.Options{
+		Interceptors: interceptors,
+	})
 	if err != nil {
 		return nil, err
 	}

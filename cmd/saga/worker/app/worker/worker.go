@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal"
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.temporal.io/sdk/client"
@@ -78,11 +77,6 @@ func NewConnToProfile() (*grpc.ClientConn, error) {
 }
 
 func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker.Worker, error) {
-	interceptors, err := temporal.WorkerInterceptors()
-	if err != nil {
-		return nil, err
-	}
-
 	// This worker hosts both Workflow and Activity functions
 	w := worker.New(c, saga.CreateLicenseTaskQueue, worker.Options{
 		// worker.Start() only return errors on start, so we need to catch
@@ -90,7 +84,6 @@ func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker
 		OnFatalError: func(err error) {
 			logrus.WithError(err).Error("Worker failed!")
 		},
-		Interceptors: interceptors,
 	})
 
 	w.RegisterWorkflow(saga.CreateLicense)
