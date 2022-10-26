@@ -6,6 +6,8 @@ import (
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 	"github.com/sirupsen/logrus"
 	"go.temporal.io/sdk/client"
+	"go.temporal.io/sdk/contrib/opentelemetry"
+	"go.temporal.io/sdk/interceptor"
 	"go.temporal.io/sdk/worker"
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
@@ -69,13 +71,24 @@ func NewConnToProfile() (*grpc.ClientConn, error) {
 		grpc.WithTransportCredentials(insecure.NewCredentials()))
 }
 
-func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) worker.Worker {
+func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker.Worker, error) {
+	i, err := opentelemetry.NewTracingInterceptor(opentelemetry.TracerOptions{
+		// TODO not sure if I need to set this
+		//TextMapPropagator:    nil,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create OTEL tracing interceptor: %w", err)
+	}
+
 	// This worker hosts both Workflow and Activity functions
 	w := worker.New(c, saga.CreateLicenseTaskQueue, worker.Options{
 		// worker.Start() only return errors on start, so we need to catch
 		// errors during run
 		OnFatalError: func(err error) {
 			logrus.WithError(err).Error("Worker failed!")
+		},
+		Interceptors: []interceptor.WorkerInterceptor{
+			i,
 		},
 	})
 
@@ -98,15 +111,8 @@ func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) worker.W
 		},
 	})
 
-	return w
+	return &w, nil
 }
 
-func RegisterWorkflowAndActivities(w worker.Worker) {
+func RegisterWorkflowAndActivities(w *worker.Worker) {
 }
-
-// TODO dial grpc connections to upstream services;
-//  use uber-go/fx;
-//  create a service struct w/ 3 grpc connections;
-//  register the struct itself which causes all its exported functions to become activities:
-//  from the docs:
-//  And activity struct is a structure with all its exported methods treated as activities.
