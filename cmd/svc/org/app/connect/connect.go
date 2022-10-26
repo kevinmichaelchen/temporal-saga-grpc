@@ -4,9 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/bufbuild/connect-go"
 	grpchealth "github.com/bufbuild/connect-grpchealth-go"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/service"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/org/v1beta1/orgv1beta1connect"
+	pkgConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/cors"
 	"github.com/sethvargo/go-envconfig"
 	"github.com/sirupsen/logrus"
@@ -75,6 +77,7 @@ func RegisterServer(mux *http.ServeMux, svc *service.Service) {
 	// Register our Connect-Go server
 	path, handler := orgv1beta1connect.NewOrgServiceHandler(
 		svc,
+		connect.WithInterceptors(pkgConnect.UnaryInterceptors()...),
 	)
 	checker := grpchealth.NewStaticChecker(
 		// protoc-gen-connect-go generates package-level constants

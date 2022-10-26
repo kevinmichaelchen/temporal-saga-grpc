@@ -19,9 +19,6 @@ func NewClient(lc fx.Lifecycle) (client.Client, error) {
 	}
 
 	lc.Append(fx.Hook{
-		OnStart: func(ctx context.Context) error {
-			return nil
-		},
 		OnStop: func(ctx context.Context) error {
 			c.Close()
 			return nil

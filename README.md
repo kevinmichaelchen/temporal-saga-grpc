@@ -16,9 +16,11 @@ execution.
 
 The upstream microservices that are called during the workflow all use gRPC.
 
-Inspiration:
+## Resources:
 * <a target="_blank" href="https://github.com/temporalio/samples-go/blob/main/saga/workflow.go">temporalio/samples-go</a>
 * <a target="_blank" href="https://github.com/temporalio/money-transfer-project-template-go/blob/main/workflow.go">money-transfer-project-template-go</a>
+* <a target="_blank" href="https://www.swyx.io/why-temporal/">swyx — Why Temporal?</a>
+* <a target="_blank" href="https://youtu.be/-KWutSkFda8">YouTube — Intro to Temporal with Go SDK</a>
 
 ## Getting started
 
