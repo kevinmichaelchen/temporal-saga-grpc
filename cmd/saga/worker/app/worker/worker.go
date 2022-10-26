@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 	"github.com/sirupsen/logrus"
+	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/contrib/opentelemetry"
 	"go.temporal.io/sdk/interceptor"
@@ -56,19 +57,25 @@ func NewController(license, org, profile *grpc.ClientConn) *saga.Controller {
 func NewConnToLicense() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortLicense)
 	return grpc.Dial(addr,
-		grpc.WithTransportCredentials(insecure.NewCredentials()))
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
+	)
 }
 
 func NewConnToOrg() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortOrg)
 	return grpc.Dial(addr,
-		grpc.WithTransportCredentials(insecure.NewCredentials()))
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
+	)
 }
 
 func NewConnToProfile() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortProfile)
 	return grpc.Dial(addr,
-		grpc.WithTransportCredentials(insecure.NewCredentials()))
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
+	)
 }
 
 func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker.Worker, error) {
