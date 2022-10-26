@@ -24,13 +24,21 @@ The upstream microservices that are called during the workflow all use gRPC.
 
 ## Getting started
 
-### Step 1: Temporal Server
+### Step 0: Temporal Server
 ```shell
 git clone https://github.com/temporalio/docker-compose.git temporal-docker-compose
 cd  temporal-docker-compose
 docker-compose up
 ```
 This may take a minute or two to pull all the Docker image layers.
+
+### Step 1: Start Jaeger
+We'll need [Jaeger](https://www.jaegertracing.io/) to observe distributed traces.
+```shell
+docker-compose up
+```
+
+See traces in Jaeger [here](http://localhost:16686)
 
 ### Step 2: Start Temporal Worker
 ```shell
