@@ -9,24 +9,33 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
+	"go.temporal.io/sdk/contrib/opentelemetry"
 	"go.uber.org/fx"
 	"log"
 	"time"
 )
 
 const (
-	serviceName = "temporal-worker"
 	environment = "production"
 	id          = 1
 )
 
-var Module = fx.Module("tracing",
-	fx.Provide(
-		NewTracerProvider,
-		NewConfig,
-	),
-	fx.Invoke(Register),
-)
+type ModuleOptions struct {
+	ServiceName string
+}
+
+func CreateModule(opts ModuleOptions) fx.Option {
+	return fx.Module("tracing",
+		fx.Provide(
+			func() *ModuleOptions {
+				return &opts
+			},
+			NewTracerProvider,
+			NewConfig,
+		),
+		fx.Invoke(Register),
+	)
+}
 
 type Config struct {
 	TraceConfig *TraceConfig `env:",prefix=TRACE_"`
@@ -49,13 +58,16 @@ func Register(tp *tracesdk.TracerProvider) {
 	// Register our TracerProvider as the global so any imported
 	// instrumentation in the future will default to using it.
 	otel.SetTracerProvider(tp)
+
+	// Set the same Trace Propagator that Temporal uses by default
+	otel.SetTextMapPropagator(opentelemetry.DefaultTextMapPropagator)
 }
 
 // NewTracerProvider returns an OpenTelemetry TracerProvider configured to use
 // the Jaeger exporter that will send spans to the provided url. The returned
 // TracerProvider will also use a Resource configured with all the information
 // about the application.
-func NewTracerProvider(lc fx.Lifecycle, cfg *Config) (*tracesdk.TracerProvider, error) {
+func NewTracerProvider(lc fx.Lifecycle, opts *ModuleOptions, cfg *Config) (*tracesdk.TracerProvider, error) {
 	// Create the Jaeger exporter
 	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(cfg.TraceConfig.URL)))
 	if err != nil {
@@ -69,7 +81,7 @@ func NewTracerProvider(lc fx.Lifecycle, cfg *Config) (*tracesdk.TracerProvider, 
 		// Record information about this application in a Resource.
 		tracesdk.WithResource(resource.NewWithAttributes(
 			semconv.SchemaURL,
-			semconv.ServiceNameKey.String(serviceName),
+			semconv.ServiceNameKey.String(opts.ServiceName),
 			attribute.String("environment", environment),
 			attribute.Int64("ID", id),
 		)),

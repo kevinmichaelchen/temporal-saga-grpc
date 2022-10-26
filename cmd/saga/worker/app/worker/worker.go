@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 	"github.com/sirupsen/logrus"
+	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.temporal.io/sdk/client"
-	"go.temporal.io/sdk/contrib/opentelemetry"
-	"go.temporal.io/sdk/interceptor"
 	"go.temporal.io/sdk/worker"
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
@@ -56,39 +55,34 @@ func NewController(license, org, profile *grpc.ClientConn) *saga.Controller {
 func NewConnToLicense() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortLicense)
 	return grpc.Dial(addr,
-		grpc.WithTransportCredentials(insecure.NewCredentials()))
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
+	)
 }
 
 func NewConnToOrg() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortOrg)
 	return grpc.Dial(addr,
-		grpc.WithTransportCredentials(insecure.NewCredentials()))
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
+	)
 }
 
 func NewConnToProfile() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortProfile)
 	return grpc.Dial(addr,
-		grpc.WithTransportCredentials(insecure.NewCredentials()))
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
+	)
 }
 
 func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker.Worker, error) {
-	i, err := opentelemetry.NewTracingInterceptor(opentelemetry.TracerOptions{
-		// TODO not sure if I need to set this
-		//TextMapPropagator:    nil,
-	})
-	if err != nil {
-		return nil, fmt.Errorf("failed to create OTEL tracing interceptor: %w", err)
-	}
-
 	// This worker hosts both Workflow and Activity functions
 	w := worker.New(c, saga.CreateLicenseTaskQueue, worker.Options{
 		// worker.Start() only return errors on start, so we need to catch
 		// errors during run
 		OnFatalError: func(err error) {
 			logrus.WithError(err).Error("Worker failed!")
-		},
-		Interceptors: []interceptor.WorkerInterceptor{
-			i,
 		},
 	})
 
