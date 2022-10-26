@@ -4,11 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal"
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.temporal.io/sdk/client"
-	"go.temporal.io/sdk/contrib/opentelemetry"
-	"go.temporal.io/sdk/interceptor"
 	"go.temporal.io/sdk/worker"
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
@@ -79,12 +78,9 @@ func NewConnToProfile() (*grpc.ClientConn, error) {
 }
 
 func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker.Worker, error) {
-	i, err := opentelemetry.NewTracingInterceptor(opentelemetry.TracerOptions{
-		// TODO not sure if I need to set this
-		//TextMapPropagator:    nil,
-	})
+	interceptors, err := temporal.WorkerInterceptors()
 	if err != nil {
-		return nil, fmt.Errorf("failed to create OTEL tracing interceptor: %w", err)
+		return nil, err
 	}
 
 	// This worker hosts both Workflow and Activity functions
@@ -94,9 +90,7 @@ func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker
 		OnFatalError: func(err error) {
 			logrus.WithError(err).Error("Worker failed!")
 		},
-		Interceptors: []interceptor.WorkerInterceptor{
-			i,
-		},
+		Interceptors: interceptors,
 	})
 
 	w.RegisterWorkflow(saga.CreateLicense)

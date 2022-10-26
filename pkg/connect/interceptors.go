@@ -19,7 +19,10 @@ func connectInterceptorForSpan() connect.UnaryInterceptorFunc {
 			req connect.AnyRequest,
 		) (connect.AnyResponse, error) {
 			name := req.Spec().Procedure
+
 			tr := otel.Tracer("")
+
+			// Create a new span
 			ctx, span := tr.Start(ctx, name)
 			defer span.End()
 

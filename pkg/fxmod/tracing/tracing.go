@@ -9,6 +9,7 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
+	"go.temporal.io/sdk/contrib/opentelemetry"
 	"go.uber.org/fx"
 	"log"
 	"time"
@@ -57,6 +58,9 @@ func Register(tp *tracesdk.TracerProvider) {
 	// Register our TracerProvider as the global so any imported
 	// instrumentation in the future will default to using it.
 	otel.SetTracerProvider(tp)
+
+	// Set the same Trace Propagator that Temporal uses by default
+	otel.SetTextMapPropagator(opentelemetry.DefaultTextMapPropagator)
 }
 
 // NewTracerProvider returns an OpenTelemetry TracerProvider configured to use
