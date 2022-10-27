@@ -3,7 +3,7 @@ module github.com/kevinmichaelchen/temporal-saga-grpc/services/license
 go 1.19
 
 require (
-	github.com/bufbuild/connect-go v1.0.0
+	github.com/bufbuild/connect-go v1.1.0
 	github.com/bufbuild/connect-grpchealth-go v1.0.0
 	github.com/kevinmichaelchen/temporal-saga-grpc v0.0.0-20221026163436-be83de26b703
 	github.com/sethvargo/go-envconfig v0.8.2
