@@ -2,20 +2,20 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl
+    default: github.com/kevinmichaelchen/temporal-saga-grpc/pkg/idl
     except:
       - buf.build/googleapis/googleapis
 plugins:
   - remote: buf.build/protocolbuffers/plugins/go:v1.28.1-1
-    out: internal/idl
+    out: pkg/idl
     opt:
       - paths=source_relative
   - remote: buf.build/bufbuild/plugins/connect-go:v1.0.0-1
-    out: internal/idl
+    out: pkg/idl
     opt:
       - paths=source_relative
   - remote: buf.build/grpc/plugins/go:v1.2.0-1
-    out: internal/idl
+    out: pkg/idl
     opt:
       - paths=source_relative
       - require_unimplemented_servers=false

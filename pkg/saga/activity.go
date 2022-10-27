@@ -3,15 +3,15 @@ package saga
 import (
 	"context"
 	"fmt"
-	licensev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/license/v1beta1"
-	orgv1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/org/v1beta1"
-	profilev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/profile/v1beta1"
+	licensev1beta12 "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/idl/com/teachingstrategies/license/v1beta1"
+	orgv1beta12 "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/idl/com/teachingstrategies/org/v1beta1"
+	profilev1beta12 "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/idl/com/teachingstrategies/profile/v1beta1"
 )
 
 func (c *Controller) CreateOrg(ctx context.Context, args CreateLicenseInputArgs) error {
-	client := orgv1beta1.NewOrgServiceClient(c.connOrg)
+	client := orgv1beta12.NewOrgServiceClient(c.connOrg)
 
-	_, err := client.CreateOrg(ctx, &orgv1beta1.CreateOrgRequest{
+	_, err := client.CreateOrg(ctx, &orgv1beta12.CreateOrgRequest{
 		Name: args.OrgName,
 	})
 	if err != nil {
@@ -22,9 +22,9 @@ func (c *Controller) CreateOrg(ctx context.Context, args CreateLicenseInputArgs)
 }
 
 func (c *Controller) CreateProfile(ctx context.Context, args CreateLicenseInputArgs) error {
-	client := profilev1beta1.NewProfileServiceClient(c.connProfile)
+	client := profilev1beta12.NewProfileServiceClient(c.connProfile)
 
-	_, err := client.CreateProfile(ctx, &profilev1beta1.CreateProfileRequest{
+	_, err := client.CreateProfile(ctx, &profilev1beta12.CreateProfileRequest{
 		Name: args.ProfileName,
 	})
 	if err != nil {
@@ -35,9 +35,9 @@ func (c *Controller) CreateProfile(ctx context.Context, args CreateLicenseInputA
 }
 
 func (c *Controller) CreateLicense(ctx context.Context, args CreateLicenseInputArgs) error {
-	client := licensev1beta1.NewLicenseServiceClient(c.connLicense)
+	client := licensev1beta12.NewLicenseServiceClient(c.connLicense)
 
-	_, err := client.CreateLicense(ctx, &licensev1beta1.CreateLicenseRequest{
+	_, err := client.CreateLicense(ctx, &licensev1beta12.CreateLicenseRequest{
 		Name: args.LicenseName,
 	})
 	if err != nil {

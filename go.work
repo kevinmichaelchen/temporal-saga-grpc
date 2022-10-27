@@ -1,0 +1,19 @@
+go 1.19
+
+use (
+	.
+	./pkg/connect
+	./pkg/cors
+	./pkg/fxmod/logging
+	./pkg/fxmod/rand
+	./pkg/fxmod/tracing
+	./pkg/idl
+	./pkg/saga
+	./pkg/simulated
+	./pkg/temporal
+	./services/license
+	./services/org
+	./services/profile
+	./services/temporalstarter
+	./services/temporalworker
+)
