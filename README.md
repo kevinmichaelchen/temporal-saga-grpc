@@ -42,19 +42,19 @@ See traces in Jaeger [here](http://localhost:16686)
 
 ### Step 2: Start Temporal Worker
 ```shell
-go run cmd/saga/worker/main.go
+go run services/temporalworker/main.go
 ```
 
 ### Step 3: Start Temporal Workflow gRPC Server
 ```shell
-go run cmd/saga/start/main.go
+go run services/temporalstarter/main.go
 ```
 
 ### Step 4: Start upstream gRPC Services
 ```shell
-go run cmd/svc/license/main.go
-go run cmd/svc/org/main.go
-go run cmd/svc/profile/main.go
+go run services/license/main.go
+go run services/org/main.go
+go run services/profile/main.go
 ```
 
 ### Step 5: Start Temporal Workflow

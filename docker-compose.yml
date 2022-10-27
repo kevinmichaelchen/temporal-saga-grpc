@@ -1,6 +1,12 @@
 version: "3.9"
 
 services:
+  license:
+    ports:
+      - "9090:9090"
+    build:
+      context: ./services/license
+      target: license-svc
   jaeger:
     image: jaegertracing/all-in-one:1.33
     environment:
