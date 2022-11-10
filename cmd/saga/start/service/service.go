@@ -23,8 +23,11 @@ func (s *Service) CreateLicense(
 ) (*connect.Response[temporalv1beta1.CreateLicenseResponse], error) {
 	c := s.client
 
+	// The business identifier of the workflow execution
+	workflowID := req.Msg.GetWorkflowOptions().GetWorkflowId()
+
 	options := client.StartWorkflowOptions{
-		ID:        req.Msg.GetWorkflowOptions().GetWorkflowId(),
+		ID:        workflowID,
 		TaskQueue: saga.CreateLicenseTaskQueue,
 	}
 	args := saga.CreateLicenseInputArgs{
@@ -33,7 +36,7 @@ func (s *Service) CreateLicense(
 		LicenseName: req.Msg.GetLicense().GetName(),
 	}
 	we, err := c.ExecuteWorkflow(
-		context.Background(),
+		ctx,
 		options,
 		saga.CreateLicense,
 		args)
