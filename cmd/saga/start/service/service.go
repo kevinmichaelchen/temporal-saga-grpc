@@ -2,10 +2,12 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"github.com/bufbuild/connect-go"
 	temporalv1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/temporal/v1beta1"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 	"github.com/sirupsen/logrus"
+	"go.opentelemetry.io/otel/baggage"
 	"go.temporal.io/sdk/client"
 )
 
@@ -25,6 +27,17 @@ func (s *Service) CreateLicense(
 
 	// The business identifier of the workflow execution
 	workflowID := req.Msg.GetWorkflowOptions().GetWorkflowId()
+
+	// Inject the workflow ID as OTel baggage, so it appears on all spans
+	bgMem, err := baggage.NewMember("temporal.workflowID", workflowID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create otel baggage member: %w", err)
+	}
+	bg, err := baggage.New(bgMem)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create otel baggage: %w", err)
+	}
+	ctx = baggage.ContextWithBaggage(ctx, bg)
 
 	options := client.StartWorkflowOptions{
 		ID:        workflowID,

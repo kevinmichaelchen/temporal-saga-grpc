@@ -36,7 +36,9 @@ func PossibleError(ep ErrorProbability) error {
 	p := ep.Int()
 	logrus.WithField("error_probability", p).Info("Rolling dice...")
 	if rand.Intn(100) < p {
+		logrus.Error("Failed.")
 		return errors.New("oh no internal failure")
 	}
+	logrus.Info("Succeeded.")
 	return nil
 }
