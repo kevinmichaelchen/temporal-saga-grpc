@@ -4,11 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/bufbuild/connect-go"
 	grpchealth "github.com/bufbuild/connect-grpchealth-go"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/service"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/org/v1beta1/orgv1beta1connect"
-	pkgConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/cors"
 	"github.com/sethvargo/go-envconfig"
 	"github.com/sirupsen/logrus"
@@ -18,23 +14,39 @@ import (
 	"net/http"
 )
 
-var Module = fx.Module("grpc",
-	fx.Provide(
-		NewConfig,
-		NewServer,
-	),
-	fx.Invoke(
-		RegisterServer,
-	),
-)
+func CreateModule(opts *ModuleOptions) fx.Option {
+	return fx.Module("grpc",
+		fx.Provide(
+			opts.HandlerProvider,
+			func() *ModuleOptions {
+				return opts
+			},
+			NewConfig,
+			NewServer,
+		),
+		fx.Invoke(
+			Register,
+		),
+	)
+}
+
+type HandlerOutput struct {
+	Path    string
+	Handler http.Handler
+}
+
+type ModuleOptions struct {
+	HandlerProvider any
+	Services        []string
+}
 
 type Config struct {
-	ConnectConfig *NestedConfig `env:",prefix=GRPC_CONNECT"`
+	ConnectConfig *NestedConfig `env:",prefix=GRPC_CONNECT_"`
 }
 
 type NestedConfig struct {
 	Host string `env:"HOST,default=localhost"`
-	Port int    `env:"PORT,default=9091"`
+	Port int    `env:"PORT,required"`
 }
 
 func NewConfig() (cfg Config, err error) {
@@ -73,18 +85,13 @@ func NewServer(lc fx.Lifecycle, cfg Config) *http.ServeMux {
 	return mux
 }
 
-func RegisterServer(mux *http.ServeMux, svc *service.Service) {
-	// Register our Connect-Go server
-	path, handler := orgv1beta1connect.NewOrgServiceHandler(
-		svc,
-		connect.WithInterceptors(pkgConnect.UnaryInterceptors()...),
-	)
+func Register(opts *ModuleOptions, mux *http.ServeMux, h HandlerOutput) {
 	checker := grpchealth.NewStaticChecker(
 		// protoc-gen-connect-go generates package-level constants
 		// for these fully-qualified protobuf service names, so we'd be able
 		// to reference foov1beta1.FooService as opposed to foo.v1beta1.FooService.
-		"com.teachingstrategies.orgv1beta1.OrgService",
+		opts.Services...,
 	)
 	mux.Handle(grpchealth.NewHandler(checker))
-	mux.Handle(path, handler)
+	mux.Handle(h.Path, h.Handler)
 }

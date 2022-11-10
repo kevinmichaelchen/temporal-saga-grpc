@@ -16,10 +16,6 @@ func UnaryInterceptors() []connect.Interceptor {
 	}
 }
 
-// TODO this can go away eventually when we get an official interceptor:
-// https://github.com/bufbuild/connect-go/issues/344
-// For now, we're inspired by:
-// https://github.com/open-telemetry/opentelemetry-go-contrib/blob/instrumentation/google.golang.org/grpc/otelgrpc/v0.36.4/instrumentation/google.golang.org/grpc/otelgrpc/interceptor.go#L307
 func connectInterceptorForSpan() connect.UnaryInterceptorFunc {
 	interceptor := func(next connect.UnaryFunc) connect.UnaryFunc {
 		return connect.UnaryFunc(func(

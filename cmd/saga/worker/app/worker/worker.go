@@ -54,22 +54,20 @@ func NewController(license, org, profile *grpc.ClientConn) *saga.Controller {
 
 func NewConnToLicense() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortLicense)
-	return grpc.Dial(addr,
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
-	)
+	return dial(addr)
 }
 
 func NewConnToOrg() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortOrg)
-	return grpc.Dial(addr,
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
-	)
+	return dial(addr)
 }
 
 func NewConnToProfile() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortProfile)
+	return dial(addr)
+}
+
+func dial(addr string) (*grpc.ClientConn, error) {
 	return grpc.Dial(addr,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
