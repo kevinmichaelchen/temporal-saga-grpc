@@ -45,14 +45,14 @@ go run cmd/saga/worker/main.go
 
 ### Step 2: Start Temporal Workflow gRPC Server
 ```shell
-go run cmd/saga/start/main.go
+env GRPC_CONNECT_PORT=8081 go run cmd/saga/start/main.go
 ```
 
 ### Step 3: Start upstream gRPC Services
 ```shell
-go run cmd/svc/license/main.go
-go run cmd/svc/org/main.go
-go run cmd/svc/profile/main.go
+GRPC_CONNECT_PORT=9090 go run cmd/svc/license/main.go
+GRPC_CONNECT_PORT=9091 go run cmd/svc/org/main.go
+GRPC_CONNECT_PORT=9092 go run cmd/svc/profile/main.go
 ```
 
 ### Step 4: Start Temporal Workflow
