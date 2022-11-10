@@ -24,40 +24,38 @@ The upstream microservices that are called during the workflow all use gRPC.
 
 ## Getting started
 
-### Step 0: Temporal Server
-```shell
-git clone https://github.com/temporalio/docker-compose.git temporal-docker-compose
-cd  temporal-docker-compose
-docker-compose up
-```
-This may take a minute or two to pull all the Docker image layers.
+### Step 0: Spin up Temporal and Jaeger
+We use Docker Compose for
+[Temporalite](https://github.com/temporalio/temporalite)
+(a lighter-weight version of Temporal's
+[docker-compose](https://github.com/temporalio/docker-compose) repo),
+as well as for [Jaeger](https://www.jaegertracing.io/) (a telemetry backend).
 
-### Step 1: Start Jaeger
-We'll need [Jaeger](https://www.jaegertracing.io/) to observe distributed traces.
+You can spin everything up with:
 ```shell
-docker-compose up
+docker-compose up -d
 ```
 
-See traces in Jaeger [here](http://localhost:16686)
+Temporalite runs the Temporal server on 7233, and the Temporal Web UI on 8233.
 
-### Step 2: Start Temporal Worker
+### Step 1: Start Temporal Worker
 ```shell
 go run cmd/saga/worker/main.go
 ```
 
-### Step 3: Start Temporal Workflow gRPC Server
+### Step 2: Start Temporal Workflow gRPC Server
 ```shell
 go run cmd/saga/start/main.go
 ```
 
-### Step 4: Start upstream gRPC Services
+### Step 3: Start upstream gRPC Services
 ```shell
 go run cmd/svc/license/main.go
 go run cmd/svc/org/main.go
 go run cmd/svc/profile/main.go
 ```
 
-### Step 5: Start Temporal Workflow
+### Step 4: Start Temporal Workflow
 ```shell
 curl -v http://localhost:8081/com.teachingstrategies.temporal.v1beta1.TemporalService/CreateLicense \
   -H "Content-Type: application/json" \
@@ -70,6 +68,9 @@ http POST \
     profile:='{"name": "Kevin Chen"}'
 ```
 
-### Step 6: Check the Temporal UI
-Open [localhost:8080](http://localhost:8080) in your browser to see the
-workflow.
+### Step 5: Check the UIs
+#### Jaeger
+See traces in Jaeger at [localhost:16686](http://localhost:16686).
+
+#### Temporal Web UI
+See the Temporal Workflow at [localhost:8233](http://localhost:8233).
