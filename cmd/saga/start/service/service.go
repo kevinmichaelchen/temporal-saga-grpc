@@ -29,7 +29,7 @@ func (s *Service) CreateLicense(
 	workflowID := req.Msg.GetWorkflowOptions().GetWorkflowId()
 
 	// Inject the workflow ID as OTel baggage, so it appears on all spans
-	bgMem, err := baggage.NewMember("temporal.workflowID", workflowID)
+	bgMem, err := baggage.NewMember("foo", "bar")
 	if err != nil {
 		return nil, fmt.Errorf("failed to create otel baggage member: %w", err)
 	}

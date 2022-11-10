@@ -77,6 +77,9 @@ func dial(addr string) (*grpc.ClientConn, error) {
 func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker.Worker, error) {
 	// This worker hosts both Workflow and Activity functions
 	w := worker.New(c, saga.CreateLicenseTaskQueue, worker.Options{
+		// Deliberately do not set interceptors on the Temporal worker. Our OTel
+		// interceptor is already set on the Temporal client.
+		// Interceptors: nil,
 		// worker.Start() only return errors on start, so we need to catch
 		// errors during run
 		OnFatalError: func(err error) {
