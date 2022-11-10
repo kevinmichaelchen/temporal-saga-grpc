@@ -60,6 +60,8 @@ func Register(tp *tracesdk.TracerProvider) {
 	otel.SetTracerProvider(tp)
 
 	// Set the same Trace Propagator that Temporal uses by default
+	// This is the same TextMapPropagator as Temporal client interceptors are
+	// using
 	otel.SetTextMapPropagator(opentelemetry.DefaultTextMapPropagator)
 }
 
