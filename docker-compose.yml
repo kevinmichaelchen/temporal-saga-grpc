@@ -1,6 +1,11 @@
 version: "3.9"
 
 services:
+  temporalite:
+    build: https://github.com/temporalio/temporalite.git#main
+    ports:
+      - "127.0.0.1:7233:7233"
+      - "127.0.0.1:8233:8233"
   jaeger:
     image: jaegertracing/all-in-one:1.39
     environment:
