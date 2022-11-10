@@ -1,8 +1,12 @@
 package app
 
 import (
-	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/app/connect"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/app/service"
+	"github.com/bufbuild/connect-go"
+	modService "github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/app/service"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/service"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/org/v1beta1/orgv1beta1connect"
+	pkgConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect"
+	modConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/logging"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/rand"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/tracing"
@@ -10,9 +14,24 @@ import (
 )
 
 var Module = fx.Options(
-	connect.Module,
+	modConnect.CreateModule(&modConnect.ModuleOptions{
+		HandlerProvider: func(svc *service.Service) modConnect.HandlerOutput {
+			// Register our Connect-Go server
+			path, h := orgv1beta1connect.NewOrgServiceHandler(
+				svc,
+				connect.WithInterceptors(pkgConnect.UnaryInterceptors()...),
+			)
+			return modConnect.HandlerOutput{
+				Path:    path,
+				Handler: h,
+			}
+		},
+		Services: []string{
+			"com.teachingstrategies.orgv1beta1.OrgService",
+		},
+	}),
 	logging.Module,
-	service.Module,
+	modService.Module,
 	rand.Module,
 	tracing.CreateModule(tracing.ModuleOptions{
 		ServiceName: "org-svc",
