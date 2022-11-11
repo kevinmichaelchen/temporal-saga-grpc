@@ -3,9 +3,9 @@ package service
 import (
 	"context"
 	"github.com/bufbuild/connect-go"
-	profilev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/profile/v1beta1"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 	"github.com/sirupsen/logrus"
+	profilev1beta1 "go.buf.build/bufbuild/connect-go/kevinmichaelchen/profileapis/profile/v1beta1"
 )
 
 type Service struct{}

@@ -8,6 +8,8 @@ import (
 	profilev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/profile/v1beta1"
 )
 
+// TODO why isn't Remote Generation creating gRPC clients?
+
 func (c *Controller) CreateOrg(ctx context.Context, args CreateLicenseInputArgs) error {
 	client := orgv1beta1.NewOrgServiceClient(c.connOrg)
 

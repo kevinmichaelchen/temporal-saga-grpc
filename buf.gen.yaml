@@ -10,10 +10,6 @@ plugins:
     out: internal/idl
     opt:
       - paths=source_relative
-  - remote: buf.build/bufbuild/plugins/connect-go:v1.0.0-1
-    out: internal/idl
-    opt:
-      - paths=source_relative
   - remote: buf.build/grpc/plugins/go:v1.2.0-1
     out: internal/idl
     opt:
