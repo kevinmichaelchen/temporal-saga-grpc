@@ -148,8 +148,6 @@ go.buf.build/grpc/go/kevinmichaelchen/orgapis v1.4.1 h1:5wCMNvuYNXOPeQJBkbK8YbBa
 go.buf.build/grpc/go/kevinmichaelchen/orgapis v1.4.1/go.mod h1:ff2WBZY9OWttSw/nbz2HCt8j07oiVPi9EZPoYELz9Sw=
 go.buf.build/grpc/go/kevinmichaelchen/profileapis v1.4.1 h1:ECSQZuRA/chXcfarP0ujGBG8L7xtnEaYIvd7ChiB9Wg=
 go.buf.build/grpc/go/kevinmichaelchen/profileapis v1.4.1/go.mod h1:0/j/ouMH9s+cPQ1WcoQSvFXWnwrrQJEKmDy8zZpuHNs=
-go.buf.build/grpc/go/kevinmichaelchen/temporalapis v1.4.1 h1:rWwJmuhRRIi3NEeX4B9tAQm0LLWA0tKwVAoI2wMo8l0=
-go.buf.build/grpc/go/kevinmichaelchen/temporalapis v1.4.1/go.mod h1:F6JqlMHTjfU5pHPIE7ZurL7b6Pz/Qz/DKfDnsmR5z7c=
 go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.36.4 h1:PRXhsszxTt5bbPriTjmaweWUsAnJYeWBhUMLRetUgBU=
 go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.36.4/go.mod h1:05eWWy6ZWzmpeImD3UowLTB3VjDMU1yxQ+ENuVWDM3c=
 go.opentelemetry.io/otel v1.2.0/go.mod h1:aT17Fk0Z1Nor9e0uisf98LrntPGMnk4frBO9+dkf69I=

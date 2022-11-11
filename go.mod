@@ -13,6 +13,9 @@ require (
 	go.buf.build/bufbuild/connect-go/kevinmichaelchen/orgapis v1.10.1
 	go.buf.build/bufbuild/connect-go/kevinmichaelchen/profileapis v1.10.1
 	go.buf.build/bufbuild/connect-go/kevinmichaelchen/temporalapis v1.10.1
+	go.buf.build/grpc/go/kevinmichaelchen/licenseapis v1.4.1
+	go.buf.build/grpc/go/kevinmichaelchen/orgapis v1.4.1
+	go.buf.build/grpc/go/kevinmichaelchen/profileapis v1.4.1
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.36.4
 	go.opentelemetry.io/otel v1.11.1
 	go.opentelemetry.io/otel/exporters/jaeger v1.11.1
@@ -23,7 +26,6 @@ require (
 	go.uber.org/fx v1.18.2
 	golang.org/x/net v0.0.0-20220906165146-f3363e06e74c
 	google.golang.org/grpc v1.50.1
-	google.golang.org/protobuf v1.28.1
 )
 
 require (
@@ -42,10 +44,6 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/robfig/cron v1.2.0 // indirect
 	github.com/stretchr/objx v0.4.0 // indirect
-	go.buf.build/grpc/go/kevinmichaelchen/licenseapis v1.4.1 // indirect
-	go.buf.build/grpc/go/kevinmichaelchen/orgapis v1.4.1 // indirect
-	go.buf.build/grpc/go/kevinmichaelchen/profileapis v1.4.1 // indirect
-	go.buf.build/grpc/go/kevinmichaelchen/temporalapis v1.4.1 // indirect
 	go.temporal.io/api v1.11.1-0.20220907050538-6de5285cf463 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/dig v1.15.0 // indirect
@@ -55,5 +53,6 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac // indirect
 	google.golang.org/genproto v0.0.0-20220902135211-223410557253 // indirect
+	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
