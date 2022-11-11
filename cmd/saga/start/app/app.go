@@ -4,12 +4,12 @@ import (
 	"github.com/bufbuild/connect-go"
 	modService "github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/start/app/service"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/start/service"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/temporal/v1beta1/temporalv1beta1connect"
 	pkgConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect"
 	modConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/logging"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/temporal"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/tracing"
+	"go.buf.build/bufbuild/connect-go/kevinmichaelchen/temporalapis/temporal/v1beta1/temporalv1beta1connect"
 	"go.uber.org/fx"
 )
 

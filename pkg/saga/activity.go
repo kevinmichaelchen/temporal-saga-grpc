@@ -3,10 +3,12 @@ package saga
 import (
 	"context"
 	"fmt"
-	licensev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/license/v1beta1"
-	orgv1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/org/v1beta1"
-	profilev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/profile/v1beta1"
+	licensev1beta1 "go.buf.build/grpc/go/kevinmichaelchen/licenseapis/license/v1beta1"
+	orgv1beta1 "go.buf.build/grpc/go/kevinmichaelchen/orgapis/org/v1beta1"
+	profilev1beta1 "go.buf.build/grpc/go/kevinmichaelchen/profileapis/profile/v1beta1"
 )
+
+// TODO why isn't Remote Generation creating gRPC clients?
 
 func (c *Controller) CreateOrg(ctx context.Context, args CreateLicenseInputArgs) error {
 	client := orgv1beta1.NewOrgServiceClient(c.connOrg)
