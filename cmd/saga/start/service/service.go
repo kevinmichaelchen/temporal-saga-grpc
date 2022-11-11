@@ -2,10 +2,13 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"github.com/bufbuild/connect-go"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal/ctxpropagation"
 	"github.com/sirupsen/logrus"
 	temporalv1beta1 "go.buf.build/bufbuild/connect-go/kevinmichaelchen/temporalapis/temporal/v1beta1"
+	"go.opentelemetry.io/otel/baggage"
 	"go.temporal.io/sdk/client"
 )
 
@@ -25,6 +28,11 @@ func (s *Service) CreateLicense(
 
 	// The business identifier of the workflow execution
 	workflowID := req.Msg.GetWorkflowOptions().GetWorkflowId()
+
+	ctx, err := injectBaggage(ctx, workflowID)
+	if err != nil {
+		return nil, err
+	}
 
 	options := client.StartWorkflowOptions{
 		ID:        workflowID,
@@ -67,4 +75,22 @@ func printResults(args saga.CreateLicenseInputArgs, workflowID, runID string) {
 		"temporal.workflow_id": workflowID,
 		"temporal.run_id":      runID,
 	}).Info("Successfully completed Workflow")
+}
+
+func injectBaggage(ctx context.Context, workflowID string) (context.Context, error) {
+	// Inject the workflow ID as OTel baggage, so it appears on all spans
+	bgMem, err := baggage.NewMember("foo", "bar")
+	if err != nil {
+		return nil, fmt.Errorf("failed to create otel baggage member: %w", err)
+	}
+	bg, err := baggage.New(bgMem)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create otel baggage: %w", err)
+	}
+
+	// INJECT BAGGAGE!!
+	//ctx = baggage.ContextWithBaggage(ctx, bg)
+	ctx = context.WithValue(ctx, ctxpropagation.PropagateKey, bg)
+
+	return ctx, nil
 }

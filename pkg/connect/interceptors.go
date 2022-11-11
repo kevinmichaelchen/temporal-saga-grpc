@@ -3,7 +3,9 @@ package connect
 import (
 	"context"
 	"github.com/bufbuild/connect-go"
+	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/baggage"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/trace"
 	grpc_codes "google.golang.org/grpc/codes"
@@ -39,6 +41,8 @@ func connectInterceptorForSpan() connect.UnaryInterceptorFunc {
 			)
 			defer span.End()
 
+			logBaggage(ctx)
+
 			resp, err := next(ctx, req)
 			if err != nil {
 				s, _ := status.FromError(err)
@@ -52,4 +56,14 @@ func connectInterceptorForSpan() connect.UnaryInterceptorFunc {
 		})
 	}
 	return connect.UnaryInterceptorFunc(interceptor)
+}
+
+func logBaggage(ctx context.Context) {
+	// EXTRACT BAGGAGE!!
+	bg := baggage.FromContext(ctx)
+	members := bg.Members()
+	logrus.WithField("otel.baggage.num_members", len(members)).Info("OTel baggage")
+	//for _, m := range bg.Members() {
+	//	span.SetAttributes(attribute.String(m.Key(), m.Value()))
+	//}
 }

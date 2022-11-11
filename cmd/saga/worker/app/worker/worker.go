@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal/ctxpropagation"
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
+	"go.opentelemetry.io/otel/baggage"
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/worker"
 	"go.uber.org/fx"
@@ -70,7 +72,21 @@ func NewConnToProfile() (*grpc.ClientConn, error) {
 func dial(addr string) (*grpc.ClientConn, error) {
 	return grpc.Dial(addr,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
+		grpc.WithChainUnaryInterceptor(
+			// interceptor to extract Baggage from workflow.Context and inject into new context
+			func(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
+				bgv, ok := ctx.Value(ctxpropagation.PropagateKey).(ctxpropagation.Values)
+
+				if ok {
+					// INJECT!
+					ctx = baggage.ContextWithBaggage(ctx, baggage.Baggage(bgv))
+				}
+
+				return invoker(ctx, method, req, reply, cc, opts...)
+			},
+			// create span, do context propagation
+			otelgrpc.UnaryClientInterceptor(),
+		),
 	)
 }
 

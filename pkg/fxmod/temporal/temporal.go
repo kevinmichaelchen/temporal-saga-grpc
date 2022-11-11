@@ -2,8 +2,12 @@ package temporal
 
 import (
 	"context"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal"
+	"fmt"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal/ctxpropagation"
 	"go.temporal.io/sdk/client"
+	"go.temporal.io/sdk/contrib/opentelemetry"
+	"go.temporal.io/sdk/interceptor"
+	"go.temporal.io/sdk/workflow"
 	"go.uber.org/fx"
 )
 
@@ -14,13 +18,14 @@ var Module = fx.Module("temporal",
 )
 
 func NewClient(lc fx.Lifecycle) (client.Client, error) {
-	interceptors, err := temporal.ClientInterceptors()
+	interceptors, err := clientInterceptors()
 	if err != nil {
 		return nil, err
 	}
 
 	c, err := client.Dial(client.Options{
-		Interceptors: interceptors,
+		Interceptors:       interceptors,
+		ContextPropagators: []workflow.ContextPropagator{ctxpropagation.NewContextPropagator()},
 	})
 	if err != nil {
 		return nil, err
@@ -34,4 +39,14 @@ func NewClient(lc fx.Lifecycle) (client.Client, error) {
 	})
 
 	return c, nil
+}
+
+func clientInterceptors() ([]interceptor.ClientInterceptor, error) {
+	i, err := opentelemetry.NewTracingInterceptor(opentelemetry.TracerOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create OTEL tracing interceptor: %w", err)
+	}
+	return []interceptor.ClientInterceptor{
+		i,
+	}, nil
 }
