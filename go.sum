@@ -142,6 +142,14 @@ go.buf.build/bufbuild/connect-go/kevinmichaelchen/profileapis v1.10.1 h1:kAW3jmA
 go.buf.build/bufbuild/connect-go/kevinmichaelchen/profileapis v1.10.1/go.mod h1:AU3sEglTCATp8NfgEGd9yM9bw00djrGYsfaAcbZu7SI=
 go.buf.build/bufbuild/connect-go/kevinmichaelchen/temporalapis v1.10.1 h1:6CXLesCcqUGwZquUK7+GW2srpoZXALUMwQoQku/Kh5E=
 go.buf.build/bufbuild/connect-go/kevinmichaelchen/temporalapis v1.10.1/go.mod h1:KSUk9YU1Boc0B5pScf3YiezIeBKOVqA2L9kkIo/ycJY=
+go.buf.build/grpc/go/kevinmichaelchen/licenseapis v1.4.1 h1:8NWAOh+EVlvrR5q/0pUFJhronpVEMSe8vu7/9NgAhoU=
+go.buf.build/grpc/go/kevinmichaelchen/licenseapis v1.4.1/go.mod h1:ZXgQE9GoZFPp142Fhcr/a6izCv5uxXnzcDuBg5hSjUI=
+go.buf.build/grpc/go/kevinmichaelchen/orgapis v1.4.1 h1:5wCMNvuYNXOPeQJBkbK8YbBaAh4X7ud/sAVztPI3yUE=
+go.buf.build/grpc/go/kevinmichaelchen/orgapis v1.4.1/go.mod h1:ff2WBZY9OWttSw/nbz2HCt8j07oiVPi9EZPoYELz9Sw=
+go.buf.build/grpc/go/kevinmichaelchen/profileapis v1.4.1 h1:ECSQZuRA/chXcfarP0ujGBG8L7xtnEaYIvd7ChiB9Wg=
+go.buf.build/grpc/go/kevinmichaelchen/profileapis v1.4.1/go.mod h1:0/j/ouMH9s+cPQ1WcoQSvFXWnwrrQJEKmDy8zZpuHNs=
+go.buf.build/grpc/go/kevinmichaelchen/temporalapis v1.4.1 h1:rWwJmuhRRIi3NEeX4B9tAQm0LLWA0tKwVAoI2wMo8l0=
+go.buf.build/grpc/go/kevinmichaelchen/temporalapis v1.4.1/go.mod h1:F6JqlMHTjfU5pHPIE7ZurL7b6Pz/Qz/DKfDnsmR5z7c=
 go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.36.4 h1:PRXhsszxTt5bbPriTjmaweWUsAnJYeWBhUMLRetUgBU=
 go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.36.4/go.mod h1:05eWWy6ZWzmpeImD3UowLTB3VjDMU1yxQ+ENuVWDM3c=
 go.opentelemetry.io/otel v1.2.0/go.mod h1:aT17Fk0Z1Nor9e0uisf98LrntPGMnk4frBO9+dkf69I=
@@ -296,6 +304,7 @@ google.golang.org/grpc v1.23.0/go.mod h1:Y5yQAOtifL1yxbo5wqy6BxZv8vAUGQwXBOALyac
 google.golang.org/grpc v1.25.1/go.mod h1:c3i+UQWmh7LiEpx4sFZnkU36qjEYZ0imhYfXVyQciAY=
 google.golang.org/grpc v1.27.0/go.mod h1:qbnxyOmOxrQa7FizSgH+ReBfzJrCY1pSN7KXBS8abTk=
 google.golang.org/grpc v1.29.1/go.mod h1:itym6AZVZYACWQqET3MqgPpjcuV5QH3BxFS3IjizoKk=
+google.golang.org/grpc v1.32.0/go.mod h1:N36X2cJ7JwdamYAgDz+s+rVMFjt3numwzf/HckM8pak=
 google.golang.org/grpc v1.33.1/go.mod h1:fr5YgcSWrqhRRxogOsw7RzIpsmvOZ6IcH4kBYTpR3n0=
 google.golang.org/grpc v1.36.0/go.mod h1:qjiiYl8FncCW8feJPdyg3v6XW24KsRHe+dy9BAGRRjU=
 google.golang.org/grpc v1.40.0/go.mod h1:ogyxbiOoUXAkP+4+xa6PZSE9DZgIHtSpzjDTB9KAK34=

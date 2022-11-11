@@ -2,10 +2,6 @@
 all:
 	$(MAKE) gen-proto
 
-.PHONY: gen-proto
-gen-proto:
-	docker run --rm --volume "$(shell pwd):/workspace" --workdir /workspace bufbuild/buf generate
-
 .PHONY: buf-lint
 buf-lint:
 	docker run --rm --volume "$(shell pwd):/workspace" --workdir /workspace bufbuild/buf lint
