@@ -3,9 +3,9 @@ package saga
 import (
 	"context"
 	"fmt"
-	licensev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/license/v1beta1"
-	orgv1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/org/v1beta1"
-	profilev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/profile/v1beta1"
+	licensev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/license/v1beta1"
+	orgv1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/org/v1beta1"
+	profilev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/profile/v1beta1"
 )
 
 func (c *Controller) CreateOrg(ctx context.Context, args CreateLicenseInputArgs) error {

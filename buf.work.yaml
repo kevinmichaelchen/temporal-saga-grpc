@@ -1,3 +1,6 @@
 version: v1
 directories:
-  - idl
+  - idl/licenseapis
+  - idl/orgapis
+  - idl/profileapis
+  - idl/temporalapis

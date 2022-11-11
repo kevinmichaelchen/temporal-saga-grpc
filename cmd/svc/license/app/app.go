@@ -4,7 +4,7 @@ import (
 	"github.com/bufbuild/connect-go"
 	modService "github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/license/app/service"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/license/service"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/license/v1beta1/licensev1beta1connect"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/license/v1beta1/licensev1beta1connect"
 	pkgConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect"
 	modConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/logging"
@@ -27,7 +27,7 @@ var Module = fx.Options(
 			}
 		},
 		Services: []string{
-			"com.teachingstrategies.licensev1beta1.LicenseService",
+			"licensev1beta1.LicenseService",
 		},
 	}),
 	logging.Module,

@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	"github.com/bufbuild/connect-go"
-	temporalv1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/temporal/v1beta1"
+	temporalv1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/temporal/v1beta1"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 	"github.com/sirupsen/logrus"
 	"go.temporal.io/sdk/client"
