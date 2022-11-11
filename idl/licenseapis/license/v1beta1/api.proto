@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package license.v1beta1;
+
+service LicenseService {
+  rpc CreateLicense(CreateLicenseRequest) returns (CreateLicenseResponse) {}
+}
+
+message CreateLicenseRequest {
+  string name = 1;
+}
+
+message CreateLicenseResponse {}

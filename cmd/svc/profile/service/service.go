@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	"github.com/bufbuild/connect-go"
-	profilev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/com/teachingstrategies/profile/v1beta1"
+	profilev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/profile/v1beta1"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 	"github.com/sirupsen/logrus"
 )
