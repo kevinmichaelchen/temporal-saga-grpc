@@ -3,7 +3,9 @@ package temporal
 import (
 	"context"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal/ctxpropagation"
 	"go.temporal.io/sdk/client"
+	"go.temporal.io/sdk/workflow"
 	"go.uber.org/fx"
 )
 
@@ -20,7 +22,8 @@ func NewClient(lc fx.Lifecycle) (client.Client, error) {
 	}
 
 	c, err := client.Dial(client.Options{
-		Interceptors: interceptors,
+		Interceptors:       interceptors,
+		ContextPropagators: []workflow.ContextPropagator{ctxpropagation.NewContextPropagator()},
 	})
 	if err != nil {
 		return nil, err
