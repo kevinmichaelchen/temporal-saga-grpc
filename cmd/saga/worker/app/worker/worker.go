@@ -75,11 +75,11 @@ func dial(addr string) (*grpc.ClientConn, error) {
 		grpc.WithChainUnaryInterceptor(
 			// interceptor to extract Baggage from workflow.Context and inject into new context
 			func(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
-				bg, ok := ctx.Value(ctxpropagation.PropagateKey).(baggage.Baggage)
+				bgv, ok := ctx.Value(ctxpropagation.PropagateKey).(ctxpropagation.Values)
 
 				if ok {
 					// INJECT!
-					ctx = baggage.ContextWithBaggage(ctx, bg)
+					ctx = baggage.ContextWithBaggage(ctx, baggage.Baggage(bgv))
 				}
 
 				return invoker(ctx, method, req, reply, cc, opts...)
