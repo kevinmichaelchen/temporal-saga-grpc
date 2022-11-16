@@ -3,7 +3,7 @@
 [![Lines Of Code](https://tokei.rs/b1/github/kevinmichaelchen/temporal-saga-grpc?category=code)](https://github.com/kevinmichaelchen/temporal-saga-grpc)
 
 <p align="center">
-<a href="https://raw.githubusercontent.com/kevinmichaelchen/temporal-saga-grpc/main/docs/design.png">
+<a target="_blank" href="https://raw.githubusercontent.com/kevinmichaelchen/temporal-saga-grpc/main/docs/design.png">
 <img width="400" src="./docs/design.png" />
 </a>
 </p>
