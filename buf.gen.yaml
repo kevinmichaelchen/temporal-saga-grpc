@@ -5,6 +5,7 @@ managed:
     default: github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl
     except:
       - buf.build/googleapis/googleapis
+      - buf.build/envoyproxy/protoc-gen-validate
 plugins:
   - remote: buf.build/protocolbuffers/plugins/go:v1.28.1-1
     out: internal/idl

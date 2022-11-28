@@ -5,6 +5,7 @@ go 1.19
 require (
 	github.com/bufbuild/connect-go v1.1.0
 	github.com/bufbuild/connect-grpchealth-go v1.0.0
+	github.com/envoyproxy/protoc-gen-validate v0.1.0
 	github.com/google/go-cmp v0.5.9
 	github.com/rs/cors v1.8.2
 	github.com/sethvargo/go-envconfig v0.8.2

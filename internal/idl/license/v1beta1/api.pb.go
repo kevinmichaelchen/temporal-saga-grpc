@@ -7,7 +7,7 @@
 package licensev1beta1
 
 import (
-	//_ "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/validate"
+	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
