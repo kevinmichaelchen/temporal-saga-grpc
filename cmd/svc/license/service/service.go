@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/bufbuild/connect-go"
 	licensev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/license/v1beta1"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect/pgv"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 	"github.com/sirupsen/logrus"
 )
@@ -20,7 +21,7 @@ func (s *Service) CreateLicense(
 ) (*connect.Response[licensev1beta1.CreateLicenseResponse], error) {
 	err := req.Msg.Validate()
 	if err != nil {
-		return nil, convert(err)
+		return nil, pgv.Convert(err)
 	}
 
 	// Sleep for a bit to simulate the latency of a database lookup

@@ -1,4 +1,4 @@
-package service
+package pgv
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 )
 
-type PGVError interface {
+type Error interface {
 	Field() string
 	Reason() string
 }
@@ -15,10 +15,10 @@ type MultiError interface {
 	AllErrors() []error
 }
 
-// convert PGV error to *connect.Error
-func convert(err error) error {
+// Convert converts a PGV error to *connect.Error
+func Convert(err error) error {
 	var fv []*errdetails.BadRequest_FieldViolation
-	pgve, ok := err.(PGVError)
+	pgve, ok := err.(Error)
 	if ok {
 		fv = append(fv, &errdetails.BadRequest_FieldViolation{
 			Field:       pgve.Field(),
@@ -29,7 +29,7 @@ func convert(err error) error {
 	pgves, ok := err.(MultiError)
 	if ok {
 		for _, p := range pgves.AllErrors() {
-			pgve, ok := p.(PGVError)
+			pgve, ok := p.(Error)
 			if ok {
 				fv = append(fv, &errdetails.BadRequest_FieldViolation{
 					Field:       pgve.Field(),

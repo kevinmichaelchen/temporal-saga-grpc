@@ -1,4 +1,4 @@
-package service
+package pgv
 
 import (
 	"github.com/bufbuild/connect-go"
@@ -69,7 +69,7 @@ func TestConvert(t *testing.T) {
 			require.Error(t, err)
 
 			// Convert that error to a *connect.Error
-			err = convert(err)
+			err = Convert(err)
 			cErr, ok := err.(*connect.Error)
 			require.True(t, ok)
 
