@@ -7,15 +7,15 @@ managed:
       - buf.build/googleapis/googleapis
       - buf.build/envoyproxy/protoc-gen-validate
 plugins:
-  - remote: buf.build/protocolbuffers/plugins/go:v1.28.1-1
+  - plugin: buf.build/protocolbuffers/go:v1.28.1
     out: internal/idl
     opt:
       - paths=source_relative
-  - remote: buf.build/bufbuild/plugins/connect-go:v1.0.0-1
+  - plugin: buf.build/bufbuild/connect-go:v1.3.1
     out: internal/idl
     opt:
       - paths=source_relative
-  - remote: buf.build/grpc/plugins/go:v1.2.0-1
+  - plugin: buf.build/grpc/go:v1.2.0
     out: internal/idl
     opt:
       - paths=source_relative

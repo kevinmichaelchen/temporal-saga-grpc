@@ -5,7 +5,7 @@ DOCKER_BUF = bufbuild/buf:1.9.0
 
 .PHONY: all
 all:
-	$(MAKE) gen-proto
+	$(MAKE) buf-gen
 
 .PHONY: buf-mod-update
 buf-mod-update:
