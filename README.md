@@ -1,6 +1,6 @@
 # temporal-saga-grpc
 
-[![Lines Of Code](https://tokei.rs/b1/github/kevinmichaelchen/temporal-saga-grpc?category=code)](https://github.com/kevinmichaelchen/temporal-saga-grpc)
+[![Lines Of Code](https://aschey.tech/tokei/github/kevinmichaelchen/temporal-saga-grpc?category=code&style=for-the-badge)](https://github.com/kevinmichaelchen/temporal-saga-grpc)
 
 <p align="center">
 <a href="https://raw.githubusercontent.com/kevinmichaelchen/temporal-saga-grpc/main/docs/design.png">
