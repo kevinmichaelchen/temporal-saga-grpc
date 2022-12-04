@@ -19,3 +19,9 @@ We now have code in the BSR for all our modules:
 * [orgapis](https://buf.build/kevinmichaelchen/orgapis/docs/main:org.v1beta1)
 * [profileapis](https://buf.build/kevinmichaelchen/profileapis/docs/main:profile.v1beta1)
 * [temporalapis](https://buf.build/kevinmichaelchen/temporalapis/docs/main:temporal.v1beta1)
+
+## Updating modules
+After pushing up to the BSR, to update modules run:
+```shell
+go list all | grep go.buf.build | xargs go get -v
+```

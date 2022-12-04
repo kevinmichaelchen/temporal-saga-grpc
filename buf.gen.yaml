@@ -1,0 +1,26 @@
+version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl
+    except:
+      - buf.build/googleapis/googleapis
+      - buf.build/envoyproxy/protoc-gen-validate
+plugins:
+  - plugin: buf.build/protocolbuffers/go:v1.28.1
+    out: internal/idl
+    opt:
+      - paths=source_relative
+  - plugin: buf.build/bufbuild/connect-go:v1.3.1
+    out: internal/idl
+    opt:
+      - paths=source_relative
+  - plugin: buf.build/grpc/go:v1.2.0
+    out: internal/idl
+    opt:
+      - paths=source_relative
+      - require_unimplemented_servers=false
+  - plugin: buf.build/bufbuild/validate-go:v0.9.0
+    out: internal/idl
+    opt:
+      - paths=source_relative
