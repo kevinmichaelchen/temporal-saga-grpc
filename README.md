@@ -8,6 +8,15 @@
 </a>
 </p>
 
+```mermaid
+sequenceDiagram
+    WorkflowStarter->>TemporalCluster: Start Temporal Workflow
+    TemporalWorker->>TemporalCluster: Poll task queue
+    TemporalWorker->>OrgService: Create Org
+    TemporalWorker->>ProfileService: Create Profile
+    TemporalWorker->>LicenseService: Create License
+```
+
 This project demonstrates using <a target="_blank" href="https://temporal.io/">Temporal</a>
 to orchestrate a <a target="_blank" href="https://microservices.io/patterns/data/saga.html">saga</a>
 (effectively a distributed transaction) that interacts with multiple services
