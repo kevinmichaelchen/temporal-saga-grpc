@@ -2,6 +2,9 @@ package tracing
 
 import (
 	"context"
+	"log"
+	"time"
+
 	"github.com/sethvargo/go-envconfig"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -11,8 +14,6 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 	"go.temporal.io/sdk/contrib/opentelemetry"
 	"go.uber.org/fx"
-	"log"
-	"time"
 )
 
 const (

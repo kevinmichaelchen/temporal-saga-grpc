@@ -2,6 +2,7 @@ package temporal
 
 import (
 	"fmt"
+
 	"go.temporal.io/sdk/contrib/opentelemetry"
 	"go.temporal.io/sdk/interceptor"
 )

@@ -1,11 +1,12 @@
 package app
 
 import (
+	"go.uber.org/fx"
+
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/worker/app/worker"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/logging"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/temporal"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/tracing"
-	"go.uber.org/fx"
 )
 
 var Module = fx.Options(

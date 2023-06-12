@@ -2,11 +2,13 @@ package service
 
 import (
 	"context"
+
 	"github.com/bufbuild/connect-go"
+	"github.com/sirupsen/logrus"
+
 	licensev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/license/v1beta1"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect/pgv"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
-	"github.com/sirupsen/logrus"
 )
 
 type Service struct{}

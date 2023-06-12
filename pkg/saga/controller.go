@@ -11,7 +11,8 @@ type Controller struct {
 func NewController(
 	connLicense *grpc.ClientConn,
 	connOrg *grpc.ClientConn,
-	connProfile *grpc.ClientConn) *Controller {
+	connProfile *grpc.ClientConn,
+) *Controller {
 	return &Controller{
 		connLicense: connLicense,
 		connOrg:     connOrg,

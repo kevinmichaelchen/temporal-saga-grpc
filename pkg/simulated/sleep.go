@@ -1,9 +1,10 @@
 package simulated
 
 import (
-	"github.com/sirupsen/logrus"
 	"math/rand"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 func Sleep() {

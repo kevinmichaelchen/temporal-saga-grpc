@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/worker/app"
 	"go.uber.org/fx"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/worker/app"
 )
 
 func main() {

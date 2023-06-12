@@ -2,11 +2,13 @@ package service
 
 import (
 	"context"
+
 	"github.com/bufbuild/connect-go"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 	"github.com/sirupsen/logrus"
 	temporalv1beta1 "go.buf.build/bufbuild/connect-go/kevinmichaelchen/temporalapis/temporal/v1beta1"
 	"go.temporal.io/sdk/client"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 )
 
 type Service struct {

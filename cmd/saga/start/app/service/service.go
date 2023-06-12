@@ -1,9 +1,10 @@
 package service
 
 import (
-	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/start/service"
 	"go.temporal.io/sdk/client"
 	"go.uber.org/fx"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/start/service"
 )
 
 var Module = fx.Module("service",

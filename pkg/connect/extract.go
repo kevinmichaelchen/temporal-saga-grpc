@@ -2,6 +2,10 @@ package connect
 
 import (
 	"context"
+	"net"
+	"net/http"
+	"strings"
+
 	"github.com/bufbuild/connect-go"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.opentelemetry.io/otel/attribute"
@@ -9,9 +13,6 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 	grpc_codes "google.golang.org/grpc/codes"
 	"google.golang.org/grpc/peer"
-	"net"
-	"net/http"
-	"strings"
 )
 
 func extract(ctx context.Context, propagators propagation.TextMapPropagator, req connect.AnyRequest) context.Context {

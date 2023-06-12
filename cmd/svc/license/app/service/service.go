@@ -1,8 +1,9 @@
 package service
 
 import (
-	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/license/service"
 	"go.uber.org/fx"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/license/service"
 )
 
 var Module = fx.Module("service",

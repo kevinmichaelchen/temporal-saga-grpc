@@ -2,10 +2,12 @@ package service
 
 import (
 	"context"
+
 	"github.com/bufbuild/connect-go"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 	"github.com/sirupsen/logrus"
 	orgv1beta1 "go.buf.build/bufbuild/connect-go/kevinmichaelchen/orgapis/org/v1beta1"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 )
 
 type Service struct{}

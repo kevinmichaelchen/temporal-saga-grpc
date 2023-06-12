@@ -2,8 +2,9 @@ package simulated
 
 import (
 	"errors"
-	"github.com/sirupsen/logrus"
 	"math/rand"
+
+	"github.com/sirupsen/logrus"
 )
 
 type ErrorProbability int

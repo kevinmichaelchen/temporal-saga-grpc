@@ -1,13 +1,15 @@
 package pgv
 
 import (
+	"testing"
+
 	"github.com/bufbuild/connect-go"
 	"github.com/google/go-cmp/cmp"
-	licensev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/license/v1beta1"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/protobuf/testing/protocmp"
-	"testing"
+
+	licensev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/license/v1beta1"
 )
 
 func TestConvert(t *testing.T) {

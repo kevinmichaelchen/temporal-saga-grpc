@@ -4,14 +4,16 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
+
 	grpchealth "github.com/bufbuild/connect-grpchealth-go"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/cors"
 	"github.com/sethvargo/go-envconfig"
 	"github.com/sirupsen/logrus"
 	"go.uber.org/fx"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
-	"net/http"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/cors"
 )
 
 func CreateModule(opts *ModuleOptions) fx.Option {

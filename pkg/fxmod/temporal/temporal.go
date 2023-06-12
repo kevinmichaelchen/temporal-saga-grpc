@@ -2,9 +2,11 @@ package temporal
 
 import (
 	"context"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal"
+
 	"go.temporal.io/sdk/client"
 	"go.uber.org/fx"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal"
 )
 
 var Module = fx.Module("temporal",

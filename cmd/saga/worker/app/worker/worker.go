@@ -3,7 +3,7 @@ package worker
 import (
 	"context"
 	"fmt"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
+
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.temporal.io/sdk/client"
@@ -11,6 +11,8 @@ import (
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 )
 
 const (

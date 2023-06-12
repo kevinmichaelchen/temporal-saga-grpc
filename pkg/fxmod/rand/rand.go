@@ -1,9 +1,10 @@
 package rand
 
 import (
-	"go.uber.org/fx"
 	"math/rand"
 	"time"
+
+	"go.uber.org/fx"
 )
 
 var Module = fx.Module("rand",

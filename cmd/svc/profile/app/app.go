@@ -2,6 +2,9 @@ package app
 
 import (
 	"github.com/bufbuild/connect-go"
+	"go.buf.build/bufbuild/connect-go/kevinmichaelchen/profileapis/profile/v1beta1/profilev1beta1connect"
+	"go.uber.org/fx"
+
 	modService "github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/profile/app/service"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/profile/service"
 	pkgConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect"
@@ -9,8 +12,6 @@ import (
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/logging"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/rand"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/tracing"
-	"go.buf.build/bufbuild/connect-go/kevinmichaelchen/profileapis/profile/v1beta1/profilev1beta1connect"
-	"go.uber.org/fx"
 )
 
 var Module = fx.Options(

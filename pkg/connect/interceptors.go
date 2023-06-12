@@ -2,6 +2,7 @@ package connect
 
 import (
 	"context"
+
 	"github.com/bufbuild/connect-go"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/codes"

@@ -1,19 +1,22 @@
 ## Maturity
+
 It's used by some [big names](https://temporal.io/use-cases):
-* [Snapchat](https://eng.snap.com/build_a_reliable_system_in_a_microservices_world_at_snap/)
-* [Netflix](https://www.youtube.com/watch?v=LliBP7YMGyA)
-* [Doordash](https://doordash.engineering/2020/08/14/workflows-cadence-event-driven-processing/)
-* [Stripe](https://www.youtube.com/watch?v=Crkcr1S-NSc)
-* [Coinbase](https://temporal.io/case-studies/reliable-crypto-transactions-at-coinbase)
-* [Datadog](https://www.youtube.com/watch?v=Hz7ZZzafBoE)
-* [Hashicorp](https://www.youtube.com/watch?v=kDlrM6sgk2k&t=1188s)
-* [Airbyte](https://temporal.io/case-studies/airbyte-case-study)
-* [Box](https://temporal.io/case-studies/temporal-a-central-brain-for-box)
-* [Checkr](https://temporal.io/case-studies/how-temporal-simplified-checkr-workflows/)
-* [Descript](https://temporal.io/case-studies/descript-case-study)
-* [Zebra Medical Vision](https://temporal.io/case-studies/zebra-medical-case-study/)
+
+- [Snapchat](https://eng.snap.com/build_a_reliable_system_in_a_microservices_world_at_snap/)
+- [Netflix](https://www.youtube.com/watch?v=LliBP7YMGyA)
+- [Doordash](https://doordash.engineering/2020/08/14/workflows-cadence-event-driven-processing/)
+- [Stripe](https://www.youtube.com/watch?v=Crkcr1S-NSc)
+- [Coinbase](https://temporal.io/case-studies/reliable-crypto-transactions-at-coinbase)
+- [Datadog](https://www.youtube.com/watch?v=Hz7ZZzafBoE)
+- [Hashicorp](https://www.youtube.com/watch?v=kDlrM6sgk2k&t=1188s)
+- [Airbyte](https://temporal.io/case-studies/airbyte-case-study)
+- [Box](https://temporal.io/case-studies/temporal-a-central-brain-for-box)
+- [Checkr](https://temporal.io/case-studies/how-temporal-simplified-checkr-workflows/)
+- [Descript](https://temporal.io/case-studies/descript-case-study)
+- [Zebra Medical Vision](https://temporal.io/case-studies/zebra-medical-case-study/)
 
 ## Cloud Offering
+
 - Supports US East region
 - SOC2 compliant
 - Encryption means they don't see any of our data
