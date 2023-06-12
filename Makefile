@@ -1,11 +1,20 @@
 DOCKER_BUF_FLAGS = --rm --volume "$(shell pwd):/workspace" --workdir /workspace
 # Buf CLI versions:
 # https://hub.docker.com/r/bufbuild/buf/tags
-DOCKER_BUF = bufbuild/buf:1.9.0
+DOCKER_BUF = bufbuild/buf:1.21.0
 
 .PHONY: all
 all:
 	$(MAKE) buf-gen
+
+.PHONY: help
+help : Makefile
+	@sed -n 's/^##//p' $<
+
+## lint             : lints Go code
+.PHONY: lint
+lint:
+	golangci-lint run --verbose
 
 .PHONY: buf-mod-update
 buf-mod-update:
