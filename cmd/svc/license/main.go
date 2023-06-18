@@ -1,3 +1,4 @@
+// Package main provides the entrypoint for the License Service.
 package main
 
 import (

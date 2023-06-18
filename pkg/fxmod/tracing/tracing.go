@@ -1,3 +1,4 @@
+// Package tracing provides an FX module for OpenTelemetry tracing.
 package tracing
 
 import (
@@ -17,6 +18,7 @@ import (
 	"go.uber.org/fx"
 )
 
+// ModuleOptions - Options for configuring this OTel module.
 type ModuleOptions struct {
 	ServiceName string
 }
@@ -34,15 +36,18 @@ func CreateModule(opts ModuleOptions) fx.Option {
 	)
 }
 
+// Config - Config for OTel tracing.
 type Config struct {
 	TraceConfig *TraceConfig `env:",prefix=TRACE_"`
 }
 
+// TraceConfig - Config for OTel tracing.
 type TraceConfig struct {
 	URL string `env:"URL,default=http://localhost:14268/api/traces"`
 	Env string `env:"URL,default=local"`
 }
 
+// NewConfig - Reads config for OTel.
 func NewConfig() (*Config, error) {
 	var cfg Config
 
@@ -54,6 +59,7 @@ func NewConfig() (*Config, error) {
 	return &cfg, nil
 }
 
+// Register - Registers the tracer provider.
 func Register(tp *tracesdk.TracerProvider) {
 	// Register our TracerProvider as the global so any imported
 	// instrumentation in the future will default to using it.

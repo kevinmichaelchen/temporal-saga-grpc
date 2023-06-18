@@ -12,14 +12,18 @@ import (
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 )
 
+// Service - An HTTP API for starting Temporal workflows.
 type Service struct {
 	client client.Client
 }
 
+// NewService - Constructs a new service for starting Temporal workflows.
 func NewService(c client.Client) *Service {
 	return &Service{client: c}
 }
 
+// CreateLicense - A handler for starting a new Temporal workflow that results
+// in the creation of a license and associated objects.
 func (s *Service) CreateLicense(
 	ctx context.Context,
 	req *connect.Request[temporalv1beta1.CreateLicenseRequest],
