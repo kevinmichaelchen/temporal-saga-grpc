@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/bufbuild/connect-go"
 	"github.com/sirupsen/logrus"
@@ -23,7 +24,7 @@ func (s *Service) CreateLicense(
 	ctx context.Context,
 	req *connect.Request[temporalv1beta1.CreateLicenseRequest],
 ) (*connect.Response[temporalv1beta1.CreateLicenseResponse], error) {
-	c := s.client
+	temporalClient := s.client
 
 	// The business identifier of the workflow execution
 	workflowID := req.Msg.GetWorkflowOptions().GetWorkflowId()
@@ -32,32 +33,30 @@ func (s *Service) CreateLicense(
 		ID:        workflowID,
 		TaskQueue: saga.CreateLicenseTaskQueue,
 	}
+
 	args := saga.CreateLicenseInputArgs{
 		OrgName:     req.Msg.GetOrg().GetName(),
 		ProfileName: req.Msg.GetProfile().GetName(),
 		LicenseName: req.Msg.GetLicense().GetName(),
 	}
-	we, err := c.ExecuteWorkflow(
+
+	we, err := temporalClient.ExecuteWorkflow(
 		ctx,
 		options,
 		saga.CreateLicense,
-		args)
+		args,
+	)
 	if err != nil {
-		logrus.WithError(err).Fatal("error starting CreateLicense workflow")
+		return nil, connect.NewError(connect.CodeUnknown, fmt.Errorf("unable to execute Temporal workflow: %w", err))
 	}
 
 	printResults(args, we.GetID(), we.GetRunID())
 
-	// TODO edge case - what happens if server crashes before response gets sent?
-	//  or if client crashes before they receive a response?
-	//  in that case, we might experience duplicate workflows.
-
 	res := &temporalv1beta1.CreateLicenseResponse{}
-	if err != nil {
-		return nil, err
-	}
+
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")
+
 	return out, nil
 }
 

@@ -53,6 +53,7 @@ type NestedConfig struct {
 
 func NewConfig() (cfg Config, err error) {
 	err = envconfig.Process(context.Background(), &cfg)
+
 	return
 }
 
@@ -67,6 +68,7 @@ func NewServer(lc fx.Lifecycle, cfg Config) *http.ServeMux {
 			&http2.Server{},
 		),
 	}
+
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			// In production, we'd want to separate the Listen and Serve phases for
@@ -78,12 +80,19 @@ func NewServer(lc fx.Lifecycle, cfg Config) *http.ServeMux {
 				}
 			}()
 			logrus.WithField("address", address).Info("Listening for connect-go")
+
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
-			return srv.Shutdown(ctx)
+			err := srv.Shutdown(ctx)
+			if err != nil {
+				return fmt.Errorf("unable to shut down HTTP server: %w", err)
+			}
+
+			return nil
 		},
 	})
+
 	return mux
 }
 

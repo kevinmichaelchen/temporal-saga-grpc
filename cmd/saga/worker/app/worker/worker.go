@@ -56,24 +56,32 @@ func NewController(license, org, profile *grpc.ClientConn) *saga.Controller {
 
 func NewConnToLicense() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortLicense)
+
 	return dial(addr)
 }
 
 func NewConnToOrg() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortOrg)
+
 	return dial(addr)
 }
 
 func NewConnToProfile() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortProfile)
+
 	return dial(addr)
 }
 
 func dial(addr string) (*grpc.ClientConn, error) {
-	return grpc.Dial(addr,
+	conn, err := grpc.Dial(addr,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
 	)
+	if err != nil {
+		return nil, fmt.Errorf("unable to dial gRPC connection: %w", err)
+	}
+
+	return conn, nil
 }
 
 func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker.Worker, error) {
@@ -97,10 +105,16 @@ func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			// Start the worker in a non-blocking fashion.
-			return w.Start()
+			err := w.Start()
+			if err != nil {
+				return fmt.Errorf("unable to start Temporal worker: %w", err)
+			}
+
+			return nil
 		},
 		OnStop: func(ctx context.Context) error {
 			w.Stop()
+
 			return nil
 		},
 	})

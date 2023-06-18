@@ -12,6 +12,7 @@ func ClientInterceptors() ([]interceptor.ClientInterceptor, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to create OTEL tracing interceptor: %w", err)
 	}
+
 	return []interceptor.ClientInterceptor{
 		i,
 	}, nil

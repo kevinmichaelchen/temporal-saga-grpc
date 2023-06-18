@@ -17,7 +17,7 @@ func NewService() *Service {
 }
 
 func (s *Service) CreateOrg(
-	ctx context.Context,
+	_ context.Context,
 	req *connect.Request[orgv1beta1.CreateOrgRequest],
 ) (*connect.Response[orgv1beta1.CreateOrgResponse], error) {
 	// Sleep for a bit to simulate the latency of a database lookup
@@ -31,7 +31,9 @@ func (s *Service) CreateOrg(
 
 	res := &orgv1beta1.CreateOrgResponse{}
 	logrus.WithField("name", req.Msg.GetName()).Info("Creating Org")
+
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")
+
 	return out, nil
 }

@@ -18,13 +18,14 @@ var Module = fx.Options(
 	modConnect.CreateModule(&modConnect.ModuleOptions{
 		HandlerProvider: func(svc *service.Service) modConnect.HandlerOutput {
 			// Register our Connect-Go server
-			path, h := profilev1beta1connect.NewProfileServiceHandler(
+			path, handler := profilev1beta1connect.NewProfileServiceHandler(
 				svc,
 				connect.WithInterceptors(pkgConnect.UnaryInterceptors()...),
 			)
+
 			return modConnect.HandlerOutput{
 				Path:    path,
-				Handler: h,
+				Handler: handler,
 			}
 		},
 		Services: []string{

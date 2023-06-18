@@ -2,6 +2,7 @@ package temporal
 
 import (
 	"context"
+	"fmt"
 
 	"go.temporal.io/sdk/client"
 	"go.uber.org/fx"
@@ -21,19 +22,21 @@ func NewClient(lc fx.Lifecycle) (client.Client, error) {
 		return nil, err
 	}
 
-	c, err := client.Dial(client.Options{
+	temporalClient, err := client.Dial(client.Options{
 		Interceptors: interceptors,
 	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("unable to dial Temporal client: %w", err)
 	}
 
 	lc.Append(fx.Hook{
+		OnStart: nil,
 		OnStop: func(ctx context.Context) error {
-			c.Close()
+			temporalClient.Close()
+
 			return nil
 		},
 	})
 
-	return c, nil
+	return temporalClient, nil
 }
