@@ -40,7 +40,7 @@ func (s *Service) CreateLicense(
 		LicenseName: req.Msg.GetLicense().GetName(),
 	}
 
-	we, err := temporalClient.ExecuteWorkflow(
+	workflow, err := temporalClient.ExecuteWorkflow(
 		ctx,
 		options,
 		saga.CreateLicense,
@@ -50,7 +50,7 @@ func (s *Service) CreateLicense(
 		return nil, connect.NewError(connect.CodeUnknown, fmt.Errorf("unable to execute Temporal workflow: %w", err))
 	}
 
-	printResults(args, we.GetID(), we.GetRunID())
+	printResults(args, workflow.GetID(), workflow.GetRunID())
 
 	res := &temporalv1beta1.CreateLicenseResponse{}
 

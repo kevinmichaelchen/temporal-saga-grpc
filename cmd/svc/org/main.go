@@ -1,3 +1,4 @@
+// Package main provides the entrypoint for the Org Service.
 package main
 
 import (

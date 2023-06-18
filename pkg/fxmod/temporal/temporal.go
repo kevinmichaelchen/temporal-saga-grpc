@@ -22,9 +22,11 @@ func NewClient(lc fx.Lifecycle) (client.Client, error) {
 		return nil, err
 	}
 
-	temporalClient, err := client.Dial(client.Options{
-		Interceptors: interceptors,
-	})
+	temporalClient, err := client.Dial(
+		client.Options{
+			Interceptors: interceptors,
+		},
+	)
 	if err != nil {
 		return nil, fmt.Errorf("unable to dial Temporal client: %w", err)
 	}

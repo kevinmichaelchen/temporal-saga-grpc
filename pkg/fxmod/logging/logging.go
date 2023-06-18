@@ -11,5 +11,7 @@ var Module = fx.Module("logging",
 
 func ConfigureLogger() {
 	// Logs the event in colors if stdout is a tty, otherwise without colors.
-	logrus.SetFormatter(&logrus.TextFormatter{})
+	logrus.SetFormatter(
+		&logrus.TextFormatter{},
+	)
 }

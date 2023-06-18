@@ -1,3 +1,4 @@
+// Package main provides the entrypoint for the Temporal worker.
 package main
 
 import (

@@ -8,12 +8,14 @@ import (
 )
 
 func ClientInterceptors() ([]interceptor.ClientInterceptor, error) {
-	i, err := opentelemetry.NewTracingInterceptor(opentelemetry.TracerOptions{})
+	tracingInterceptor, err := opentelemetry.NewTracingInterceptor(
+		opentelemetry.TracerOptions{},
+	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create OTEL tracing interceptor: %w", err)
 	}
 
 	return []interceptor.ClientInterceptor{
-		i,
+		tracingInterceptor,
 	}, nil
 }

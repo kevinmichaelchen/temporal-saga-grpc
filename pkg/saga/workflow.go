@@ -1,6 +1,7 @@
 package saga
 
 import (
+	"fmt"
 	"time"
 
 	"go.temporal.io/sdk/temporal"
@@ -35,19 +36,19 @@ func CreateLicense(ctx workflow.Context, args CreateLicenseInputArgs) (err error
 	// Step 1: Create Org
 	err = workflow.ExecuteActivity(ctx, ctrl.CreateOrg, args).Get(ctx, nil)
 	if err != nil {
-		return err
+		return fmt.Errorf("unable to execute Temporal activity: %w", err)
 	}
 
 	// Step 2: Create Profile
 	err = workflow.ExecuteActivity(ctx, ctrl.CreateProfile, args).Get(ctx, nil)
 	if err != nil {
-		return err
+		return fmt.Errorf("unable to execute Temporal activity: %w", err)
 	}
 
 	// Step 3: Create License
 	err = workflow.ExecuteActivity(ctx, ctrl.CreateLicense, args).Get(ctx, nil)
 	if err != nil {
-		return err
+		return fmt.Errorf("unable to execute Temporal activity: %w", err)
 	}
 
 	return nil

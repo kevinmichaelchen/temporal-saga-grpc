@@ -14,7 +14,12 @@ help : Makefile
 ## lint             : lints Go code
 .PHONY: lint
 lint:
-	golangci-lint run --verbose
+	task lint
+
+## format           : formats Go code
+.PHONY: format
+format:
+	task format
 
 .PHONY: buf-mod-update
 buf-mod-update:

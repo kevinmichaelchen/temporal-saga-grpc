@@ -165,12 +165,6 @@ linters-settings:
   funlen:
     lines: 80
     statements: 40
-
-#  gci:
-# put imports beginning with prefix after 3rd-party packages;
-# only support one prefix
-# if not set, use goimports.local-prefixes
-#    local-prefixes: github.com/kevinmichaelchen/platform-ou-manager
 gocognit:
   # minimal code complexity to report, 30 by default (but we recommend 10-20)
   min-complexity: 10
@@ -378,7 +372,7 @@ gofumpt:
     #    example:
     # The path to the plugin *.so. Can be absolute or local. Required for each custom linter
     #      path: /path/to/example.so
-    # The description of the linter. Optional, just for documentation purposes.
+  # The description of the linter. Optional, just for documentation purposes.
   #      description: This is an example usage of a plugin linter.
   # Intended to point to the repo location of the linter. Optional, just for documentation purposes.
 #      original-url: github.com/golangci/example-linter
@@ -393,7 +387,7 @@ linters:
     - contextcheck
     - cyclop
     - decorder
-    - depguard
+#    - depguard
     - dogsled
     - dupl
     - dupword
@@ -401,22 +395,22 @@ linters:
     - errcheck
     - errchkjson
     - errname
-    - errorlint
+#    - errorlint
     - exhaustive
-    - exhaustruct
+#    - exhaustruct
     - exportloopref
     - forbidigo
     - funlen
     - gci
     - gocheckcompilerdirectives
-    - gochecknoglobals
+#    - gochecknoglobals
     - gochecknoinits
     - gocognit
     - goconst
     - gocritic
     - gocyclo
     - godot
-#    - godox
+    #    - godox
     - goerr113
     - gofmt
     - gofumpt

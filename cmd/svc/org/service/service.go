@@ -30,6 +30,7 @@ func (s *Service) CreateOrg(
 	}
 
 	res := &orgv1beta1.CreateOrgResponse{}
+
 	logrus.WithField("name", req.Msg.GetName()).Info("Creating Org")
 
 	out := connect.NewResponse(res)

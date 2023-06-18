@@ -1,3 +1,4 @@
+// Package main provides the entrypoint for the Profile Service.
 package main
 
 import (

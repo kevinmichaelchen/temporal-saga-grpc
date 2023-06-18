@@ -36,6 +36,7 @@ func (s *Service) CreateLicense(
 	}
 
 	res := &licensev1beta1.CreateLicenseResponse{}
+
 	logrus.WithField("name", req.Msg.GetName()).Info("Creating License")
 
 	out := connect.NewResponse(res)

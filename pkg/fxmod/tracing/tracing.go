@@ -74,7 +74,7 @@ func NewTracerProvider(lifecycle fx.Lifecycle, opts *ModuleOptions, cfg *Config)
 		return nil, fmt.Errorf("unable to create Jaeger exporter: %w", err)
 	}
 
-	tp := tracesdk.NewTracerProvider(
+	tracerProvider := tracesdk.NewTracerProvider(
 		// Always sample traces.
 		tracesdk.WithSampler(tracesdk.AlwaysSample()),
 		// Always be sure to batch in production.
@@ -98,7 +98,7 @@ func NewTracerProvider(lifecycle fx.Lifecycle, opts *ModuleOptions, cfg *Config)
 
 			log.Println("Shutting down TracerProvider...")
 
-			err := tp.Shutdown(ctx)
+			err := tracerProvider.Shutdown(ctx)
 			if err != nil {
 				return fmt.Errorf("unable to shut down tracer provider: %w", err)
 			}
@@ -109,5 +109,5 @@ func NewTracerProvider(lifecycle fx.Lifecycle, opts *ModuleOptions, cfg *Config)
 		},
 	})
 
-	return tp, nil
+	return tracerProvider, nil
 }
