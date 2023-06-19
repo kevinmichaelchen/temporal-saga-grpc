@@ -1,3 +1,4 @@
+// Package app provides an FX module for the application.
 package app
 
 import (
@@ -14,6 +15,7 @@ import (
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/tracing"
 )
 
+// Module - An FX module for the application.
 var Module = fx.Options(
 	modConnect.CreateModule(&modConnect.ModuleOptions{
 		HandlerProvider: func(svc *service.Service) modConnect.HandlerOutput {

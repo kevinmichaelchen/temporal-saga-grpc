@@ -1,3 +1,4 @@
+// Package cors provides a default CORS configuration.
 package cors
 
 import (

@@ -1,4 +1,4 @@
-// Packagae temporal provides interceptors and middleware for the Temporal
+// Package temporal provides interceptors and middleware for the Temporal
 // client.
 package temporal
 

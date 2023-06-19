@@ -1,3 +1,4 @@
+// Package app provides an FX module for the application.
 package app
 
 import (

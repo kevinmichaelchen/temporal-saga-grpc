@@ -1,3 +1,4 @@
+// Package service provides an FX module for this service's API handlers.
 package service
 
 import (

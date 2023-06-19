@@ -1,3 +1,4 @@
+// Package service implements this service's API handlers.
 package service
 
 import (

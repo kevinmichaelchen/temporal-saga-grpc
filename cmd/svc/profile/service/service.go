@@ -1,3 +1,4 @@
+// Package service implements this service's API handlers.
 package service
 
 import (
@@ -17,7 +18,7 @@ func NewService() *Service {
 }
 
 func (s *Service) CreateProfile(
-	ctx context.Context,
+	_ context.Context,
 	req *connect.Request[profilev1beta1.CreateProfileRequest],
 ) (*connect.Response[profilev1beta1.CreateProfileResponse], error) {
 	// Sleep for a bit to simulate the latency of a database lookup

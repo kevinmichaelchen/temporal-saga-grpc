@@ -50,22 +50,26 @@ var Module = fx.Module("worker",
 	),
 )
 
+// NewController - Returns a new controller for our Temporal workflow.
 func NewController(license, org, profile *grpc.ClientConn) *saga.Controller {
 	return saga.NewController(license, org, profile)
 }
 
+// NewConnToLicense - Returns a new gRPC connection to the License service.
 func NewConnToLicense() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortLicense)
 
 	return dial(addr)
 }
 
+// NewConnToOrg - Returns a new gRPC connection to the Org service.
 func NewConnToOrg() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortOrg)
 
 	return dial(addr)
 }
 
+// NewConnToProfile - Returns a new gRPC connection to the Profile service.
 func NewConnToProfile() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortProfile)
 
@@ -84,6 +88,7 @@ func dial(addr string) (*grpc.ClientConn, error) {
 	return conn, nil
 }
 
+// NewWorker - Returns a new worker for our Temporal workflow.
 func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker.Worker, error) {
 	// This worker hosts both Workflow and Activity functions
 	w := worker.New(c, saga.CreateLicenseTaskQueue, worker.Options{

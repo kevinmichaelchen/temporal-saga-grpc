@@ -1,3 +1,5 @@
+// Package connect provides a function to build an FX module for Connect Go
+// APIs.
 package connect
 
 import (
@@ -5,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"time"
 
 	grpchealth "github.com/bufbuild/connect-grpchealth-go"
 	"github.com/sethvargo/go-envconfig"
@@ -16,6 +19,10 @@ import (
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/cors"
 )
 
+// CreateModule - The primary function for building an FX module for Connect Go
+// APIs.
+//
+//nolint:ireturn // fx.Option is an interface; there's no concrete type we can return.
 func CreateModule(opts *ModuleOptions) fx.Option {
 	return fx.Module("grpc",
 		fx.Provide(
@@ -32,32 +39,50 @@ func CreateModule(opts *ModuleOptions) fx.Option {
 	)
 }
 
+// HandlerOutput - The result of creating a new Connect Go HTTP handler.
 type HandlerOutput struct {
-	Path    string
+	// Path - The path on which to mount the handler.
+	Path string
+	// Handler - The HTTP handler for the Connect Go service implementation.
 	Handler http.Handler
 }
 
 type ModuleOptions struct {
+	// HandlerProvider - Provides a Connect Go HTTP handler and the path to
+	// mount it on.
 	HandlerProvider any
-	Services        []string
+	// Services - Fully-qualified protobuf service names.
+	// For example:
+	//   - "acme.user.v1.UserService"
+	//   - "acme.userv1beta.UserService"
+	Services []string
 }
 
+// Config - Contains env vars for our Connect Go server.
 type Config struct {
 	ConnectConfig *NestedConfig `env:",prefix=GRPC_CONNECT_"`
 }
 
+// NestedConfig - Contains env vars for our Connect Go server.
 type NestedConfig struct {
 	Host string `env:"HOST,default=localhost"`
 	Port int    `env:"PORT,required"`
 }
 
-func NewConfig() (cfg Config, err error) {
-	err = envconfig.Process(context.Background(), &cfg)
+// NewConfig - Reads configs from the environment.
+func NewConfig() (Config, error) {
+	var cfg Config
 
-	return
+	err := envconfig.Process(context.Background(), &cfg)
+	if err != nil {
+		return cfg, fmt.Errorf("unable to read environment variables: %w", err)
+	}
+
+	return cfg, nil
 }
 
-func NewServer(lc fx.Lifecycle, cfg Config) *http.ServeMux {
+// NewServer - Creates a new HTTP request multiplexer for our Connect Go APIs.
+func NewServer(lifecycle fx.Lifecycle, cfg Config) *http.ServeMux {
 	mux := http.NewServeMux()
 	address := fmt.Sprintf("%s:%d", cfg.ConnectConfig.Host, cfg.ConnectConfig.Port)
 	srv := &http.Server{
@@ -67,9 +92,19 @@ func NewServer(lc fx.Lifecycle, cfg Config) *http.ServeMux {
 			cors.NewCORS().Handler(mux),
 			&http2.Server{},
 		),
+		// The maximum duration for reading the entire request, including the
+		// body.
+		ReadTimeout: 1 * time.Second,
+		// The maximum duration before timing out writes of the response.
+		WriteTimeout: 1 * time.Second,
+		// The maximum amount of time to wait for the next request when
+		// keep-alive is enabled.
+		IdleTimeout: 30 * time.Second,
+		// The amount of time allowed to read request headers.
+		ReadHeaderTimeout: 2 * time.Second,
 	}
 
-	lc.Append(fx.Hook{
+	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			// In production, we'd want to separate the Listen and Serve phases for
 			// better error-handling.
@@ -96,13 +131,19 @@ func NewServer(lc fx.Lifecycle, cfg Config) *http.ServeMux {
 	return mux
 }
 
-func Register(opts *ModuleOptions, mux *http.ServeMux, h HandlerOutput) {
+// Register - Registers the Connect Go service to its HTTP handlers.
+func Register(
+	opts *ModuleOptions,
+	mux *http.ServeMux,
+	handlerOutput HandlerOutput,
+) {
 	checker := grpchealth.NewStaticChecker(
 		// protoc-gen-connect-go generates package-level constants
 		// for these fully-qualified protobuf service names, so we'd be able
-		// to reference foov1beta1.FooService as opposed to foo.v1beta1.FooService.
+		// to reference foov1beta1.FooService as opposed to
+		// foo.v1beta1.FooService.
 		opts.Services...,
 	)
 	mux.Handle(grpchealth.NewHandler(checker))
-	mux.Handle(h.Path, h.Handler)
+	mux.Handle(handlerOutput.Path, handlerOutput.Handler)
 }
