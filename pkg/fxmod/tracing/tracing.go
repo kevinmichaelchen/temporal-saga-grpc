@@ -23,6 +23,7 @@ type ModuleOptions struct {
 	ServiceName string
 }
 
+// CreateModule - Creates an FX module for telemetry.
 func CreateModule(opts ModuleOptions) fx.Option {
 	return fx.Module("tracing",
 		fx.Provide(

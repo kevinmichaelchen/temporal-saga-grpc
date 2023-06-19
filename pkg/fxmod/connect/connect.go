@@ -21,8 +21,6 @@ import (
 
 // CreateModule - The primary function for building an FX module for Connect Go
 // APIs.
-//
-//nolint:ireturn // fx.Option is an interface; there's no concrete type we can return.
 func CreateModule(opts *ModuleOptions) fx.Option {
 	return fx.Module("grpc",
 		fx.Provide(
@@ -47,6 +45,8 @@ type HandlerOutput struct {
 	Handler http.Handler
 }
 
+// ModuleOptions - Information that the consumer of this FX module should
+// "provide" (in the FX sense).
 type ModuleOptions struct {
 	// HandlerProvider - Provides a Connect Go HTTP handler and the path to
 	// mount it on.

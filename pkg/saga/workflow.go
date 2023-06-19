@@ -8,7 +8,8 @@ import (
 	"go.temporal.io/sdk/workflow"
 )
 
-func CreateLicense(ctx workflow.Context, args CreateLicenseInputArgs) (err error) {
+// CreateLicense - A Temporal workflow to create a license, org, and profile.
+func CreateLicense(ctx workflow.Context, args CreateLicenseInputArgs) error {
 	retryPolicy := &temporal.RetryPolicy{
 		InitialInterval:    time.Second,
 		BackoffCoefficient: 2.0,
@@ -32,6 +33,8 @@ func CreateLicense(ctx workflow.Context, args CreateLicenseInputArgs) (err error
 	// To call an activity that is a member of a structure use the function
 	// reference with nil receiver.
 	var ctrl *Controller
+
+	var err error
 
 	// Step 1: Create Org
 	err = workflow.ExecuteActivity(ctx, ctrl.CreateOrg, args).Get(ctx, nil)

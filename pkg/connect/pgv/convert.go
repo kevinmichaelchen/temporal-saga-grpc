@@ -1,3 +1,5 @@
+// Package pgv provides a function to convert protoc-gen-validate (PGV) errors
+// to Connect Go errors.
 package pgv
 
 import (
@@ -7,16 +9,18 @@ import (
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 )
 
+// Error - A single validation error.
 type Error interface {
 	Field() string
 	Reason() string
 }
 
+// MultiError - A list of validation errors.
 type MultiError interface {
 	AllErrors() []error
 }
 
-// Convert converts a PGV error to *connect.Error.
+// Convert - Converts a PGV error to *connect.Error.
 func Convert(err error) error {
 	var fieldViolations []*errdetails.BadRequest_FieldViolation
 

@@ -11,12 +11,15 @@ import (
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 )
 
+// Service - A controller for our business logic.
 type Service struct{}
 
+// NewService - Returns a new Service.
 func NewService() *Service {
 	return &Service{}
 }
 
+// CreateOrg - Creates a new org.
 func (s *Service) CreateOrg(
 	_ context.Context,
 	req *connect.Request[orgv1beta1.CreateOrgRequest],

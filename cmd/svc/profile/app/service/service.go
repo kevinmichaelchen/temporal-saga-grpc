@@ -7,12 +7,14 @@ import (
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/profile/service"
 )
 
+// Module - An FX module for the service layer.
 var Module = fx.Module("service",
 	fx.Provide(
 		NewService,
 	),
 )
 
+// NewService - Returns a new Service.
 func NewService() *service.Service {
 	return service.NewService()
 }

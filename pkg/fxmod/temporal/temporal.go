@@ -1,3 +1,4 @@
+// Package temporal provides an FX module for a Temporal client.
 package temporal
 
 import (
@@ -10,13 +11,15 @@ import (
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal"
 )
 
+// Module - An FX module for a Temporal client.
 var Module = fx.Module("temporal",
 	fx.Provide(
 		NewClient,
 	),
 )
 
-func NewClient(lc fx.Lifecycle) (client.Client, error) {
+// NewClient - Returns a new Temporal client.
+func NewClient(lifecycle fx.Lifecycle) (client.Client, error) {
 	interceptors, err := temporal.ClientInterceptors()
 	if err != nil {
 		return nil, err
@@ -31,7 +34,7 @@ func NewClient(lc fx.Lifecycle) (client.Client, error) {
 		return nil, fmt.Errorf("unable to dial Temporal client: %w", err)
 	}
 
-	lc.Append(fx.Hook{
+	lifecycle.Append(fx.Hook{
 		OnStart: nil,
 		OnStop: func(ctx context.Context) error {
 			temporalClient.Close()

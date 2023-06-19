@@ -12,14 +12,17 @@ import (
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 )
 
+// Service - A controller for our business logic.
 type Service struct{}
 
+// NewService - Returns a new Service.
 func NewService() *Service {
 	return &Service{}
 }
 
+// CreateLicense - Creates a new license.
 func (s *Service) CreateLicense(
-	ctx context.Context,
+	_ context.Context,
 	req *connect.Request[licensev1beta1.CreateLicenseRequest],
 ) (*connect.Response[licensev1beta1.CreateLicenseResponse], error) {
 	err := req.Msg.Validate()

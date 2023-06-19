@@ -9,12 +9,13 @@ import (
 	"go.temporal.io/sdk/interceptor"
 )
 
+// ClientInterceptors - Interceptors for Temporal clients.
 func ClientInterceptors() ([]interceptor.ClientInterceptor, error) {
 	tracingInterceptor, err := opentelemetry.NewTracingInterceptor(
 		opentelemetry.TracerOptions{},
 	)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create OTEL tracing interceptor: %w", err)
+		return nil, fmt.Errorf("unable to create OTEL tracing interceptor: %w", err)
 	}
 
 	return []interceptor.ClientInterceptor{

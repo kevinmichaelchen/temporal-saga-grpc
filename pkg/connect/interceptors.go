@@ -1,3 +1,4 @@
+// Package connect returns Connect Go interceptors.
 package connect
 
 import (
@@ -11,6 +12,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// UnaryInterceptors - Unary interceptors for Connect Go servers.
 func UnaryInterceptors() []connect.Interceptor {
 	return []connect.Interceptor{
 		connectInterceptorForSpan(),

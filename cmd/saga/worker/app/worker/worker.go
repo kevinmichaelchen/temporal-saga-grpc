@@ -1,3 +1,4 @@
+// Package worker provides an FX module for a Temporal worker.
 package worker
 
 import (
@@ -21,6 +22,7 @@ const (
 	servicePortProfile = 9092
 )
 
+// Module - An FX module for a Temporal worker.
 var Module = fx.Module("worker",
 	fx.Provide(
 		fx.Annotate(
@@ -89,9 +91,9 @@ func dial(addr string) (*grpc.ClientConn, error) {
 }
 
 // NewWorker - Returns a new worker for our Temporal workflow.
-func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker.Worker, error) {
+func NewWorker(lifecycle fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker.Worker, error) {
 	// This worker hosts both Workflow and Activity functions
-	w := worker.New(c, saga.CreateLicenseTaskQueue, worker.Options{
+	temporalWorker := worker.New(c, saga.CreateLicenseTaskQueue, worker.Options{
 		// worker.Start() only return errors on start, so we need to catch
 		// errors during run
 		OnFatalError: func(err error) {
@@ -99,18 +101,20 @@ func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker
 		},
 	})
 
-	w.RegisterWorkflow(saga.CreateLicense)
+	// TODO can we move calls to RegisterWorkflow and RegisterActivity into an fx.Invoke block
+
+	temporalWorker.RegisterWorkflow(saga.CreateLicense)
 
 	// RegisterActivity - register an activity function or a pointer to a
 	// structure with the worker.
 	// The activity struct is a structure with all its exported methods treated
 	// as activities. The default name of each activity is the method name.
-	w.RegisterActivity(ctrl)
+	temporalWorker.RegisterActivity(ctrl)
 
-	lc.Append(fx.Hook{
+	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			// Start the worker in a non-blocking fashion.
-			err := w.Start()
+			err := temporalWorker.Start()
 			if err != nil {
 				return fmt.Errorf("unable to start Temporal worker: %w", err)
 			}
@@ -118,14 +122,16 @@ func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
-			w.Stop()
+			temporalWorker.Stop()
 
 			return nil
 		},
 	})
 
-	return &w, nil
+	return &temporalWorker, nil
 }
 
-func RegisterWorkflowAndActivities(w *worker.Worker) {
+// RegisterWorkflowAndActivities - Registers the workflow and activities onto
+// the Temporal worker.
+func RegisterWorkflowAndActivities(_ *worker.Worker) {
 }

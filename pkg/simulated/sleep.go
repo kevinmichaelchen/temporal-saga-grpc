@@ -7,6 +7,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Sleep - Sleeps for a random duration.
 func Sleep() {
 	min := 100
 	max := 300
