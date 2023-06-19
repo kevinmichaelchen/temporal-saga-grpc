@@ -1,37 +1,47 @@
+// Package temporal provides an FX module for a Temporal client.
 package temporal
 
 import (
 	"context"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal"
+	"fmt"
+
 	"go.temporal.io/sdk/client"
 	"go.uber.org/fx"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal"
 )
 
+// Module - An FX module for a Temporal client.
 var Module = fx.Module("temporal",
 	fx.Provide(
 		NewClient,
 	),
 )
 
-func NewClient(lc fx.Lifecycle) (client.Client, error) {
+// NewClient - Returns a new Temporal client.
+func NewClient(lifecycle fx.Lifecycle) (client.Client, error) {
 	interceptors, err := temporal.ClientInterceptors()
 	if err != nil {
 		return nil, err
 	}
 
-	c, err := client.Dial(client.Options{
-		Interceptors: interceptors,
-	})
+	temporalClient, err := client.Dial(
+		client.Options{
+			Interceptors: interceptors,
+		},
+	)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("unable to dial Temporal client: %w", err)
 	}
 
-	lc.Append(fx.Hook{
+	lifecycle.Append(fx.Hook{
+		OnStart: nil,
 		OnStop: func(ctx context.Context) error {
-			c.Close()
+			temporalClient.Close()
+
 			return nil
 		},
 	})
 
-	return c, nil
+	return temporalClient, nil
 }

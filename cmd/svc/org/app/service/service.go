@@ -1,16 +1,20 @@
+// Package service provides an FX module for this service's API handlers.
 package service
 
 import (
-	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/service"
 	"go.uber.org/fx"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/service"
 )
 
+// Module - An FX module for the service layer.
 var Module = fx.Module("service",
 	fx.Provide(
 		NewService,
 	),
 )
 
+// NewService - Returns a new controller for our business logic.
 func NewService() *service.Service {
 	return service.NewService()
 }

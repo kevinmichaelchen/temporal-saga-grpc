@@ -2,6 +2,10 @@ package connect
 
 import (
 	"context"
+	"net"
+	"net/http"
+	"strings"
+
 	"github.com/bufbuild/connect-go"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.opentelemetry.io/otel/attribute"
@@ -9,9 +13,6 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 	grpc_codes "google.golang.org/grpc/codes"
 	"google.golang.org/grpc/peer"
-	"net"
-	"net/http"
-	"strings"
 )
 
 func extract(ctx context.Context, propagators propagation.TextMapPropagator, req connect.AnyRequest) context.Context {
@@ -40,6 +41,7 @@ func (s *metadataSupplier) Keys() []string {
 	for key := range s.headers {
 		out = append(out, key)
 	}
+
 	return out
 }
 
@@ -49,6 +51,7 @@ func peerFromCtx(ctx context.Context) string {
 	if !ok {
 		return ""
 	}
+
 	return p.Addr.String()
 }
 
@@ -59,6 +62,7 @@ func spanInfo(fullMethod, peerAddress string) (string, []attribute.KeyValue) {
 	name, mAttrs := ParseFullMethod(fullMethod)
 	attrs = append(attrs, mAttrs...)
 	attrs = append(attrs, peerAttr(peerAddress)...)
+
 	return name, attrs
 }
 
@@ -85,6 +89,7 @@ func peerAttr(addr string) []attribute.KeyValue {
 func ParseFullMethod(fullMethod string) (string, []attribute.KeyValue) {
 	name := strings.TrimLeft(fullMethod, "/")
 	parts := strings.SplitN(name, "/", 2)
+
 	if len(parts) != 2 {
 		// Invalid format, does not follow `/package.service/method`.
 		return name, []attribute.KeyValue(nil)
@@ -94,9 +99,11 @@ func ParseFullMethod(fullMethod string) (string, []attribute.KeyValue) {
 	if service := parts[0]; service != "" {
 		attrs = append(attrs, semconv.RPCServiceKey.String(service))
 	}
+
 	if method := parts[1]; method != "" {
 		attrs = append(attrs, semconv.RPCMethodKey.String(method))
 	}
+
 	return name, attrs
 }
 

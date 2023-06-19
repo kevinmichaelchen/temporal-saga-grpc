@@ -1,8 +1,10 @@
+// Package main provides the entrypoint for the Profile Service.
 package main
 
 import (
-	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/profile/app"
 	"go.uber.org/fx"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/profile/app"
 )
 
 func main() {

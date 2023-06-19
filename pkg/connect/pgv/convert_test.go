@@ -1,16 +1,20 @@
 package pgv
 
 import (
+	"testing"
+
 	"github.com/bufbuild/connect-go"
 	"github.com/google/go-cmp/cmp"
-	licensev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/license/v1beta1"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/protobuf/testing/protocmp"
-	"testing"
+
+	licensev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/license/v1beta1"
 )
 
 func TestConvert(t *testing.T) {
+	t.Parallel()
+
 	tests := map[string]struct {
 		r           *licensev1beta1.CreateLicenseRequest
 		validateAll bool
@@ -57,7 +61,13 @@ func TestConvert(t *testing.T) {
 		},
 	}
 	for testName, tc := range tests {
+		// https://github.com/kunwardeep/paralleltest#tparallel-is-called-in-the-range-method-and-test-case-variable-tc-being-used-but-is-not-reinitialised-more-info
+		// https://gist.github.com/kunwardeep/80c2e9f3d3256c894898bae82d9f75d0
+		tc := tc
+
 		t.Run(testName, func(t *testing.T) {
+			t.Parallel()
+
 			var err error
 			if tc.validateAll {
 				err = tc.r.ValidateAll()

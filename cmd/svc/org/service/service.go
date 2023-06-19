@@ -1,21 +1,27 @@
+// Package service implements this service's API handlers.
 package service
 
 import (
 	"context"
+
 	"github.com/bufbuild/connect-go"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 	"github.com/sirupsen/logrus"
 	orgv1beta1 "go.buf.build/bufbuild/connect-go/kevinmichaelchen/orgapis/org/v1beta1"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 )
 
+// Service - A controller for our business logic.
 type Service struct{}
 
+// NewService - Returns a new Service.
 func NewService() *Service {
 	return &Service{}
 }
 
+// CreateOrg - Creates a new org.
 func (s *Service) CreateOrg(
-	ctx context.Context,
+	_ context.Context,
 	req *connect.Request[orgv1beta1.CreateOrgRequest],
 ) (*connect.Response[orgv1beta1.CreateOrgResponse], error) {
 	// Sleep for a bit to simulate the latency of a database lookup
@@ -28,8 +34,11 @@ func (s *Service) CreateOrg(
 	}
 
 	res := &orgv1beta1.CreateOrgResponse{}
+
 	logrus.WithField("name", req.Msg.GetName()).Info("Creating Org")
+
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")
+
 	return out, nil
 }

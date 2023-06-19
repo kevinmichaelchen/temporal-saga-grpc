@@ -1,9 +1,10 @@
+// Package worker provides an FX module for a Temporal worker.
 package worker
 
 import (
 	"context"
 	"fmt"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
+
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.temporal.io/sdk/client"
@@ -11,6 +12,8 @@ import (
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 )
 
 const (
@@ -19,6 +22,7 @@ const (
 	servicePortProfile = 9092
 )
 
+// Module - An FX module for a Temporal worker.
 var Module = fx.Module("worker",
 	fx.Provide(
 		fx.Annotate(
@@ -48,35 +52,48 @@ var Module = fx.Module("worker",
 	),
 )
 
+// NewController - Returns a new controller for our Temporal workflow.
 func NewController(license, org, profile *grpc.ClientConn) *saga.Controller {
 	return saga.NewController(license, org, profile)
 }
 
+// NewConnToLicense - Returns a new gRPC connection to the License service.
 func NewConnToLicense() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortLicense)
+
 	return dial(addr)
 }
 
+// NewConnToOrg - Returns a new gRPC connection to the Org service.
 func NewConnToOrg() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortOrg)
+
 	return dial(addr)
 }
 
+// NewConnToProfile - Returns a new gRPC connection to the Profile service.
 func NewConnToProfile() (*grpc.ClientConn, error) {
 	addr := fmt.Sprintf("localhost:%d", servicePortProfile)
+
 	return dial(addr)
 }
 
 func dial(addr string) (*grpc.ClientConn, error) {
-	return grpc.Dial(addr,
+	conn, err := grpc.Dial(addr,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
 	)
+	if err != nil {
+		return nil, fmt.Errorf("unable to dial gRPC connection: %w", err)
+	}
+
+	return conn, nil
 }
 
-func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker.Worker, error) {
+// NewWorker - Returns a new worker for our Temporal workflow.
+func NewWorker(lifecycle fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker.Worker, error) {
 	// This worker hosts both Workflow and Activity functions
-	w := worker.New(c, saga.CreateLicenseTaskQueue, worker.Options{
+	temporalWorker := worker.New(c, saga.CreateLicenseTaskQueue, worker.Options{
 		// worker.Start() only return errors on start, so we need to catch
 		// errors during run
 		OnFatalError: func(err error) {
@@ -84,27 +101,37 @@ func NewWorker(lc fx.Lifecycle, c client.Client, ctrl *saga.Controller) (*worker
 		},
 	})
 
-	w.RegisterWorkflow(saga.CreateLicense)
+	// TODO can we move calls to RegisterWorkflow and RegisterActivity into an fx.Invoke block
+
+	temporalWorker.RegisterWorkflow(saga.CreateLicense)
 
 	// RegisterActivity - register an activity function or a pointer to a
 	// structure with the worker.
 	// The activity struct is a structure with all its exported methods treated
 	// as activities. The default name of each activity is the method name.
-	w.RegisterActivity(ctrl)
+	temporalWorker.RegisterActivity(ctrl)
 
-	lc.Append(fx.Hook{
+	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			// Start the worker in a non-blocking fashion.
-			return w.Start()
+			err := temporalWorker.Start()
+			if err != nil {
+				return fmt.Errorf("unable to start Temporal worker: %w", err)
+			}
+
+			return nil
 		},
 		OnStop: func(ctx context.Context) error {
-			w.Stop()
+			temporalWorker.Stop()
+
 			return nil
 		},
 	})
 
-	return &w, nil
+	return &temporalWorker, nil
 }
 
-func RegisterWorkflowAndActivities(w *worker.Worker) {
+// RegisterWorkflowAndActivities - Registers the workflow and activities onto
+// the Temporal worker.
+func RegisterWorkflowAndActivities(_ *worker.Worker) {
 }

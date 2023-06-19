@@ -1,8 +1,11 @@
+// Package main provides the entrypoint for the Temporal Workflow starter API,
+// a gRPC/Connect/HTTP API you can use to kick off workflows.
 package main
 
 import (
-	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/start/app"
 	"go.uber.org/fx"
+
+	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/start/app"
 )
 
 func main() {

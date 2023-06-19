@@ -1,10 +1,13 @@
+// Package cors provides a default CORS configuration.
 package cors
 
 import (
-	"github.com/rs/cors"
 	"net/http"
+
+	"github.com/rs/cors"
 )
 
+// NewCORS - Constructs a new CORS object.
 func NewCORS() *cors.Cors {
 	// To let web developers play with the demo service from browsers, we need a
 	// very permissive CORS setup.

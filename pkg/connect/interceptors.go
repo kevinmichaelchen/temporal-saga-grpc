@@ -1,7 +1,9 @@
+// Package connect returns Connect Go interceptors.
 package connect
 
 import (
 	"context"
+
 	"github.com/bufbuild/connect-go"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/codes"
@@ -10,6 +12,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// UnaryInterceptors - Unary interceptors for Connect Go servers.
 func UnaryInterceptors() []connect.Interceptor {
 	return []connect.Interceptor{
 		connectInterceptorForSpan(),
@@ -24,14 +27,14 @@ func connectInterceptorForSpan() connect.UnaryInterceptorFunc {
 		) (connect.AnyResponse, error) {
 			fullMethod := req.Spec().Procedure // e.g., "/acme.foo.v1.FooService/Bar"
 
-			tr := otel.Tracer("")
+			tracer := otel.Tracer("")
 
 			ctx = extract(ctx, otel.GetTextMapPropagator(), req)
 
 			name, attr := spanInfo(fullMethod, peerFromCtx(ctx))
 
 			// Create a new span
-			ctx, span := tr.Start(
+			ctx, span := tracer.Start(
 				trace.ContextWithRemoteSpanContext(ctx, trace.SpanContextFromContext(ctx)),
 				name,
 				trace.WithSpanKind(trace.SpanKindServer),
@@ -51,5 +54,6 @@ func connectInterceptorForSpan() connect.UnaryInterceptorFunc {
 			return resp, err
 		})
 	}
-	return connect.UnaryInterceptorFunc(interceptor)
+
+	return interceptor
 }
