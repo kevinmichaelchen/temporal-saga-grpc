@@ -1,7 +1,6 @@
 package simulated
 
 import (
-	"math/rand"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -11,7 +10,19 @@ import (
 func Sleep() {
 	min := 100
 	max := 300
-	sleepDuration := time.Millisecond * time.Duration(rand.Intn(max-min+1)+min)
+
+	roll, err := generateRandomNumber(max - min + 1)
+	if err != nil {
+		sleepDuration := time.Millisecond * time.Duration(min)
+		logrus.WithField("sleep", sleepDuration).
+			WithError(err).
+			Info("Sleeping...")
+		time.Sleep(sleepDuration)
+
+		return
+	}
+
+	sleepDuration := time.Millisecond * time.Duration(roll+min)
 	logrus.WithField("sleep", sleepDuration).Info("Sleeping...")
 	time.Sleep(sleepDuration)
 }

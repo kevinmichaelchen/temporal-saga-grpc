@@ -2,8 +2,10 @@
 package simulated
 
 import (
+	"crypto/rand"
 	"errors"
-	"math/rand"
+	"fmt"
+	"math/big"
 
 	"github.com/sirupsen/logrus"
 )
@@ -46,11 +48,29 @@ func (p ErrorProbability) Int() int {
 
 // PossibleError - Returns an error (or none) at random.
 func PossibleError(ep ErrorProbability) error {
-	p := ep.Int()
-	logrus.WithField("error_probability", p).Info("Rolling dice...")
-	if rand.Intn(100) < p {
+	probability := ep.Int()
+
+	roll, err := generateRandomNumber(100)
+	if err != nil {
+		return err
+	}
+
+	logrus.WithField("error_probability", probability).Info("Rolling dice...")
+
+	if roll < probability {
 		return errInternalFailure
 	}
 
 	return nil
+}
+
+func generateRandomNumber(ceiling int) (int, error) {
+	// Generate a random number between "[0, ceiling)".
+	// That is, 0 (inclusive) and ceiling (exclusive).
+	randomNum, err := rand.Int(rand.Reader, big.NewInt(int64(ceiling)))
+	if err != nil {
+		return 0, fmt.Errorf("unable to generate random number: %w", err)
+	}
+
+	return int(randomNum.Int64()), nil
 }

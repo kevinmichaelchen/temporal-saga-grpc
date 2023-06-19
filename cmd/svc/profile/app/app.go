@@ -11,7 +11,6 @@ import (
 	pkgConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect"
 	modConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/logging"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/rand"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/tracing"
 )
 
@@ -36,7 +35,6 @@ var Module = fx.Options(
 	}),
 	logging.Module,
 	modService.Module,
-	rand.Module,
 	tracing.CreateModule(tracing.ModuleOptions{
 		ServiceName: "profile-svc",
 	}),
