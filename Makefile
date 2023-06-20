@@ -11,12 +11,17 @@ all:
 help : Makefile
 	@sed -n 's/^##//p' $<
 
-## lint             : lints Go code
+## gen           : Generates code
+.PHONY: gen
+gen:
+	task gen
+
+## lint          : Lints code
 .PHONY: lint
 lint:
 	task lint
 
-## format           : formats Go code
+## format        : Formats code
 .PHONY: format
 format:
 	task format

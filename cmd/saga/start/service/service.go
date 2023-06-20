@@ -53,7 +53,7 @@ func (s *Service) CreateOnboardingWorkflow(
 	args := saga.CreateLicenseInputArgs{
 		OrgName:     req.Msg.GetOrg().GetName(),
 		ProfileName: req.Msg.GetProfile().GetName(),
-		LicenseName: req.Msg.GetLicense().GetName(),
+		LicenseName: "New License",
 	}
 
 	workflow, err := temporalClient.ExecuteWorkflow(

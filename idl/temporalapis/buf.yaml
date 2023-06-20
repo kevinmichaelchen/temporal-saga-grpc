@@ -1,5 +1,7 @@
 version: v1
 name: buf.build/kevinmichaelchen/temporalapis
+deps:
+  - buf.build/bufbuild/protovalidate:3757a25ff0b9479eae89d3e80a508d34
 breaking:
   use:
     - FILE
