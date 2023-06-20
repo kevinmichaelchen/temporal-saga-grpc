@@ -6,30 +6,41 @@ import (
 	"fmt"
 
 	"github.com/bufbuild/connect-go"
+	"github.com/bufbuild/protovalidate-go"
 	"github.com/sirupsen/logrus"
-	temporalv1beta1 "go.buf.build/bufbuild/connect-go/kevinmichaelchen/temporalapis/temporal/v1beta1"
 	"go.temporal.io/sdk/client"
 
+	temporalv1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/temporal/v1beta1"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 )
 
 // Service - An HTTP API for starting Temporal workflows.
 type Service struct {
-	client client.Client
+	client    client.Client
+	validator *protovalidate.Validator
 }
 
 // NewService - Constructs a new service for starting Temporal workflows.
-func NewService(c client.Client) *Service {
-	return &Service{client: c}
+func NewService(c client.Client, validator *protovalidate.Validator) *Service {
+	return &Service{
+		client:    c,
+		validator: validator,
+	}
 }
 
-// CreateLicense - A handler for starting a new Temporal workflow that results
-// in the creation of a license and associated objects.
-func (s *Service) CreateLicense(
+// CreateOnboardingWorkflow - A handler for starting a new Temporal workflow
+// that results in the creation of a license and associated objects.
+func (s *Service) CreateOnboardingWorkflow(
 	ctx context.Context,
-	req *connect.Request[temporalv1beta1.CreateLicenseRequest],
-) (*connect.Response[temporalv1beta1.CreateLicenseResponse], error) {
+	req *connect.Request[temporalv1beta1.CreateOnboardingWorkflowRequest],
+) (*connect.Response[temporalv1beta1.CreateOnboardingWorkflowResponse], error) {
 	temporalClient := s.client
+
+	// Validate the request
+	err := validate(s.validator, req.Msg)
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+	}
 
 	// The business identifier of the workflow execution
 	workflowID := req.Msg.GetWorkflowOptions().GetWorkflowId()
@@ -57,7 +68,7 @@ func (s *Service) CreateLicense(
 
 	printResults(args, workflow.GetID(), workflow.GetRunID())
 
-	res := &temporalv1beta1.CreateLicenseResponse{}
+	res := &temporalv1beta1.CreateOnboardingWorkflowResponse{}
 
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")

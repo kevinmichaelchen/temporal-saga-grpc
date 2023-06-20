@@ -10,6 +10,7 @@ import (
 	"time"
 
 	grpchealth "github.com/bufbuild/connect-grpchealth-go"
+	"github.com/bufbuild/protovalidate-go"
 	"github.com/sethvargo/go-envconfig"
 	"github.com/sirupsen/logrus"
 	"go.uber.org/fx"
@@ -30,11 +31,22 @@ func CreateModule(opts *ModuleOptions) fx.Option {
 			},
 			NewConfig,
 			NewServer,
+			NewValidator,
 		),
 		fx.Invoke(
 			Register,
 		),
 	)
+}
+
+// NewValidator - Creates a new protobuf validator.
+func NewValidator() (*protovalidate.Validator, error) {
+	v, err := protovalidate.New()
+	if err != nil {
+		return nil, fmt.Errorf("unable to create protobuf validator: %w", err)
+	}
+
+	return v, nil
 }
 
 // HandlerOutput - The result of creating a new Connect Go HTTP handler.

@@ -3,11 +3,11 @@ syntax = "proto3";
 package temporal.v1beta1;
 
 service TemporalService {
-  // CreateLicense starts a Temporal Workflow that will:
+  // CreateOnboardingWorkflow starts a Temporal Workflow that will:
   // 1. Create an Org
   // 2. Create a Profile
   // 3. Create a License
-  rpc CreateLicense(CreateLicenseRequest) returns (CreateLicenseResponse) {}
+  rpc CreateOnboardingWorkflow(CreateOnboardingWorkflowRequest) returns (CreateOnboardingWorkflowResponse) {}
 }
 
 message WorkflowOptions {
@@ -16,14 +16,14 @@ message WorkflowOptions {
   string workflow_id = 1;
 }
 
-message CreateLicenseRequest {
+message CreateOnboardingWorkflowRequest {
   WorkflowOptions workflow_options = 1;
   License license = 2;
   Org org = 3;
   Profile profile = 4;
 }
 
-message CreateLicenseResponse {}
+message CreateOnboardingWorkflowResponse {}
 
 message License {
   string name = 1;

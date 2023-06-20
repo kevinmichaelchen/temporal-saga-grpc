@@ -137,22 +137,22 @@ var _ interface {
 	ErrorName() string
 } = WorkflowOptionsValidationError{}
 
-// Validate checks the field values on CreateLicenseRequest with the rules
-// defined in the proto definition for this message. If any rules are
+// Validate checks the field values on CreateOnboardingWorkflowRequest with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *CreateLicenseRequest) Validate() error {
+func (m *CreateOnboardingWorkflowRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on CreateLicenseRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// CreateLicenseRequestMultiError, or nil if none found.
-func (m *CreateLicenseRequest) ValidateAll() error {
+// ValidateAll checks the field values on CreateOnboardingWorkflowRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// CreateOnboardingWorkflowRequestMultiError, or nil if none found.
+func (m *CreateOnboardingWorkflowRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *CreateLicenseRequest) validate(all bool) error {
+func (m *CreateOnboardingWorkflowRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -163,7 +163,7 @@ func (m *CreateLicenseRequest) validate(all bool) error {
 		switch v := interface{}(m.GetWorkflowOptions()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, CreateLicenseRequestValidationError{
+				errors = append(errors, CreateOnboardingWorkflowRequestValidationError{
 					field:  "WorkflowOptions",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -171,7 +171,7 @@ func (m *CreateLicenseRequest) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, CreateLicenseRequestValidationError{
+				errors = append(errors, CreateOnboardingWorkflowRequestValidationError{
 					field:  "WorkflowOptions",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -180,7 +180,7 @@ func (m *CreateLicenseRequest) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetWorkflowOptions()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return CreateLicenseRequestValidationError{
+			return CreateOnboardingWorkflowRequestValidationError{
 				field:  "WorkflowOptions",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -192,7 +192,7 @@ func (m *CreateLicenseRequest) validate(all bool) error {
 		switch v := interface{}(m.GetLicense()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, CreateLicenseRequestValidationError{
+				errors = append(errors, CreateOnboardingWorkflowRequestValidationError{
 					field:  "License",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -200,7 +200,7 @@ func (m *CreateLicenseRequest) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, CreateLicenseRequestValidationError{
+				errors = append(errors, CreateOnboardingWorkflowRequestValidationError{
 					field:  "License",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -209,7 +209,7 @@ func (m *CreateLicenseRequest) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetLicense()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return CreateLicenseRequestValidationError{
+			return CreateOnboardingWorkflowRequestValidationError{
 				field:  "License",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -221,7 +221,7 @@ func (m *CreateLicenseRequest) validate(all bool) error {
 		switch v := interface{}(m.GetOrg()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, CreateLicenseRequestValidationError{
+				errors = append(errors, CreateOnboardingWorkflowRequestValidationError{
 					field:  "Org",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -229,7 +229,7 @@ func (m *CreateLicenseRequest) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, CreateLicenseRequestValidationError{
+				errors = append(errors, CreateOnboardingWorkflowRequestValidationError{
 					field:  "Org",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -238,7 +238,7 @@ func (m *CreateLicenseRequest) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetOrg()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return CreateLicenseRequestValidationError{
+			return CreateOnboardingWorkflowRequestValidationError{
 				field:  "Org",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -250,7 +250,7 @@ func (m *CreateLicenseRequest) validate(all bool) error {
 		switch v := interface{}(m.GetProfile()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, CreateLicenseRequestValidationError{
+				errors = append(errors, CreateOnboardingWorkflowRequestValidationError{
 					field:  "Profile",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -258,7 +258,7 @@ func (m *CreateLicenseRequest) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, CreateLicenseRequestValidationError{
+				errors = append(errors, CreateOnboardingWorkflowRequestValidationError{
 					field:  "Profile",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -267,7 +267,7 @@ func (m *CreateLicenseRequest) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetProfile()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return CreateLicenseRequestValidationError{
+			return CreateOnboardingWorkflowRequestValidationError{
 				field:  "Profile",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -276,19 +276,19 @@ func (m *CreateLicenseRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return CreateLicenseRequestMultiError(errors)
+		return CreateOnboardingWorkflowRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// CreateLicenseRequestMultiError is an error wrapping multiple validation
-// errors returned by CreateLicenseRequest.ValidateAll() if the designated
-// constraints aren't met.
-type CreateLicenseRequestMultiError []error
+// CreateOnboardingWorkflowRequestMultiError is an error wrapping multiple
+// validation errors returned by CreateOnboardingWorkflowRequest.ValidateAll()
+// if the designated constraints aren't met.
+type CreateOnboardingWorkflowRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m CreateLicenseRequestMultiError) Error() string {
+func (m CreateOnboardingWorkflowRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -297,11 +297,12 @@ func (m CreateLicenseRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m CreateLicenseRequestMultiError) AllErrors() []error { return m }
+func (m CreateOnboardingWorkflowRequestMultiError) AllErrors() []error { return m }
 
-// CreateLicenseRequestValidationError is the validation error returned by
-// CreateLicenseRequest.Validate if the designated constraints aren't met.
-type CreateLicenseRequestValidationError struct {
+// CreateOnboardingWorkflowRequestValidationError is the validation error
+// returned by CreateOnboardingWorkflowRequest.Validate if the designated
+// constraints aren't met.
+type CreateOnboardingWorkflowRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -309,24 +310,24 @@ type CreateLicenseRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e CreateLicenseRequestValidationError) Field() string { return e.field }
+func (e CreateOnboardingWorkflowRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CreateLicenseRequestValidationError) Reason() string { return e.reason }
+func (e CreateOnboardingWorkflowRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CreateLicenseRequestValidationError) Cause() error { return e.cause }
+func (e CreateOnboardingWorkflowRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CreateLicenseRequestValidationError) Key() bool { return e.key }
+func (e CreateOnboardingWorkflowRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CreateLicenseRequestValidationError) ErrorName() string {
-	return "CreateLicenseRequestValidationError"
+func (e CreateOnboardingWorkflowRequestValidationError) ErrorName() string {
+	return "CreateOnboardingWorkflowRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e CreateLicenseRequestValidationError) Error() string {
+func (e CreateOnboardingWorkflowRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -338,14 +339,14 @@ func (e CreateLicenseRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCreateLicenseRequest.%s: %s%s",
+		"invalid %sCreateOnboardingWorkflowRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CreateLicenseRequestValidationError{}
+var _ error = CreateOnboardingWorkflowRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -353,24 +354,25 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CreateLicenseRequestValidationError{}
+} = CreateOnboardingWorkflowRequestValidationError{}
 
-// Validate checks the field values on CreateLicenseResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *CreateLicenseResponse) Validate() error {
+// Validate checks the field values on CreateOnboardingWorkflowResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *CreateOnboardingWorkflowResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on CreateLicenseResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// CreateLicenseResponseMultiError, or nil if none found.
-func (m *CreateLicenseResponse) ValidateAll() error {
+// ValidateAll checks the field values on CreateOnboardingWorkflowResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// CreateOnboardingWorkflowResponseMultiError, or nil if none found.
+func (m *CreateOnboardingWorkflowResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *CreateLicenseResponse) validate(all bool) error {
+func (m *CreateOnboardingWorkflowResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -378,19 +380,20 @@ func (m *CreateLicenseResponse) validate(all bool) error {
 	var errors []error
 
 	if len(errors) > 0 {
-		return CreateLicenseResponseMultiError(errors)
+		return CreateOnboardingWorkflowResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// CreateLicenseResponseMultiError is an error wrapping multiple validation
-// errors returned by CreateLicenseResponse.ValidateAll() if the designated
+// CreateOnboardingWorkflowResponseMultiError is an error wrapping multiple
+// validation errors returned by
+// CreateOnboardingWorkflowResponse.ValidateAll() if the designated
 // constraints aren't met.
-type CreateLicenseResponseMultiError []error
+type CreateOnboardingWorkflowResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m CreateLicenseResponseMultiError) Error() string {
+func (m CreateOnboardingWorkflowResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -399,11 +402,12 @@ func (m CreateLicenseResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m CreateLicenseResponseMultiError) AllErrors() []error { return m }
+func (m CreateOnboardingWorkflowResponseMultiError) AllErrors() []error { return m }
 
-// CreateLicenseResponseValidationError is the validation error returned by
-// CreateLicenseResponse.Validate if the designated constraints aren't met.
-type CreateLicenseResponseValidationError struct {
+// CreateOnboardingWorkflowResponseValidationError is the validation error
+// returned by CreateOnboardingWorkflowResponse.Validate if the designated
+// constraints aren't met.
+type CreateOnboardingWorkflowResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -411,24 +415,24 @@ type CreateLicenseResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e CreateLicenseResponseValidationError) Field() string { return e.field }
+func (e CreateOnboardingWorkflowResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CreateLicenseResponseValidationError) Reason() string { return e.reason }
+func (e CreateOnboardingWorkflowResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CreateLicenseResponseValidationError) Cause() error { return e.cause }
+func (e CreateOnboardingWorkflowResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CreateLicenseResponseValidationError) Key() bool { return e.key }
+func (e CreateOnboardingWorkflowResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CreateLicenseResponseValidationError) ErrorName() string {
-	return "CreateLicenseResponseValidationError"
+func (e CreateOnboardingWorkflowResponseValidationError) ErrorName() string {
+	return "CreateOnboardingWorkflowResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e CreateLicenseResponseValidationError) Error() string {
+func (e CreateOnboardingWorkflowResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -440,14 +444,14 @@ func (e CreateLicenseResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCreateLicenseResponse.%s: %s%s",
+		"invalid %sCreateOnboardingWorkflowResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CreateLicenseResponseValidationError{}
+var _ error = CreateOnboardingWorkflowResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -455,7 +459,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CreateLicenseResponseValidationError{}
+} = CreateOnboardingWorkflowResponseValidationError{}
 
 // Validate checks the field values on License with the rules defined in the
 // proto definition for this message. If any rules are violated, the first

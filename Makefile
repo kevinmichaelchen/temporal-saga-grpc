@@ -21,21 +21,15 @@ lint:
 format:
 	task format
 
+.PHONY: view-docs
+view-docs:
+	buf mod open idl/temporalapis
+
 .PHONY: buf-mod-update
 buf-mod-update:
 	@for i in $(shell fd buf.yaml | xargs dirname) ; do \
 	  docker run $(DOCKER_BUF_FLAGS) $(DOCKER_BUF) mod update $$i ; \
 	done
-
-.PHONY: buf-gen
-buf-gen:
-	docker run $(DOCKER_BUF_FLAGS) $(DOCKER_BUF) generate
-
-.PHONY: buf-lint
-buf-lint:
-	docker run $(DOCKER_BUF_FLAGS) $(DOCKER_BUF) lint
-	docker run $(DOCKER_BUF_FLAGS) $(DOCKER_BUF) format -w
-	# docker run --rm --volume "$(shell pwd):/workspace" --workdir /workspace bufbuild/buf breaking --against 'https://github.com/kevinmichaelchen/temporal-saga-grpc.git#branch=main'
 
 .PHONY: buf-push
 buf-push:

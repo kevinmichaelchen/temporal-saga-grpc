@@ -2,15 +2,15 @@ syntax = "proto3";
 
 package license.v1beta1;
 
-import "validate/validate.proto";
+import "buf/validate/validate.proto";
 
 service LicenseService {
   rpc CreateLicense(CreateLicenseRequest) returns (CreateLicenseResponse) {}
 }
 
 message CreateLicenseRequest {
-  string name = 1 [(validate.rules).string.min_len = 1];
-  string full_name = 2 [(validate.rules).string.min_len = 1];
+  string name = 1 [(buf.validate.field).string.min_len = 1];
+  string full_name = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message CreateLicenseResponse {}

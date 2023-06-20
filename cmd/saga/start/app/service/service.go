@@ -2,6 +2,7 @@
 package service
 
 import (
+	"github.com/bufbuild/protovalidate-go"
 	"go.temporal.io/sdk/client"
 	"go.uber.org/fx"
 
@@ -16,6 +17,9 @@ var Module = fx.Module("service",
 )
 
 // NewService - Constructs a new controller for the service layer.
-func NewService(c client.Client) *service.Service {
-	return service.NewService(c)
+func NewService(
+	c client.Client,
+	validator *protovalidate.Validator,
+) *service.Service {
+	return service.NewService(c, validator)
 }
