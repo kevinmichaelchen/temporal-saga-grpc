@@ -5,12 +5,15 @@ vars:
     sh: which -a bunx npx | grep -v "not found" | head -n 1
 
 tasks:
-  gen:
-    desc: "Auto-Generate code"
+  generate:
+    aliases:
+      - gen
+    desc: "Generate code (e.g., protobufs)"
     deps:
       - gen-buf
 
   gen-buf:
+    internal: true
     desc: "Generate protobufs"
     cmds:
       - buf generate
@@ -22,18 +25,22 @@ tasks:
       - lint-go
 
   lint-buf:
+    deps:
+      - format
     cmds:
       - buf lint
       - buf format -w
 
   lint-go:
+    deps:
+      - format
     cmds:
       - golangci-lint run --verbose
 
   format:
     aliases: [fmt]
     run: once
-    desc: "Format all code"
+    desc: "Formats all code"
     deps:
       - fmt-go
       - fmt-md

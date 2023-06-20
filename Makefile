@@ -1,11 +1,6 @@
-DOCKER_BUF_FLAGS = --rm --volume "$(shell pwd):/workspace" --workdir /workspace
-# Buf CLI versions:
-# https://hub.docker.com/r/bufbuild/buf/tags
-DOCKER_BUF = bufbuild/buf:1.21.0
-
-.PHONY: all
-all:
-	$(MAKE) buf-gen
+# The DEFAULT_GOAL variable specifies the default target that will be built
+# when you run the make command without any arguments.
+.DEFAULT_GOAL := help
 
 .PHONY: help
 help : Makefile
@@ -21,11 +16,6 @@ gen:
 lint:
 	task lint
 
-## format        : Formats code
-.PHONY: format
-format:
-	task format
-
 .PHONY: view-docs
 view-docs:
 	buf mod open idl/temporalapis
@@ -33,7 +23,7 @@ view-docs:
 .PHONY: buf-mod-update
 buf-mod-update:
 	@for i in $(shell fd buf.yaml | xargs dirname) ; do \
-	  docker run $(DOCKER_BUF_FLAGS) $(DOCKER_BUF) mod update $$i ; \
+	  buf mod update $$i ; \
 	done
 
 .PHONY: buf-push
