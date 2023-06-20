@@ -1,7 +1,6 @@
 version: v1
 name: buf.build/kevinmichaelchen/licenseapis
 deps:
-  - buf.build/envoyproxy/protoc-gen-validate:6607b10f00ed4a3d98f906807131c44a
   - buf.build/bufbuild/protovalidate:3757a25ff0b9479eae89d3e80a508d34
 breaking:
   use:

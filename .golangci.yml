@@ -74,7 +74,7 @@ linters-settings:
     min-name-length: 2
     # Check method receivers.
     # Default: false
-    check-receiver: true
+    check-receiver: false
     # Check named return values.
     # Default: false
     check-return: true

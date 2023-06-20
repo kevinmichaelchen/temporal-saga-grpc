@@ -69,12 +69,12 @@ GRPC_CONNECT_PORT=9092 go run cmd/svc/profile/main.go
 ### Step 4: Start Temporal Workflow
 
 ```shell
-curl -v http://localhost:8081/temporal.v1beta1.TemporalService/CreateLicense \
+curl -v http://localhost:8081/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow \
   -H "Content-Type: application/json" \
   -d '{"license": {"name": "L1"}, "org": {"name": "Org1"}, "profile": {"name": "Kevin Chen"}}'
 
 http POST \
-  http://localhost:8081/temporal.v1beta1.TemporalService/CreateLicense \
+  http://localhost:8081/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow \
     license:='{"name": "L1"}' \
     org:='{"name": "Org1"}' \
     profile:='{"name": "Kevin Chen"}'
