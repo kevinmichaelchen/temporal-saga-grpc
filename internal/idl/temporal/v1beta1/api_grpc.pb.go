@@ -22,11 +22,11 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TemporalServiceClient interface {
-	// CreateLicense starts a Temporal Workflow that will:
+	// CreateOnboardingWorkflow starts a Temporal Workflow that will:
 	// 1. Create an Org
 	// 2. Create a Profile
 	// 3. Create a License
-	CreateLicense(ctx context.Context, in *CreateLicenseRequest, opts ...grpc.CallOption) (*CreateLicenseResponse, error)
+	CreateOnboardingWorkflow(ctx context.Context, in *CreateOnboardingWorkflowRequest, opts ...grpc.CallOption) (*CreateOnboardingWorkflowResponse, error)
 }
 
 type temporalServiceClient struct {
@@ -37,9 +37,9 @@ func NewTemporalServiceClient(cc grpc.ClientConnInterface) TemporalServiceClient
 	return &temporalServiceClient{cc}
 }
 
-func (c *temporalServiceClient) CreateLicense(ctx context.Context, in *CreateLicenseRequest, opts ...grpc.CallOption) (*CreateLicenseResponse, error) {
-	out := new(CreateLicenseResponse)
-	err := c.cc.Invoke(ctx, "/temporal.v1beta1.TemporalService/CreateLicense", in, out, opts...)
+func (c *temporalServiceClient) CreateOnboardingWorkflow(ctx context.Context, in *CreateOnboardingWorkflowRequest, opts ...grpc.CallOption) (*CreateOnboardingWorkflowResponse, error) {
+	out := new(CreateOnboardingWorkflowResponse)
+	err := c.cc.Invoke(ctx, "/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,19 +50,19 @@ func (c *temporalServiceClient) CreateLicense(ctx context.Context, in *CreateLic
 // All implementations should embed UnimplementedTemporalServiceServer
 // for forward compatibility
 type TemporalServiceServer interface {
-	// CreateLicense starts a Temporal Workflow that will:
+	// CreateOnboardingWorkflow starts a Temporal Workflow that will:
 	// 1. Create an Org
 	// 2. Create a Profile
 	// 3. Create a License
-	CreateLicense(context.Context, *CreateLicenseRequest) (*CreateLicenseResponse, error)
+	CreateOnboardingWorkflow(context.Context, *CreateOnboardingWorkflowRequest) (*CreateOnboardingWorkflowResponse, error)
 }
 
 // UnimplementedTemporalServiceServer should be embedded to have forward compatible implementations.
 type UnimplementedTemporalServiceServer struct {
 }
 
-func (UnimplementedTemporalServiceServer) CreateLicense(context.Context, *CreateLicenseRequest) (*CreateLicenseResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateLicense not implemented")
+func (UnimplementedTemporalServiceServer) CreateOnboardingWorkflow(context.Context, *CreateOnboardingWorkflowRequest) (*CreateOnboardingWorkflowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateOnboardingWorkflow not implemented")
 }
 
 // UnsafeTemporalServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -76,20 +76,20 @@ func RegisterTemporalServiceServer(s grpc.ServiceRegistrar, srv TemporalServiceS
 	s.RegisterService(&TemporalService_ServiceDesc, srv)
 }
 
-func _TemporalService_CreateLicense_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateLicenseRequest)
+func _TemporalService_CreateOnboardingWorkflow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateOnboardingWorkflowRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TemporalServiceServer).CreateLicense(ctx, in)
+		return srv.(TemporalServiceServer).CreateOnboardingWorkflow(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/temporal.v1beta1.TemporalService/CreateLicense",
+		FullMethod: "/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TemporalServiceServer).CreateLicense(ctx, req.(*CreateLicenseRequest))
+		return srv.(TemporalServiceServer).CreateOnboardingWorkflow(ctx, req.(*CreateOnboardingWorkflowRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -102,8 +102,8 @@ var TemporalService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*TemporalServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateLicense",
-			Handler:    _TemporalService_CreateLicense_Handler,
+			MethodName: "CreateOnboardingWorkflow",
+			Handler:    _TemporalService_CreateOnboardingWorkflow_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

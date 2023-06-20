@@ -5,8 +5,28 @@ vars:
     sh: which -a bunx npx | grep -v "not found" | head -n 1
 
 tasks:
+  gen:
+    desc: "Auto-Generate code"
+    deps:
+      - gen-buf
+
+  gen-buf:
+    desc: "Generate protobufs"
+    cmds:
+      - buf generate
+
   lint:
     desc: "Lints the code"
+    deps:
+      - lint-buf
+      - lint-go
+
+  lint-buf:
+    cmds:
+      - buf lint
+      - buf format -w
+
+  lint-go:
     cmds:
       - golangci-lint run --verbose
 
@@ -16,12 +36,12 @@ tasks:
     desc: "Format all code"
     deps:
       - fmt-go
-      - fmt-gql
+      - fmt-md
 
-  fmt-gql:
+  fmt-md:
     run: once
     internal: true
-    desc: "Format GraphQL and Markdown"
+    desc: "Format Markdown"
     cmds:
       - "{{.NPX}} prettier --write \"**/*.md\" --prose-wrap always"
 

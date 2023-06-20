@@ -27,11 +27,11 @@ const (
 
 // TemporalServiceClient is a client for the temporal.v1beta1.TemporalService service.
 type TemporalServiceClient interface {
-	// CreateLicense starts a Temporal Workflow that will:
+	// CreateOnboardingWorkflow starts a Temporal Workflow that will:
 	// 1. Create an Org
 	// 2. Create a Profile
 	// 3. Create a License
-	CreateLicense(context.Context, *connect_go.Request[v1beta1.CreateLicenseRequest]) (*connect_go.Response[v1beta1.CreateLicenseResponse], error)
+	CreateOnboardingWorkflow(context.Context, *connect_go.Request[v1beta1.CreateOnboardingWorkflowRequest]) (*connect_go.Response[v1beta1.CreateOnboardingWorkflowResponse], error)
 }
 
 // NewTemporalServiceClient constructs a client for the temporal.v1beta1.TemporalService service. By
@@ -44,9 +44,9 @@ type TemporalServiceClient interface {
 func NewTemporalServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) TemporalServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &temporalServiceClient{
-		createLicense: connect_go.NewClient[v1beta1.CreateLicenseRequest, v1beta1.CreateLicenseResponse](
+		createOnboardingWorkflow: connect_go.NewClient[v1beta1.CreateOnboardingWorkflowRequest, v1beta1.CreateOnboardingWorkflowResponse](
 			httpClient,
-			baseURL+"/temporal.v1beta1.TemporalService/CreateLicense",
+			baseURL+"/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow",
 			opts...,
 		),
 	}
@@ -54,21 +54,21 @@ func NewTemporalServiceClient(httpClient connect_go.HTTPClient, baseURL string, 
 
 // temporalServiceClient implements TemporalServiceClient.
 type temporalServiceClient struct {
-	createLicense *connect_go.Client[v1beta1.CreateLicenseRequest, v1beta1.CreateLicenseResponse]
+	createOnboardingWorkflow *connect_go.Client[v1beta1.CreateOnboardingWorkflowRequest, v1beta1.CreateOnboardingWorkflowResponse]
 }
 
-// CreateLicense calls temporal.v1beta1.TemporalService.CreateLicense.
-func (c *temporalServiceClient) CreateLicense(ctx context.Context, req *connect_go.Request[v1beta1.CreateLicenseRequest]) (*connect_go.Response[v1beta1.CreateLicenseResponse], error) {
-	return c.createLicense.CallUnary(ctx, req)
+// CreateOnboardingWorkflow calls temporal.v1beta1.TemporalService.CreateOnboardingWorkflow.
+func (c *temporalServiceClient) CreateOnboardingWorkflow(ctx context.Context, req *connect_go.Request[v1beta1.CreateOnboardingWorkflowRequest]) (*connect_go.Response[v1beta1.CreateOnboardingWorkflowResponse], error) {
+	return c.createOnboardingWorkflow.CallUnary(ctx, req)
 }
 
 // TemporalServiceHandler is an implementation of the temporal.v1beta1.TemporalService service.
 type TemporalServiceHandler interface {
-	// CreateLicense starts a Temporal Workflow that will:
+	// CreateOnboardingWorkflow starts a Temporal Workflow that will:
 	// 1. Create an Org
 	// 2. Create a Profile
 	// 3. Create a License
-	CreateLicense(context.Context, *connect_go.Request[v1beta1.CreateLicenseRequest]) (*connect_go.Response[v1beta1.CreateLicenseResponse], error)
+	CreateOnboardingWorkflow(context.Context, *connect_go.Request[v1beta1.CreateOnboardingWorkflowRequest]) (*connect_go.Response[v1beta1.CreateOnboardingWorkflowResponse], error)
 }
 
 // NewTemporalServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -78,9 +78,9 @@ type TemporalServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewTemporalServiceHandler(svc TemporalServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
 	mux := http.NewServeMux()
-	mux.Handle("/temporal.v1beta1.TemporalService/CreateLicense", connect_go.NewUnaryHandler(
-		"/temporal.v1beta1.TemporalService/CreateLicense",
-		svc.CreateLicense,
+	mux.Handle("/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow", connect_go.NewUnaryHandler(
+		"/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow",
+		svc.CreateOnboardingWorkflow,
 		opts...,
 	))
 	return "/temporal.v1beta1.TemporalService/", mux
@@ -89,6 +89,6 @@ func NewTemporalServiceHandler(svc TemporalServiceHandler, opts ...connect_go.Ha
 // UnimplementedTemporalServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedTemporalServiceHandler struct{}
 
-func (UnimplementedTemporalServiceHandler) CreateLicense(context.Context, *connect_go.Request[v1beta1.CreateLicenseRequest]) (*connect_go.Response[v1beta1.CreateLicenseResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("temporal.v1beta1.TemporalService.CreateLicense is not implemented"))
+func (UnimplementedTemporalServiceHandler) CreateOnboardingWorkflow(context.Context, *connect_go.Request[v1beta1.CreateOnboardingWorkflowRequest]) (*connect_go.Response[v1beta1.CreateOnboardingWorkflowResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("temporal.v1beta1.TemporalService.CreateOnboardingWorkflow is not implemented"))
 }

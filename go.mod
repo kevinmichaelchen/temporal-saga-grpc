@@ -3,9 +3,9 @@ module github.com/kevinmichaelchen/temporal-saga-grpc
 go 1.19
 
 require (
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.30.0-20230530223247-ca37dc8895db.1
 	github.com/bufbuild/connect-go v1.8.0
 	github.com/bufbuild/connect-grpchealth-go v1.1.1
-	github.com/envoyproxy/protoc-gen-validate v1.0.1
 	github.com/google/go-cmp v0.5.9
 	github.com/rs/cors v1.9.0
 	github.com/sethvargo/go-envconfig v0.9.0
