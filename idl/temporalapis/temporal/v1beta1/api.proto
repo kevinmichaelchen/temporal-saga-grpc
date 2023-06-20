@@ -2,6 +2,9 @@ syntax = "proto3";
 
 package temporal.v1beta1;
 
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
 service TemporalService {
   // CreateOnboardingWorkflow starts a Temporal Workflow that will:
   // 1. Create an Org
@@ -13,7 +16,7 @@ service TemporalService {
 message WorkflowOptions {
   // ID - The business identifier of the workflow execution.
   // Optional: defaulted to a uuid.
-  string workflow_id = 1;
+  string workflow_id = 1 [(buf.validate.field).string.uuid = true];
 }
 
 message CreateOnboardingWorkflowRequest {
@@ -26,13 +29,20 @@ message CreateOnboardingWorkflowRequest {
 message CreateOnboardingWorkflowResponse {}
 
 message License {
-  string name = 1;
+  google.protobuf.Timestamp start = 1;
+  google.protobuf.Timestamp end = 2;
+
+  option (buf.validate.message).cel = {
+    id: "transaction.expiration_date",
+    message: "end time must be after start time",
+    expression: "this.end > this.start"
+  };
 }
 
 message Org {
-  string name = 1;
+  string name = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message Profile {
-  string name = 1;
+  string name = 1 [(buf.validate.field).string.min_len = 1];
 }
