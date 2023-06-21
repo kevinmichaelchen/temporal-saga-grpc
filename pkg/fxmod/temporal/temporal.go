@@ -19,8 +19,6 @@ var Module = fx.Module("temporal",
 )
 
 // NewClient - Returns a new Temporal client.
-//
-//nolint:ireturn
 func NewClient(lifecycle fx.Lifecycle) (client.Client, error) {
 	interceptors, err := temporal.ClientInterceptors()
 	if err != nil {

@@ -24,8 +24,6 @@ type ModuleOptions struct {
 }
 
 // CreateModule - Creates an FX module for telemetry.
-//
-//nolint:ireturn
 func CreateModule(opts ModuleOptions) fx.Option {
 	return fx.Module("tracing",
 		fx.Provide(
