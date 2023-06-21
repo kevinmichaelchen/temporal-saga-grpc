@@ -105,7 +105,7 @@ func NewTracerProvider(lifecycle fx.Lifecycle, opts *ModuleOptions, cfg *Config)
 
 			log.Println("Shutting down TracerProvider...")
 
-			err := tracerProvider.Shutdown(ctx)
+			err = tracerProvider.Shutdown(ctx)
 			if err != nil {
 				return fmt.Errorf("unable to shut down tracer provider: %w", err)
 			}

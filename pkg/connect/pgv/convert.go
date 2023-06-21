@@ -35,7 +35,7 @@ func Convert(err error) error {
 	pgves, ok := err.(MultiError)
 	if ok {
 		for _, p := range pgves.AllErrors() {
-			pgve, ok := p.(Error)
+			pgve, ok = p.(Error)
 			if ok {
 				fieldViolations = append(fieldViolations, &errdetails.BadRequest_FieldViolation{
 					Field:       pgve.Field(),

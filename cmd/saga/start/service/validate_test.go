@@ -86,7 +86,7 @@ func TestValidate(t *testing.T) {
 		t.Run(testName, func(t *testing.T) {
 			t.Parallel()
 
-			err := validate(validator, tc.build())
+			err = validate(validator, tc.build())
 			tc.expect(t, err)
 		})
 	}
