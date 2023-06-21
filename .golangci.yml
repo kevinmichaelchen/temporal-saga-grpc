@@ -63,75 +63,42 @@ output:
   path-prefix: ""
 # all available settings of specific linters
 linters-settings:
-  varnamelen:
-    # The longest distance, in source lines, that is being considered a "small scope".
-    # Variables used in at most this many lines will be ignored.
-    # Default: 5
-    max-distance: 6
-    # The minimum length of a variable's name that is considered "long".
-    # Variable names that are at least this long will be ignored.
-    # Default: 3
-    min-name-length: 2
-    # Check method receivers.
+  govet:
+    # Report about shadowed variables.
     # Default: false
-    check-receiver: false
-    # Check named return values.
+    check-shadowing: true
+    # Settings per analyzer.
+    settings:
+      # Analyzer name, run `go tool vet help` to see all analyzers.
+      printf:
+        # Comma-separated list of print function names to check (in addition to default, see `go tool vet help printf`).
+        # Default: []
+        funcs:
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Infof
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Warnf
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Errorf
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Fatalf
+      shadow:
+        # Whether to be strict about shadowing; can be noisy.
+        # Default: false
+        strict: true
+      unusedresult:
+        # Comma-separated list of functions whose results must be used
+        # (in addition to defaults context.WithCancel,context.WithDeadline,context.WithTimeout,context.WithValue,
+        # errors.New,fmt.Errorf,fmt.Sprint,fmt.Sprintf,sort.Reverse)
+        # Default []
+        funcs:
+          - pkg.MyFunc
+        # Comma-separated list of names of methods of type func() string whose results must be used
+        # (in addition to default Error,String)
+        # Default []
+        stringmethods:
+          - MyMethod
+    # Enable all analyzers.
     # Default: false
-    check-return: true
-    # Check type parameters.
-    # Default: false
-    check-type-param: true
-    # Ignore "ok" variables that hold the bool return value of a type assertion.
-    # Default: false
-    ignore-type-assert-ok: true
-    # Ignore "ok" variables that hold the bool return value of a map index.
-    # Default: false
-    ignore-map-index-ok: true
-    # Ignore "ok" variables that hold the bool return value of a channel receive.
-    # Default: false
-    ignore-chan-recv-ok: true
-    # Optional list of variable names that should be ignored completely.
-    # Default: []
-    ignore-names:
-      - err
-    # Optional list of variable declarations that should be ignored completely.
-    # Entries must be in one of the following forms (see below for examples):
-    # - for variables, parameters, named return values, method receivers, or type parameters:
-    #   <name> <type>  (<type> can also be a pointer/slice/map/chan/...)
-    # - for constants: const <name>
-    #
-    # Default: []
-    ignore-decls:
-      - c echo.Context
-      - t testing.T
-      - f *foo.Bar
-      - e error
-      - i int
-      - const C
-      - T any
-      - m map[string]int
-      - ok bool
-  ireturn:
-    # ireturn does not allow using `allow` and `reject` settings at the same time.
-    # Both settings are lists of the keywords and regular expressions matched to interface or package names.
-    # keywords:
-    # - `empty` for `interface{}`
-    # - `error` for errors
-    # - `stdlib` for standard library
-    # - `anon` for anonymous interfaces
-    # - `generic` for generic interfaces added in go 1.18
-
-    # By default, it allows using errors, empty interfaces, anonymous interfaces,
-    # and interfaces provided by the standard library.
-    allow:
-      - anon
-      - error
-      - empty
-      - stdlib
-      # You can specify idiomatic endings for interface
-      - (or|er)$
-      - go.uber.org/fx.Option
-      - go.temporal.io/sdk/client.Client
+    enable-all: true
+    disable:
+      - fieldalignment
   wrapcheck:
     # An array of strings that specify substrings of signatures to ignore.
     # If this set, it will override the default set of ignored signatures.
@@ -234,6 +201,12 @@ linters-settings:
   funlen:
     lines: 80
     statements: 40
+
+#  gci:
+# put imports beginning with prefix after 3rd-party packages;
+# only support one prefix
+# if not set, use goimports.local-prefixes
+#    local-prefixes: github.com/kevinmichaelchen/temporal-saga-grpc
 gocognit:
   # minimal code complexity to report, 30 by default (but we recommend 10-20)
   min-complexity: 10
@@ -446,94 +419,24 @@ gofumpt:
   # Intended to point to the repo location of the linter. Optional, just for documentation purposes.
 #      original-url: github.com/golangci/example-linter
 linters:
-  disable-all: true
-  enable:
-    - asasalint
-    - asciicheck
-    - bidichk
-    - bodyclose
-    - containedctx
-    - contextcheck
-    - cyclop
-    - decorder
-#    - depguard
-    - dogsled
-    - dupl
-    - dupword
-    - durationcheck
-    - errcheck
-    - errchkjson
-    - errname
-#    - errorlint
-    - exhaustive
-#    - exhaustruct
-    - exportloopref
-    - forbidigo
-    - funlen
-    - gci
-    - gocheckcompilerdirectives
-#    - gochecknoglobals
-    - gochecknoinits
-    - gocognit
-    - goconst
-    - gocritic
-    - gocyclo
-    - godot
-    #    - godox
-    - goerr113
-    - gofmt
-    - gofumpt
-    - goheader
-    - goimports
-    - gomoddirectives
-    - govet
-    - goprintffuncname
-    - gosec
-    - gosmopolitan
-    - gosimple
-    - govet
-    - importas
-    - interfacebloat
-    - ireturn
-    - ineffassign
-    - loggercheck
-    - lll
-    - maintidx
-    - misspell
-    - musttag
-    - nakedret
-    - nestif
-    - noctx
-    - nolintlint
-    - nilerr
-    - nilnil
-    - nlreturn
-    - noctx
-    - nonamedreturns
-    - nosprintfhostport
-    - paralleltest
-    - predeclared
-    - reassign
-    - rowserrcheck
-    - revive
-    - sqlclosecheck
-    - staticcheck
-    - exportloopref
-    - tagalign
-    - tagliatelle
-    - tenv
-    - thelper
-    - tparallel
-    - typecheck
-    - unconvert
-    - unparam
-    - usestdlibvars
-    - unused
-    - varnamelen
-    - wastedassign
-    - whitespace
-    - wrapcheck
-    - wsl
+  enable-all: true
+  disable:
+    - deadcode
+    - depguard # TEMPORARY
+    - errorlint # TEMPORARY
+    - exhaustruct
+    - exhaustivestruct
+    - gochecknoglobals
+    - godox
+    - golint
+    - ifshort
+    - interfacer
+    - maligned
+    - nosnakecase
+    - scopelint
+    - structcheck
+    - testpackage
+    - varcheck
 issues:
   # List of regexps of issue texts to exclude, empty list by default.
   # But independently from this option we use default exclude patterns,

@@ -81,12 +81,13 @@ func TestValidate(t *testing.T) {
 	for testName, tc := range tests {
 		// https://github.com/kunwardeep/paralleltest#tparallel-is-called-in-the-range-method-and-test-case-variable-tc-being-used-but-is-not-reinitialised-more-info
 		// https://gist.github.com/kunwardeep/80c2e9f3d3256c894898bae82d9f75d0
+		//nolint:varnamelen
 		tc := tc
 
 		t.Run(testName, func(t *testing.T) {
 			t.Parallel()
 
-			err := validate(validator, tc.build())
+			err = validate(validator, tc.build())
 			tc.expect(t, err)
 		})
 	}
