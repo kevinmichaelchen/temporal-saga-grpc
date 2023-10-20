@@ -1,0 +1,36 @@
+version: '3'
+
+tasks:
+  lint:
+    run: once
+    deps:
+      - format
+    cmd: pkgx golangci-lint@latest run --verbose
+
+  fmt:
+    aliases:
+      - format
+    run: once
+    internal: true
+    desc: "Format Golang"
+    cmds:
+      - task: gofumpt
+      - task: gci
+
+  gofumpt:
+    run: once
+    internal: true
+    desc: "Format Go code"
+    cmd: "pkgx gofumpt@latest -l -w ."
+
+  gci:
+    run: once
+    internal: true
+    desc: "Format Go imports"
+    cmds:
+      - |
+        pkgx gci@latest write --skip-generated \
+          -s standard \
+          -s default \
+          -s "prefix(github.com/kevinmichaelchen/temporal-saga-grpc)" \
+          .

@@ -1,8 +1,10 @@
 version: '3'
 
-vars:
-  NPX:
-    sh: which -a bunx npx | grep -v "not found" | head -n 1
+includes:
+  buf:
+    taskfile: ./taskfiles/buf.yml
+  go:
+    taskfile: ./taskfiles/golang.yml
 
 tasks:
   generate:
@@ -10,39 +12,21 @@ tasks:
       - gen
     desc: "Generate code (e.g., protobufs)"
     deps:
-      - gen-buf
-
-  gen-buf:
-    internal: true
-    desc: "Generate protobufs"
-    cmds:
-      - buf generate
+      - buf:gen
 
   lint:
     desc: "Lints the code"
     deps:
-      - lint-buf
-      - lint-go
-
-  lint-buf:
-    deps:
-      - format
-    cmds:
-      - buf lint
-      - buf format -w
-
-  lint-go:
-    deps:
-      - format
-    cmds:
-      - golangci-lint run --verbose
+      - buf:lint
+      - go:lint
 
   format:
     aliases: [fmt]
     run: once
     desc: "Formats all code"
     deps:
-      - fmt-go
+      - buf:fmt
+      - go:fmt
       - fmt-md
 
   fmt-md:
@@ -50,33 +34,4 @@ tasks:
     internal: true
     desc: "Format Markdown"
     cmds:
-      - "{{.NPX}} prettier --write \"**/*.md\" --prose-wrap always"
-
-  fmt-go:
-    run: once
-    internal: true
-    desc: "Format Golang"
-    cmds:
-      - task: gofumpt
-      - task: gci
-
-  gofumpt:
-    run: once
-    internal: true
-    desc: "Format Go code"
-    cmds:
-      - "go install mvdan.cc/gofumpt@latest"
-      - "gofumpt -l -w ."
-
-  gci:
-    run: once
-    internal: true
-    desc: "Format Go imports"
-    cmds:
-      - |
-        go install github.com/daixiang0/gci@latest ; \
-        gci write --skip-generated \
-          -s standard \
-          -s default \
-          -s "prefix(github.com/kevinmichaelchen/temporal-saga-grpc)" \
-          .
+      - "pkgx bunx prettier --write \"**/*.md\" --prose-wrap always"

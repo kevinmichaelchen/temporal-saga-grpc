@@ -1,0 +1,22 @@
+version: '3'
+
+tasks:
+  gen:
+    run: once
+    aliases:
+      - generate
+    internal: true
+    desc: "Generate protobufs"
+    cmd: pkgx buf@latest generate
+
+  format:
+    run: once
+    aliases:
+      - fmt
+    cmd: pkgx buf@latest format -w
+
+  lint:
+    run: once
+    deps:
+      - format
+    cmd: pkgx buf@latest lint
