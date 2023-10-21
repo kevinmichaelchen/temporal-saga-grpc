@@ -2,17 +2,20 @@
 package service
 
 import (
+	temporalConnect "buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go/temporal/v1beta1/temporalv1beta1connect"
+	temporalPB "buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go/temporal/v1beta1"
 	"context"
 	"fmt"
 
-	"github.com/bufbuild/connect-go"
+	"connectrpc.com/connect"
 	"github.com/bufbuild/protovalidate-go"
 	"github.com/sirupsen/logrus"
 	"go.temporal.io/sdk/client"
 
-	temporalv1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/temporal/v1beta1"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 )
+
+var _ temporalConnect.TemporalServiceHandler = (*Service)(nil)
 
 // Service - An HTTP API for starting Temporal workflows.
 type Service struct {
@@ -32,8 +35,8 @@ func NewService(c client.Client, validator *protovalidate.Validator) *Service {
 // that results in the creation of a license and associated objects.
 func (s *Service) CreateOnboardingWorkflow(
 	ctx context.Context,
-	req *connect.Request[temporalv1beta1.CreateOnboardingWorkflowRequest],
-) (*connect.Response[temporalv1beta1.CreateOnboardingWorkflowResponse], error) {
+	req *connect.Request[temporalPB.CreateOnboardingWorkflowRequest],
+) (*connect.Response[temporalPB.CreateOnboardingWorkflowResponse], error) {
 	temporalClient := s.client
 
 	// Validate the request
@@ -68,7 +71,7 @@ func (s *Service) CreateOnboardingWorkflow(
 
 	printResults(args, workflow.GetID(), workflow.GetRunID())
 
-	res := &temporalv1beta1.CreateOnboardingWorkflowResponse{}
+	res := &temporalPB.CreateOnboardingWorkflowResponse{}
 
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")

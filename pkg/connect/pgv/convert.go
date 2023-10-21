@@ -5,7 +5,7 @@ package pgv
 import (
 	"fmt"
 
-	"github.com/bufbuild/connect-go"
+	"connectrpc.com/connect"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 )
 

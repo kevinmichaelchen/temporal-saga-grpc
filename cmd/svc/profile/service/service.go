@@ -2,14 +2,17 @@
 package service
 
 import (
+	profileConnect "buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go/profile/v1beta1/profilev1beta1connect"
 	"context"
 
-	"github.com/bufbuild/connect-go"
+	profilePB "buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go/profile/v1beta1"
+	"connectrpc.com/connect"
 	"github.com/sirupsen/logrus"
-	profilev1beta1 "go.buf.build/bufbuild/connect-go/kevinmichaelchen/profileapis/profile/v1beta1"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 )
+
+var _ profileConnect.ProfileServiceHandler = (*Service)(nil)
 
 // Service - A controller for our business logic.
 type Service struct{}
@@ -22,8 +25,8 @@ func NewService() *Service {
 // CreateProfile - Creates a new user profile.
 func (s *Service) CreateProfile(
 	_ context.Context,
-	req *connect.Request[profilev1beta1.CreateProfileRequest],
-) (*connect.Response[profilev1beta1.CreateProfileResponse], error) {
+	req *connect.Request[profilePB.CreateProfileRequest],
+) (*connect.Response[profilePB.CreateProfileResponse], error) {
 	// Sleep for a bit to simulate the latency of a database lookup
 	simulated.Sleep()
 
@@ -33,7 +36,7 @@ func (s *Service) CreateProfile(
 		return nil, err
 	}
 
-	res := &profilev1beta1.CreateProfileResponse{}
+	res := &profilePB.CreateProfileResponse{}
 
 	logrus.WithField("name", req.Msg.GetName()).Info("Creating Profile")
 

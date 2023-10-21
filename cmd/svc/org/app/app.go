@@ -2,8 +2,8 @@
 package app
 
 import (
-	"github.com/bufbuild/connect-go"
-	"go.buf.build/bufbuild/connect-go/kevinmichaelchen/orgapis/org/v1beta1/orgv1beta1connect"
+	"buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
+	"connectrpc.com/connect"
 	"go.uber.org/fx"
 
 	modService "github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/app/service"

@@ -4,12 +4,15 @@ package service
 import (
 	"context"
 
-	"github.com/bufbuild/connect-go"
+	orgConnect "buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
+	orgPB "buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go/org/v1beta1"
+	"connectrpc.com/connect"
 	"github.com/sirupsen/logrus"
-	orgv1beta1 "go.buf.build/bufbuild/connect-go/kevinmichaelchen/orgapis/org/v1beta1"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 )
+
+var _ orgConnect.OrgServiceHandler = (*Service)(nil)
 
 // Service - A controller for our business logic.
 type Service struct{}
@@ -22,8 +25,8 @@ func NewService() *Service {
 // CreateOrg - Creates a new org.
 func (s *Service) CreateOrg(
 	_ context.Context,
-	req *connect.Request[orgv1beta1.CreateOrgRequest],
-) (*connect.Response[orgv1beta1.CreateOrgResponse], error) {
+	req *connect.Request[orgPB.CreateOrgRequest],
+) (*connect.Response[orgPB.CreateOrgResponse], error) {
 	// Sleep for a bit to simulate the latency of a database lookup
 	simulated.Sleep()
 
@@ -33,7 +36,7 @@ func (s *Service) CreateOrg(
 		return nil, err
 	}
 
-	res := &orgv1beta1.CreateOrgResponse{}
+	res := &orgPB.CreateOrgResponse{}
 
 	logrus.WithField("name", req.Msg.GetName()).Info("Creating Org")
 

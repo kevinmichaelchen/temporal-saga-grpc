@@ -2,15 +2,19 @@
 package service
 
 import (
+	licenseConnect "buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go/license/v1beta1/licensev1beta1connect"
+	licensev1beta1 "buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go/license/v1beta1"
+	"connectrpc.com/connect"
 	"context"
-
-	"github.com/bufbuild/connect-go"
+	"fmt"
+	"github.com/bufbuild/protovalidate-go"
 	"github.com/sirupsen/logrus"
 
-	licensev1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/license/v1beta1"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect/pgv"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 )
+
+var _ licenseConnect.LicenseServiceHandler = (*Service)(nil)
 
 // Service - A controller for our business logic.
 type Service struct{}
@@ -25,7 +29,15 @@ func (s *Service) CreateLicense(
 	_ context.Context,
 	req *connect.Request[licensev1beta1.CreateLicenseRequest],
 ) (*connect.Response[licensev1beta1.CreateLicenseResponse], error) {
-	err := req.Msg.Validate()
+	v, err := protovalidate.New()
+	if err != nil {
+		return nil, connect.NewError(
+			connect.CodeInternal,
+			fmt.Errorf("unable to construct validator: %w", err),
+		)
+	}
+
+	err = v.Validate(req.Msg)
 	if err != nil {
 		return nil, pgv.Convert(err)
 	}

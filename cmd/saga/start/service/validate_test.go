@@ -1,43 +1,35 @@
 package service
 
 import (
-	"testing"
-	"time"
-
+	temporalPB "buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go/temporal/v1beta1"
 	"github.com/bufbuild/protovalidate-go"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
-	"google.golang.org/protobuf/types/known/timestamppb"
-
-	temporalv1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/temporal/v1beta1"
+	"testing"
 )
 
 func TestValidate(t *testing.T) {
 	t.Parallel()
 
-	buildValid := func() *temporalv1beta1.CreateOnboardingWorkflowRequest {
-		start := time.Date(2023, 6, 19, 12, 30, 0, 0, time.UTC)
-		end := time.Date(2024, 6, 19, 12, 30, 0, 0, time.UTC)
-
-		return &temporalv1beta1.CreateOnboardingWorkflowRequest{
-			WorkflowOptions: &temporalv1beta1.WorkflowOptions{
+	buildValid := func() *temporalPB.CreateOnboardingWorkflowRequest {
+		return &temporalPB.CreateOnboardingWorkflowRequest{
+			WorkflowOptions: &temporalPB.WorkflowOptions{
 				WorkflowId: uuid.New().String(),
 			},
-			License: &temporalv1beta1.License{
-				Start: timestamppb.New(start),
-				End:   timestamppb.New(end),
-			},
-			Org: &temporalv1beta1.Org{
+			License: &temporalPB.License{
 				Name: "Name",
 			},
-			Profile: &temporalv1beta1.Profile{
+			Org: &temporalPB.Org{
+				Name: "Name",
+			},
+			Profile: &temporalPB.Profile{
 				Name: "Name",
 			},
 		}
 	}
 
 	tests := map[string]struct {
-		build  func() *temporalv1beta1.CreateOnboardingWorkflowRequest
+		build  func() *temporalPB.CreateOnboardingWorkflowRequest
 		expect func(t *testing.T, err error)
 	}{
 		"OK": {
@@ -48,7 +40,7 @@ func TestValidate(t *testing.T) {
 			},
 		},
 		"Invalid - Workflow ID should be UUID": {
-			build: func() *temporalv1beta1.CreateOnboardingWorkflowRequest {
+			build: func() *temporalPB.CreateOnboardingWorkflowRequest {
 				out := buildValid()
 				out.WorkflowOptions.WorkflowId = "foobar"
 
@@ -60,10 +52,10 @@ func TestValidate(t *testing.T) {
  - workflow_options.workflow_id: value must be a valid UUID [string.uuid]`)
 			},
 		},
-		"Invalid - License start should precede its end": {
-			build: func() *temporalv1beta1.CreateOnboardingWorkflowRequest {
+		"Invalid - License name cannot be empty": {
+			build: func() *temporalPB.CreateOnboardingWorkflowRequest {
 				out := buildValid()
-				out.License.Start = timestamppb.New(out.License.End.AsTime().Add(time.Hour))
+				out.License.Name = ""
 
 				return out
 			},

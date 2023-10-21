@@ -1,11 +1,10 @@
 package service
 
 import (
+	temporalv1beta1 "buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go/temporal/v1beta1"
 	"fmt"
 
 	"github.com/bufbuild/protovalidate-go"
-
-	temporalv1beta1 "github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/temporal/v1beta1"
 )
 
 func validate(

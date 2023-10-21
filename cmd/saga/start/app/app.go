@@ -2,12 +2,12 @@
 package app
 
 import (
-	"github.com/bufbuild/connect-go"
+	temporalConnect "buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go/temporal/v1beta1/temporalv1beta1connect"
+	"connectrpc.com/connect"
 	"go.uber.org/fx"
 
 	modService "github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/start/app/service"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/start/service"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/internal/idl/temporal/v1beta1/temporalv1beta1connect"
 	pkgConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect"
 	modConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/logging"
@@ -21,7 +21,7 @@ var Module = fx.Options(
 	modConnect.CreateModule(&modConnect.ModuleOptions{
 		HandlerProvider: func(svc *service.Service) modConnect.HandlerOutput {
 			// Register our Connect-Go server
-			path, handler := temporalv1beta1connect.NewTemporalServiceHandler(
+			path, handler := temporalConnect.NewTemporalServiceHandler(
 				svc,
 				connect.WithInterceptors(pkgConnect.UnaryInterceptors()...),
 			)

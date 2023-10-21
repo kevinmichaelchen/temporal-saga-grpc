@@ -4,11 +4,11 @@ package connect
 import (
 	"context"
 
-	"github.com/bufbuild/connect-go"
+	"connectrpc.com/connect"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/trace"
-	grpc_codes "google.golang.org/grpc/codes"
+	grpccodes "google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
@@ -48,7 +48,7 @@ func connectInterceptorForSpan() connect.UnaryInterceptorFunc {
 				span.SetStatus(codes.Error, s.Message())
 				span.SetAttributes(statusCodeAttr(s.Code()))
 			} else {
-				span.SetAttributes(statusCodeAttr(grpc_codes.OK))
+				span.SetAttributes(statusCodeAttr(grpccodes.OK))
 			}
 
 			return resp, err
