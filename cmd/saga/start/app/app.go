@@ -11,8 +11,8 @@ import (
 	pkgConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect"
 	modConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/logging"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/otel"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/temporal"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/tracing"
 )
 
 // Module - An FX module for the application.
@@ -37,7 +37,7 @@ var Module = fx.Options(
 	}),
 	logging.Module,
 	modService.Module,
-	tracing.CreateModule(tracing.ModuleOptions{
+	otel.CreateModule(otel.ModuleOptions{
 		ServiceName: "temporal-starter",
 	}),
 )

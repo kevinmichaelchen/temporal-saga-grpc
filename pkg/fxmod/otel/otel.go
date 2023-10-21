@@ -1,18 +1,18 @@
 // Package tracing provides an FX module for OpenTelemetry tracing.
-package tracing
+package otel
 
 import (
 	"context"
 	"fmt"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"log"
 	"time"
 
 	"github.com/sethvargo/go-envconfig"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/exporters/jaeger"
 	"go.opentelemetry.io/otel/sdk/resource"
-	tracesdk "go.opentelemetry.io/otel/sdk/trace"
+	"go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 	"go.temporal.io/sdk/contrib/opentelemetry"
 	"go.uber.org/fx"
@@ -30,6 +30,7 @@ func CreateModule(opts ModuleOptions) fx.Option {
 			func() *ModuleOptions {
 				return &opts
 			},
+			NewSpanExporter,
 			NewTracerProvider,
 			NewConfig,
 		),
@@ -61,7 +62,7 @@ func NewConfig() (*Config, error) {
 }
 
 // Register - Registers the tracer provider.
-func Register(tp *tracesdk.TracerProvider) {
+func Register(tp *trace.TracerProvider) {
 	// Register our TracerProvider as the global so any imported
 	// instrumentation in the future will default to using it.
 	otel.SetTracerProvider(tp)
@@ -70,24 +71,32 @@ func Register(tp *tracesdk.TracerProvider) {
 	otel.SetTextMapPropagator(opentelemetry.DefaultTextMapPropagator)
 }
 
+func NewSpanExporter(
+	cfg *Config,
+) (trace.SpanExporter, error) {
+	return otlptracegrpc.New(
+		context.Background(),
+		otlptracegrpc.WithEndpoint(cfg.TraceConfig.URL),
+	)
+}
+
 // NewTracerProvider returns an OpenTelemetry TracerProvider configured to use
 // the Jaeger exporter that will send spans to the provided url. The returned
 // TracerProvider will also use a Resource configured with all the information
 // about the application.
-func NewTracerProvider(lifecycle fx.Lifecycle, opts *ModuleOptions, cfg *Config) (*tracesdk.TracerProvider, error) {
-	// Create the Jaeger exporter
-	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(cfg.TraceConfig.URL)))
-	if err != nil {
-		return nil, fmt.Errorf("unable to create Jaeger exporter: %w", err)
-	}
-
-	tracerProvider := tracesdk.NewTracerProvider(
+func NewTracerProvider(
+	lifecycle fx.Lifecycle,
+	opts *ModuleOptions,
+	cfg *Config,
+	exp trace.SpanExporter,
+) (*trace.TracerProvider, error) {
+	tracerProvider := trace.NewTracerProvider(
 		// Always sample traces.
-		tracesdk.WithSampler(tracesdk.AlwaysSample()),
+		trace.WithSampler(trace.AlwaysSample()),
 		// Always be sure to batch in production.
-		tracesdk.WithBatcher(exp),
+		trace.WithBatcher(exp),
 		// Record information about this application in a Resource.
-		tracesdk.WithResource(resource.NewWithAttributes(
+		trace.WithResource(resource.NewWithAttributes(
 			semconv.SchemaURL,
 			semconv.ServiceNameKey.String(opts.ServiceName),
 			attribute.String("environment", cfg.TraceConfig.Env),
@@ -105,7 +114,7 @@ func NewTracerProvider(lifecycle fx.Lifecycle, opts *ModuleOptions, cfg *Config)
 
 			log.Println("Shutting down TracerProvider...")
 
-			err = tracerProvider.Shutdown(ctx)
+			err := tracerProvider.Shutdown(ctx)
 			if err != nil {
 				return fmt.Errorf("unable to shut down tracer provider: %w", err)
 			}
