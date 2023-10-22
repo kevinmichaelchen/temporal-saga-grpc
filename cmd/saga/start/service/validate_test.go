@@ -1,11 +1,12 @@
 package service
 
 import (
+	"testing"
+
 	temporalPB "buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go/temporal/v1beta1"
 	"github.com/bufbuild/protovalidate-go"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 func TestValidate(t *testing.T) {

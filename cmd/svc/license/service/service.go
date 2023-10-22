@@ -2,15 +2,15 @@
 package service
 
 import (
+	"context"
+	"fmt"
+
 	licenseConnect "buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go/license/v1beta1/licensev1beta1connect"
 	licensev1beta1 "buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go/license/v1beta1"
 	"connectrpc.com/connect"
-	"context"
-	"fmt"
 	"github.com/bufbuild/protovalidate-go"
 	"github.com/sirupsen/logrus"
 
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect/pgv"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 )
 
@@ -29,7 +29,7 @@ func (s *Service) CreateLicense(
 	_ context.Context,
 	req *connect.Request[licensev1beta1.CreateLicenseRequest],
 ) (*connect.Response[licensev1beta1.CreateLicenseResponse], error) {
-	v, err := protovalidate.New()
+	validator, err := protovalidate.New()
 	if err != nil {
 		return nil, connect.NewError(
 			connect.CodeInternal,
@@ -37,9 +37,9 @@ func (s *Service) CreateLicense(
 		)
 	}
 
-	err = v.Validate(req.Msg)
+	err = validator.Validate(req.Msg)
 	if err != nil {
-		return nil, pgv.Convert(err)
+		return nil, fmt.Errorf("invalid request: %w", err)
 	}
 
 	// Sleep for a bit to simulate the latency of a database lookup

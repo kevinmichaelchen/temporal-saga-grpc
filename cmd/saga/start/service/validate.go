@@ -1,9 +1,9 @@
 package service
 
 import (
-	temporalv1beta1 "buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go/temporal/v1beta1"
 	"fmt"
 
+	temporalv1beta1 "buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go/temporal/v1beta1"
 	"github.com/bufbuild/protovalidate-go"
 )
 

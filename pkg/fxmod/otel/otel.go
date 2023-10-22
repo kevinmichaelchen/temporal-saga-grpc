@@ -1,16 +1,16 @@
-// Package tracing provides an FX module for OpenTelemetry tracing.
+// Package otel provides an FX module for OpenTelemetry tracing.
 package otel
 
 import (
 	"context"
 	"fmt"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"log"
 	"time"
 
 	"github.com/sethvargo/go-envconfig"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
@@ -71,13 +71,19 @@ func Register(tp *trace.TracerProvider) {
 	otel.SetTextMapPropagator(opentelemetry.DefaultTextMapPropagator)
 }
 
+// NewSpanExporter - Returns a new span exporter.
 func NewSpanExporter(
 	cfg *Config,
 ) (trace.SpanExporter, error) {
-	return otlptracegrpc.New(
+	exp, err := otlptracegrpc.New(
 		context.Background(),
 		otlptracegrpc.WithEndpoint(cfg.TraceConfig.URL),
 	)
+	if err != nil {
+		return nil, fmt.Errorf("unable to create span exporter: %w", err)
+	}
+
+	return exp, nil
 }
 
 // NewTracerProvider returns an OpenTelemetry TracerProvider configured to use
