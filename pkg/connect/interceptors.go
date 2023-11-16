@@ -9,6 +9,10 @@ import (
 // Interceptors - Interceptors for Connect Go servers.
 func Interceptors() []connect.Interceptor {
 	return []connect.Interceptor{
-		otelconnect.NewInterceptor(),
+		otelconnect.NewInterceptor(
+			// Trust the client's tracing information. With this option, servers
+			// will create child spans for each request.
+			otelconnect.WithTrustRemote(),
+		),
 	}
 }
