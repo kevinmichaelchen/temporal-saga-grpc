@@ -1,11 +1,11 @@
-buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.31.0-20230609233005-3757a25ff0b9.1/go.mod h1:xafc+XIsTxTy76GJQ1TKgvJWsSugFBqMaN27WhUblew=
+buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.31.0-20230609233005-3757a25ff0b9.2/go.mod h1:xafc+XIsTxTy76GJQ1TKgvJWsSugFBqMaN27WhUblew=
 buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.31.0-20231106192134-1baebb0a1518.2 h1:iRWpWLm1nrsCHBVhibqPJQB3iIf3FRsAXioJVU8m6w0=
 buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.31.0-20231106192134-1baebb0a1518.2/go.mod h1:xafc+XIsTxTy76GJQ1TKgvJWsSugFBqMaN27WhUblew=
-buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.31.0-20221025150516-6607b10f00ed.1/go.mod h1:Piak8t898VnXArmyLTXHwiVis+pdk9Yxsu5TwwmFnsA=
-buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.11.1-20230620011624-257a6358889c.1 h1:iSNaHmO0O98X3OBzykl1GjjFfbjlfy9ND7pQG5/Yn2s=
-buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.11.1-20230620011624-257a6358889c.1/go.mod h1:MYFJbp6q3ZyR8EVKsyb4r5YccKT88c7l6ori+QDeDUM=
-buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20230620011624-257a6358889c.1 h1:r9L/Ft2VH9Bg3hfSw5RV82GU/PE6kits9mFj2yBoN9A=
-buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20230620011624-257a6358889c.1/go.mod h1:KKl3zWWM/kfIMwE/xPBqakydUGQF05lIi9lthKGsTI8=
+buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.31.0-20221025150516-6607b10f00ed.2/go.mod h1:Piak8t898VnXArmyLTXHwiVis+pdk9Yxsu5TwwmFnsA=
+buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.12.0-20230620011624-257a6358889c.1 h1:naeA0jZJOJWMi6iyhgVOFnKt3zg41rWhMnbmoWJFwh0=
+buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.12.0-20230620011624-257a6358889c.1/go.mod h1:e1o2+jGmTqGIhTtZqHQDvaEa3Sj6l4ALDvTjEOaIIVE=
+buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20230620011624-257a6358889c.2 h1:bA6lD3nAuU6elc1SRwHHezVQWKqVoI1jMXVpZ4Sp9s4=
+buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20230620011624-257a6358889c.2/go.mod h1:K4Mk4tofbo9RULJZCS6PQKuA41d5VIwVwiKE658DIYg=
 buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.11.1-20221121195307-c877b91e28b6.1 h1:Ql4YrqLtP1gzUcCoUEjN7DbJuI+fhNSkoPqIph1gevI=
 buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.11.1-20221121195307-c877b91e28b6.1/go.mod h1:m+vuLs2wZPsBBhbVAz6yC9VbeG5iUbUi++Ql3zNZ3Uo=
 buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20221121195307-c877b91e28b6.2 h1:7paMof8yuib6fN3gfmZHgFBEmQY4MGaMUeMa9CPPcy8=
