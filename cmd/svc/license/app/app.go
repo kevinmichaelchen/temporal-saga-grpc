@@ -21,7 +21,7 @@ var Module = fx.Options(
 			// Register our Connect-Go server
 			path, handler := licenseConnect.NewLicenseServiceHandler(
 				svc,
-				connect.WithInterceptors(pkgConnect.UnaryInterceptors()...),
+				connect.WithInterceptors(pkgConnect.Interceptors()...),
 			)
 
 			return modConnect.HandlerOutput{

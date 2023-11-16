@@ -23,7 +23,7 @@ var Module = fx.Options(
 			// Register our Connect-Go server
 			path, handler := temporalConnect.NewTemporalServiceHandler(
 				svc,
-				connect.WithInterceptors(pkgConnect.UnaryInterceptors()...),
+				connect.WithInterceptors(pkgConnect.Interceptors()...),
 			)
 
 			return modConnect.HandlerOutput{

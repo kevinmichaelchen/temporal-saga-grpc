@@ -15,6 +15,7 @@ require (
 	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.11.1-20230620011625-99cb60d4ce70.1
 	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.31.0-20230620011625-99cb60d4ce70.1
 	connectrpc.com/connect v1.12.0
+	connectrpc.com/otelconnect v0.6.0
 	github.com/bufbuild/connect-grpchealth-go v1.1.1
 	github.com/bufbuild/protovalidate-go v0.3.4
 	github.com/google/uuid v1.3.1
@@ -26,7 +27,6 @@ require (
 	go.opentelemetry.io/otel v1.19.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.19.0
 	go.opentelemetry.io/otel/sdk v1.19.0
-	go.opentelemetry.io/otel/trace v1.19.0
 	go.temporal.io/sdk v1.25.1
 	go.temporal.io/sdk/contrib/opentelemetry v0.3.0
 	go.uber.org/fx v1.20.1
@@ -59,6 +59,7 @@ require (
 	github.com/stretchr/objx v0.5.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.19.0 // indirect
 	go.opentelemetry.io/otel/metric v1.19.0 // indirect
+	go.opentelemetry.io/otel/trace v1.19.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.0.0 // indirect
 	go.temporal.io/api v1.24.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
