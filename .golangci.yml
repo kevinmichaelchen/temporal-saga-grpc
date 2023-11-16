@@ -84,6 +84,9 @@ linters-settings:
       - (or|er)$
       - go.uber.org/fx.Option
       - go.temporal.io/sdk/client.Client
+      - orgv1beta1connect.OrgServiceClient
+      - profilev1beta1connect.ProfileServiceClient
+      - licensev1beta1connect.LicenseServiceClient
   varnamelen:
     # The longest distance, in source lines, that is being considered a "small scope".
     # Variables used in at most this many lines will be ignored.

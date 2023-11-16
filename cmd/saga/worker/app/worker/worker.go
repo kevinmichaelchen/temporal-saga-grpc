@@ -49,8 +49,6 @@ func NewController(
 }
 
 // NewLicenseClient - Returns a new Connect client for the License service.
-//
-//nolint:ireturn // Connect client is an interface
 func NewLicenseClient() licensev1beta1connect.LicenseServiceClient {
 	addr := fmt.Sprintf("localhost:%d", servicePortLicense)
 
@@ -62,8 +60,6 @@ func NewLicenseClient() licensev1beta1connect.LicenseServiceClient {
 }
 
 // NewOrgClient - Returns a new Connect client for the Org service.
-//
-//nolint:ireturn // Connect client is an interface
 func NewOrgClient() orgv1beta1connect.OrgServiceClient {
 	addr := fmt.Sprintf("localhost:%d", servicePortOrg)
 
