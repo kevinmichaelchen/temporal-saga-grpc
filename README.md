@@ -32,11 +32,13 @@ The upstream microservices that are called during the workflow all use gRPC.
 
 ### Step 0: Spin up Temporal and Jaeger
 
-We use Docker Compose for
-[Temporalite](https://github.com/temporalio/temporalite) (a lighter-weight
-version of Temporal's
-[docker-compose](https://github.com/temporalio/docker-compose) repo), as well as
-for [Jaeger](https://www.jaegertracing.io/) (a telemetry backend).
+We use Docker Compose for [Temporalite][temporalite] (a lighter-weight version 
+of Temporal's [docker-compose][temporal-docker-compose] repo), as well as
+for [Jaeger][jaeger] (a telemetry backend).
+
+[temporalite]: https://github.com/temporalio/temporalite
+[temporal-docker-compose]: https://github.com/temporalio/docker-compose
+[jaeger]: https://www.jaegertracing.io
 
 You can spin everything up with:
 
