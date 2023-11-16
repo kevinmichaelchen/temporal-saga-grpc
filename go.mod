@@ -14,7 +14,7 @@ require (
 	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20221121195307-54c7cc0bb136.1
 	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.11.1-20230620011625-99cb60d4ce70.1
 	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.31.0-20230620011625-99cb60d4ce70.1
-	connectrpc.com/connect v1.11.1
+	connectrpc.com/connect v1.12.0
 	github.com/bufbuild/connect-grpchealth-go v1.1.1
 	github.com/bufbuild/protovalidate-go v0.3.4
 	github.com/google/uuid v1.3.1
