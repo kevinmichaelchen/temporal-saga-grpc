@@ -8,7 +8,7 @@ require (
 	buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20230620011624-257a6358889c.1
 	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.11.1-20221121195307-c877b91e28b6.1
 	buf.build/gen/go/kevinmichaelchen/orgapis/grpc/go v1.3.0-20221121195307-c877b91e28b6.1
-	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20221121195307-c877b91e28b6.1
+	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20221121195307-c877b91e28b6.2
 	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.11.1-20221121195307-54c7cc0bb136.1
 	buf.build/gen/go/kevinmichaelchen/profileapis/grpc/go v1.3.0-20221121195307-54c7cc0bb136.1
 	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20221121195307-54c7cc0bb136.1
