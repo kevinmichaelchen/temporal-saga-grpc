@@ -1,23 +1,6 @@
 version: "3.9"
 
 services:
-  # All telemetry will go to OpenTelemetry Collector first.
-  # From there, we can forward it to any platform.
-  collector:
-    image: otel/opentelemetry-collector
-    # Expose OTel Collector's OTLP ports so Hasura can send it telemetry
-    expose:
-      - 4317 # gRPC
-      - 4318 # HTTP
-    ports:
-      - "127.0.0.1:4317:4317" # Any locally-running Go needs to reach
-      - "127.0.0.1:4318:4318"
-    volumes:
-      - ./otel-config.yml:/etc/otel-config.yaml
-    command: "--config=/etc/otel-config.yaml"
-    depends_on:
-      - jaeger
-
   jaeger:
     image: jaegertracing/all-in-one:latest
     # Enable OTLP export of traces from OTel Collector to Jaeger

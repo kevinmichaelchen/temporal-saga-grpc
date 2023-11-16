@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package org.v1beta1;
 
+// Service for managing Orgs.
 service OrgService {
   rpc CreateOrg(CreateOrgRequest) returns (CreateOrgResponse) {}
 }

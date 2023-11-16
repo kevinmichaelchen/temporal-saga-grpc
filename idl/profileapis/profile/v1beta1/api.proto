@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package profile.v1beta1;
 
+// Service for managing Profiles.
 service ProfileService {
   rpc CreateProfile(CreateProfileRequest) returns (CreateProfileResponse) {}
 }

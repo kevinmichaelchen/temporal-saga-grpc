@@ -30,45 +30,21 @@ The upstream microservices that are called during the workflow all use gRPC.
 
 ## Getting started
 
-### Step 0: Spin up Temporal and Jaeger
+### Step 1: Spin everything up
 
-We use Docker Compose for [Temporalite][temporalite] (a lighter-weight version 
-of Temporal's [docker-compose][temporal-docker-compose] repo), as well as
-for [Jaeger][jaeger] (a telemetry backend).
+We use [pkgx][pkgx] to run Temporal's dev server. We use Docker to run 
+[Jaeger][jaeger] (a telemetry backend).
 
-[temporalite]: https://github.com/temporalio/temporalite
-[temporal-docker-compose]: https://github.com/temporalio/docker-compose
+[pkgx]: https://pkgx.sh/
 [jaeger]: https://www.jaegertracing.io
 
 You can spin everything up with:
 
 ```shell
-docker-compose up -d
+make all
 ```
 
-Temporalite runs the Temporal server on 7233, and the Temporal Web UI on 8233.
-
-### Step 1: Start Temporal Worker
-
-```shell
-go run cmd/saga/worker/main.go
-```
-
-### Step 2: Start Temporal Workflow gRPC Server
-
-```shell
-env GRPC_CONNECT_PORT=8081 go run cmd/saga/start/main.go
-```
-
-### Step 3: Start upstream gRPC Services
-
-```shell
-GRPC_CONNECT_PORT=9090 go run cmd/svc/license/main.go
-GRPC_CONNECT_PORT=9091 go run cmd/svc/org/main.go
-GRPC_CONNECT_PORT=9092 go run cmd/svc/profile/main.go
-```
-
-### Step 4: Start Temporal Workflow
+### Step 2: Start a Temporal Workflow
 
 ```shell
 curl -v http://localhost:8081/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow \
@@ -82,12 +58,7 @@ http POST \
     profile:='{"name": "Kevin Chen"}'
 ```
 
-### Step 5: Check the UIs
+### Step 3: Check the UIs
 
-#### Jaeger
-
-See traces in Jaeger at [localhost:16686](http://localhost:16686).
-
-#### Temporal Web UI
-
-See the Temporal Workflow at [localhost:8233](http://localhost:8233).
+- See traces in Jaeger at [localhost:16686](http://localhost:16686).
+- See the Temporal Workflow at [localhost:8233](http://localhost:8233).

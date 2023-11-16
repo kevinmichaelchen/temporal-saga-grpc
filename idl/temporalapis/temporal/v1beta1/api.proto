@@ -5,6 +5,7 @@ package temporal.v1beta1;
 import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 
+// Service for managing Temporal workflows.
 service TemporalService {
   // CreateOnboardingWorkflow starts a Temporal Workflow that will:
   // 1. Create an Org

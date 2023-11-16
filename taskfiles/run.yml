@@ -1,0 +1,50 @@
+version: '3'
+
+tasks:
+  all:
+    desc: "Starts everything"
+    deps:
+      - pkgx docker-clean stop
+      - task: infra
+      - task: temporal
+      - task: worker
+      - task: starter
+      - task: service-license
+      - task: service-org
+      - task: service-profile
+
+  infra:
+    desc: "Runs Docker Compose infra"
+    cmd: docker compose up -d
+
+  temporal:
+    desc: "Runs Temporal dev server"
+    cmd: pkgx temporal server start-dev
+
+  worker:
+    desc: "Runs Temporal worker"
+    cmd: go run cmd/saga/worker/main.go
+
+  starter:
+    desc: "Runs Temporal workflow starter service"
+    cmd: go run cmd/saga/start/main.go
+    env:
+      GRPC_CONNECT_PORT: 8081
+
+  service-license:
+    desc: "Runs license service"
+    cmd: go run cmd/svc/license/main.go
+    env:
+      GRPC_CONNECT_PORT: 9090
+
+  service-org:
+    desc: "Runs Org service"
+    cmd: go run cmd/svc/org/main.go
+    env:
+      GRPC_CONNECT_PORT: 9091
+
+  service-profile:
+    desc: "Runs profile service"
+    cmd: go run cmd/svc/profile/main.go
+    env:
+      GRPC_CONNECT_PORT: 9092

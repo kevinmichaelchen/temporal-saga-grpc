@@ -5,6 +5,8 @@ includes:
     taskfile: ./taskfiles/buf.yml
   go:
     taskfile: ./taskfiles/golang.yml
+  run:
+    taskfile: ./taskfiles/run.yml
 
 tasks:
   generate:

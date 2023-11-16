@@ -2,10 +2,10 @@ version: '3'
 
 tasks:
   gen:
+    internal: true
     run: once
     aliases:
       - generate
-    internal: true
     desc: "Generate protobufs"
     cmd: pkgx buf@latest generate
 
@@ -20,3 +20,6 @@ tasks:
     deps:
       - format
     cmd: pkgx buf@latest lint
+
+  docs:
+    cmd: pkgx buf@latest mod open idl/temporalapis

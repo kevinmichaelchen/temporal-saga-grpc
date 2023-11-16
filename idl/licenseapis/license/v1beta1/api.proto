@@ -4,6 +4,7 @@ package license.v1beta1;
 
 import "buf/validate/validate.proto";
 
+// Service for managing licenses.
 service LicenseService {
   rpc CreateLicense(CreateLicenseRequest) returns (CreateLicenseResponse) {}
 }
