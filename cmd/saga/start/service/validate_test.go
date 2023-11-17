@@ -2,23 +2,28 @@ package service
 
 import (
 	"testing"
+	"time"
 
 	temporalPB "buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go/temporal/v1beta1"
 	"github.com/bufbuild/protovalidate-go"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func TestValidate(t *testing.T) {
 	t.Parallel()
 
 	buildValid := func() *temporalPB.CreateOnboardingWorkflowRequest {
+		now := time.Now()
+
 		return &temporalPB.CreateOnboardingWorkflowRequest{
 			WorkflowOptions: &temporalPB.WorkflowOptions{
 				WorkflowId: uuid.New().String(),
 			},
 			License: &temporalPB.License{
-				Name: "Name",
+				Start: timestamppb.New(now),
+				End:   timestamppb.New(now.Add(time.Hour * 24 * 30)),
 			},
 			Org: &temporalPB.Org{
 				Name: "Name",
@@ -53,10 +58,10 @@ func TestValidate(t *testing.T) {
  - workflow_options.workflow_id: value must be a valid UUID [string.uuid]`)
 			},
 		},
-		"Invalid - License name cannot be empty": {
+		"Invalid - License end date must be after start date": {
 			build: func() *temporalPB.CreateOnboardingWorkflowRequest {
 				out := buildValid()
-				out.License.Name = ""
+				out.License.End = timestamppb.New(out.GetLicense().GetStart().AsTime().Add(-1 * time.Hour))
 
 				return out
 			},
