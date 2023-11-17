@@ -51,7 +51,7 @@ curl -v http://localhost:8081/temporal.v1beta1.TemporalService/CreateOnboardingW
   -H "Content-Type: application/json" \
   -d '{"license": {"name": "L1"}, "org": {"name": "Org1"}, "profile": {"name": "Kevin Chen"}}'
 
-http POST \
+pkgx http POST \
   http://localhost:8081/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow \
     license:='{"name": "L1"}' \
     org:='{"name": "Org1"}' \

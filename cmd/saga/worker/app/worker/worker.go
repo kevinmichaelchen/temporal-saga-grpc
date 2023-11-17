@@ -50,7 +50,7 @@ func NewController(
 
 // NewLicenseClient - Returns a new Connect client for the License service.
 func NewLicenseClient() licensev1beta1connect.LicenseServiceClient {
-	addr := fmt.Sprintf("localhost:%d", servicePortLicense)
+	addr := fmt.Sprintf("http://localhost:%d", servicePortLicense)
 
 	return licensev1beta1connect.NewLicenseServiceClient(
 		http.DefaultClient,
@@ -61,7 +61,7 @@ func NewLicenseClient() licensev1beta1connect.LicenseServiceClient {
 
 // NewOrgClient - Returns a new Connect client for the Org service.
 func NewOrgClient() orgv1beta1connect.OrgServiceClient {
-	addr := fmt.Sprintf("localhost:%d", servicePortOrg)
+	addr := fmt.Sprintf("http://localhost:%d", servicePortOrg)
 
 	return orgv1beta1connect.NewOrgServiceClient(
 		http.DefaultClient,
@@ -72,7 +72,7 @@ func NewOrgClient() orgv1beta1connect.OrgServiceClient {
 
 // NewProfileClient - Returns a new Connect client for the Profile service.
 func NewProfileClient() profilev1beta1connect.ProfileServiceClient {
-	addr := fmt.Sprintf("localhost:%d", servicePortProfile)
+	addr := fmt.Sprintf("http://localhost:%d", servicePortProfile)
 
 	return profilev1beta1connect.NewProfileServiceClient(
 		http.DefaultClient,

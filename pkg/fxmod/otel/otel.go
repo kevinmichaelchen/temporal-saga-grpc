@@ -45,7 +45,7 @@ type Config struct {
 
 // TraceConfig - Config for OTel tracing.
 type TraceConfig struct {
-	URL string `env:"URL,default=http://localhost:14268/api/traces"`
+	URL string `env:"URL,default=localhost:14268/api/traces"`
 	Env string `env:"URL,default=local"`
 }
 

@@ -4,7 +4,6 @@ tasks:
   all:
     desc: "Starts everything"
     deps:
-      - pkgx docker-clean stop
       - task: infra
       - task: temporal
       - task: worker
@@ -15,7 +14,9 @@ tasks:
 
   infra:
     desc: "Runs Docker Compose infra"
-    cmd: docker compose up -d
+    cmds:
+      - pkgx docker-clean stop
+      - docker compose up -d
 
   temporal:
     desc: "Runs Temporal dev server"
