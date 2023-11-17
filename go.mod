@@ -12,8 +12,8 @@ require (
 	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.12.0-20231116235008-cfdc53c8fba5.1
 	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.31.0-20231116235008-cfdc53c8fba5.2
 	connectrpc.com/connect v1.12.0
+	connectrpc.com/grpchealth v1.3.0
 	connectrpc.com/otelconnect v0.6.0
-	github.com/bufbuild/connect-grpchealth-go v1.1.1
 	github.com/bufbuild/protovalidate-go v0.4.1
 	github.com/google/uuid v1.4.0
 	github.com/rs/cors v1.10.1
@@ -27,12 +27,12 @@ require (
 	go.temporal.io/sdk/contrib/opentelemetry v0.3.0
 	go.uber.org/fx v1.20.1
 	golang.org/x/net v0.18.0
+	google.golang.org/protobuf v1.31.0
 )
 
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.31.0-20231106192134-1baebb0a1518.2 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
-	github.com/bufbuild/connect-go v1.5.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
@@ -69,6 +69,5 @@ require (
 	google.golang.org/genproto/googleapis/api v0.0.0-20230913181813-007df8e322eb // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230913181813-007df8e322eb // indirect
 	google.golang.org/grpc v1.59.0 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

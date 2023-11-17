@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"time"
 
-	grpchealth "github.com/bufbuild/connect-grpchealth-go"
+	"connectrpc.com/grpchealth"
 	"github.com/bufbuild/protovalidate-go"
 	"github.com/sethvargo/go-envconfig"
 	"github.com/sirupsen/logrus"
