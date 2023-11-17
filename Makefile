@@ -1,10 +1,6 @@
 # The DEFAULT_GOAL variable specifies the default target that will be built
 # when you run the make command without any arguments.
-.DEFAULT_GOAL := help
-
-.PHONY: help
-help : Makefile
-	@sed -n 's/^##//p' $<
+.DEFAULT_GOAL := all
 
 RED = \033[0;31m
 YELLOW = \033[1;33m
@@ -26,6 +22,8 @@ check_pkgx:
 
 .PHONY: all
 all: check_pkgx
+	pkgx killport 7233
+	pkgx temporal server start-dev &
 	pkgx task run:all
 
 .PHONY: buf-mod-update

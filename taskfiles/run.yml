@@ -4,8 +4,6 @@ tasks:
   all:
     desc: "Starts everything"
     deps:
-      - task: infra
-      - task: temporal
       - task: worker
       - task: starter
       - task: service-license
@@ -13,39 +11,59 @@ tasks:
       - task: service-profile
 
   infra:
+    run: once
     desc: "Runs Docker Compose infra"
     cmds:
       - pkgx docker-clean stop
       - docker compose up -d
 
-  temporal:
-    desc: "Runs Temporal dev server"
-    cmd: pkgx temporal server start-dev
-
   worker:
+    run: once
+    deps:
+      - task: infra
     desc: "Runs Temporal worker"
     cmd: go run cmd/saga/worker/main.go
 
   starter:
+    run: once
+    deps:
+      - task: infra
     desc: "Runs Temporal workflow starter service"
-    cmd: go run cmd/saga/start/main.go
+    cmds:
+      - pkgx killport 8081
+      - go run cmd/saga/start/main.go
     env:
       GRPC_CONNECT_PORT: 8081
 
   service-license:
+    run: once
+    deps:
+      - task: infra
     desc: "Runs license service"
-    cmd: go run cmd/svc/license/main.go
+    cmds:
+      - pkgx killport 9090
+      - go run cmd/svc/license/main.go
     env:
       GRPC_CONNECT_PORT: 9090
 
   service-org:
+    run: once
+    deps:
+      - task: infra
     desc: "Runs Org service"
-    cmd: go run cmd/svc/org/main.go
+    cmds:
+      - pkgx killport 9091
+      - go run cmd/svc/org/main.go
     env:
       GRPC_CONNECT_PORT: 9091
 
   service-profile:
+    run: once
+    deps:
+      - task: infra
     desc: "Runs profile service"
-    cmd: go run cmd/svc/profile/main.go
+    cmds:
+      - pkgx killport 9092
+      - go run cmd/svc/profile/main.go
     env:
       GRPC_CONNECT_PORT: 9092

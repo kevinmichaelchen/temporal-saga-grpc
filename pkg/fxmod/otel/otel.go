@@ -45,7 +45,7 @@ type Config struct {
 
 // TraceConfig - Config for OTel tracing.
 type TraceConfig struct {
-	URL string `env:"URL,default=localhost:14268/api/traces"`
+	URL string `env:"URL,default=localhost:4317"`
 	Env string `env:"URL,default=local"`
 }
 
@@ -78,6 +78,7 @@ func NewSpanExporter(
 	exp, err := otlptracegrpc.New(
 		context.Background(),
 		otlptracegrpc.WithEndpoint(cfg.TraceConfig.URL),
+		otlptracegrpc.WithInsecure(),
 	)
 	if err != nil {
 		return nil, fmt.Errorf("unable to create span exporter: %w", err)

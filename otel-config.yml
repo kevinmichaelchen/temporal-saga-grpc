@@ -1,0 +1,43 @@
+receivers:
+  otlp:
+    protocols:
+      # TODO fix exposed DOS attack
+      # https://github.com/open-telemetry/opentelemetry-collector/blob/main/docs/security-best-practices.md#safeguards-against-denial-of-service-attacks
+      grpc:
+      http:
+
+processors:
+  batch:
+
+exporters:
+  otlp/jaeger:
+    endpoint: http://jaeger:4317
+    tls:
+      insecure: true
+
+  # Enabled from time-to-time to view telemetry in the logs
+  debug:
+    verbosity: detailed
+
+service:
+  # Set DEBUG-level logs
+  # https://github.com/open-telemetry/opentelemetry-collector/blob/main/docs/troubleshooting.md#troubleshooting
+  #  telemetry:
+  #    logs:
+  #      level: "debug"
+
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters:
+        # - debug # Lets us view spans in logs
+        - otlp/jaeger # Export spans to Jaeger -- http://localhost:16686/
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug]
