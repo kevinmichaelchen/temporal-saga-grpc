@@ -1,16 +1,16 @@
 module github.com/kevinmichaelchen/temporal-saga-grpc
 
-go 1.21
+go 1.21.4
 
 require (
-	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.12.0-20230620011624-257a6358889c.1
-	buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20230620011624-257a6358889c.2
-	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.11.1-20221121195307-c877b91e28b6.1
-	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20221121195307-c877b91e28b6.2
-	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.12.0-20221121195307-54c7cc0bb136.1
-	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20221121195307-54c7cc0bb136.2
-	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.12.0-20230620011625-99cb60d4ce70.1
-	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.31.0-20230620011625-99cb60d4ce70.2
+	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.12.0-20231116235005-c6c14421843f.1
+	buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20231116235005-c6c14421843f.2
+	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.12.0-20231116235006-ea3a50123280.1
+	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20231116235006-ea3a50123280.2
+	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.12.0-20231116235007-f7082abb76c7.1
+	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20231116235007-f7082abb76c7.2
+	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.12.0-20231116235008-cfdc53c8fba5.1
+	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.31.0-20231116235008-cfdc53c8fba5.2
 	connectrpc.com/connect v1.12.0
 	connectrpc.com/otelconnect v0.6.0
 	github.com/bufbuild/connect-grpchealth-go v1.1.1
@@ -32,7 +32,7 @@ require (
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.31.0-20231106192134-1baebb0a1518.2 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
-	github.com/bufbuild/connect-go v1.10.0 // indirect
+	github.com/bufbuild/connect-go v1.5.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
@@ -65,9 +65,9 @@ require (
 	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
-	google.golang.org/genproto v0.0.0-20231012201019-e917dd12ba7a // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20231002182017-d307bd883b97 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20231016165738-49dd2c1f3d0b // indirect
+	google.golang.org/genproto v0.0.0-20230822172742-b8732ec3820d // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20230913181813-007df8e322eb // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20230913181813-007df8e322eb // indirect
 	google.golang.org/grpc v1.59.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
