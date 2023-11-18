@@ -3,6 +3,7 @@
 package connect
 
 import (
+	"connectrpc.com/grpcreflect"
 	"context"
 	"errors"
 	"fmt"
@@ -157,5 +158,14 @@ func Register(
 		opts.Services...,
 	)
 	mux.Handle(grpchealth.NewHandler(checker))
+
+	reflector := grpcreflect.NewStaticReflector(
+		opts.Services...,
+	)
+	mux.Handle(grpcreflect.NewHandlerV1(reflector))
+	// Many tools still expect the older version of the server reflection API,
+	// so most servers should mount both handlers.
+	mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
+
 	mux.Handle(handlerOutput.Path, handlerOutput.Handler)
 }

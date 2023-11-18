@@ -13,6 +13,7 @@ require (
 	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.31.0-20231116235008-cfdc53c8fba5.2
 	connectrpc.com/connect v1.12.0
 	connectrpc.com/grpchealth v1.3.0
+	connectrpc.com/grpcreflect v1.2.0
 	connectrpc.com/otelconnect v0.6.0
 	github.com/bufbuild/protovalidate-go v0.4.2
 	github.com/google/uuid v1.4.0
