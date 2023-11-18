@@ -1,0 +1,44 @@
+version: "3"
+
+vars:
+  # https://d2lang.com/tour/themes/
+  THEME: 105
+  DARK_THEME: 105
+
+tasks:
+  compile:
+    desc: "Compiles D2 diagrams"
+    vars:
+      DIAGRAMS:
+        sh: find . -type f -name "*.d2"
+    cmds:
+      - for: { var: DIAGRAMS }
+        task: compile-one
+        vars: { ITEM: "{{ .ITEM }}" }
+
+  compile-one:
+    internal: true
+    label: compile-one-{{.ITEM}}
+    vars:
+      DIRNAME:
+        sh: dirname {{.ITEM}}
+      BASENAME:
+        sh: basename {{.ITEM}}
+      FILENAME:
+        sh: |
+          echo {{.BASENAME}} | rev | cut -d. -f2- | rev
+    cmds:
+      - pkgx d2 fmt {{.ITEM}}
+      - |
+        pkgx d2 \
+          --sketch \
+          --theme={{.THEME}} \
+          --dark-theme={{.DARK_THEME}} \
+          -l elk \
+          --pad 25 \
+          {{.ITEM}}
+      - echo ITEM={{.ITEM}}, DIRNAME={{.DIRNAME}}, BASENAME={{.BASENAME}}, FILENAME={{.FILENAME}}
+    sources:
+      - "{{.ITEM}}"
+    generates:
+      - "{{.DIRNAME}}/{{.FILENAME}}.svg"

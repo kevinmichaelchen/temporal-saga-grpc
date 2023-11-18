@@ -1,8 +1,10 @@
-version: '3'
+version: "3"
 
 includes:
   buf:
     taskfile: ./taskfiles/buf.yml
+  docs:
+    taskfile: ./taskfiles/docs.yml
   go:
     taskfile: ./taskfiles/golang.yml
   run:
@@ -36,4 +38,4 @@ tasks:
     internal: true
     desc: "Format Markdown"
     cmds:
-      - "pkgx bunx prettier --write \"**/*.md\" --prose-wrap always"
+      - 'pkgx bunx prettier --write "**/*.md" --prose-wrap always'

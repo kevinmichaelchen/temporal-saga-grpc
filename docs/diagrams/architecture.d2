@@ -1,0 +1,73 @@
+direction: right
+
+vars: {
+  icons: {
+    gopher: https://www.svgrepo.com/show/373635/go-gopher.svg
+    temporal: ./docs/diagrams/temporal.svg
+  }
+}
+
+client: Client
+
+cloud: Cloud {
+  starter: Starter {
+    shape: image
+    icon: ${icons.gopher}
+  }
+
+  worker: Temporal Worker {
+    shape: image
+    icon: ${icons.gopher}
+  }
+
+  svc-license: License µService {
+    shape: image
+    icon: ${icons.gopher}
+  }
+
+  svc-profile: Profile µService {
+    shape: image
+    icon: ${icons.gopher}
+  }
+
+  svc-org: Org µService {
+    shape: image
+    icon: ${icons.gopher}
+  }
+
+  worker -> svc-license: Create License {
+    style: {
+      stroke: "#ada9a8"
+      stroke-dash: 3
+    }
+  }
+  worker -> svc-org: Create Org {
+    style: {
+      stroke: "#ada9a8"
+      stroke-dash: 3
+    }
+  }
+  worker -> svc-profile: Create Profile {
+    style: {
+      stroke: "#ada9a8"
+      stroke-dash: 3
+    }
+  }
+}
+
+temporal: Temporal Cloud {
+  cluster: Temporal Cluster {
+    shape: image
+    icon: ${icons.temporal}
+  }
+}
+
+client -> cloud.starter: Connect/gRPC {
+  style.animated: true
+}
+cloud.starter -> temporal.cluster: Start Temporal Workflow {
+  style.animated: true
+}
+temporal.cluster -> cloud.worker: Pick up job {
+  style.animated: true
+}

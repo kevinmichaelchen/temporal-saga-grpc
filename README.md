@@ -3,9 +3,9 @@
 [![Lines Of Code](https://aschey.tech/tokei/github/kevinmichaelchen/temporal-saga-grpc?category=code&style=for-the-badge)](https://github.com/kevinmichaelchen/temporal-saga-grpc)
 
 <p align="center">
-<a href="https://raw.githubusercontent.com/kevinmichaelchen/temporal-saga-grpc/main/docs/design.png">
-<img width="400" src="./docs/design.png" />
-</a>
+
+![./docs/diagrams/architecture.svg](./docs/diagrams/architecture.svg)
+
 </p>
 
 This project demonstrates using
@@ -32,7 +32,7 @@ The upstream microservices that are called during the workflow all use gRPC.
 
 ### Step 1: Spin everything up
 
-We use [pkgx][pkgx] to run Temporal's dev server. We use Docker to run 
+We use [pkgx][pkgx] to run Temporal's dev server. We use Docker to run
 [Jaeger][jaeger] (a telemetry backend).
 
 [pkgx]: https://pkgx.sh/
