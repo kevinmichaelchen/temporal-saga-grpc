@@ -3,6 +3,8 @@ version: "3"
 vars:
   MODULES:
     sh: pkgx fd buf.yaml | xargs dirname
+  MODULE_CHOICE:
+    sh: pkgx fd buf.yaml | xargs dirname | paste -sd " " -
 
 tasks:
   gen:
@@ -30,7 +32,7 @@ tasks:
     interactive: true
     vars:
       MODULE:
-        sh: pkgx gum choose idl/temporalapis idl/orgapis idl/profileapis idl/licenseapis
+        sh: pkgx gum choose {{.MODULE_CHOICE}}
     cmd: pkgx buf@latest mod open {{.MODULE}}
 
   mod-update:
