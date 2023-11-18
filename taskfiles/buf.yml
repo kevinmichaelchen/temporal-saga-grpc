@@ -1,4 +1,8 @@
-version: '3'
+version: "3"
+
+vars:
+  MODULES:
+    sh: pkgx fd buf.yaml | xargs dirname
 
 tasks:
   gen:
@@ -22,4 +26,39 @@ tasks:
     cmd: pkgx buf@latest lint
 
   docs:
-    cmd: pkgx buf@latest mod open idl/temporalapis
+    desc: "Open the module's homepage in a web browser"
+    interactive: true
+    vars:
+      MODULE:
+        sh: pkgx gum choose idl/temporalapis idl/orgapis idl/profileapis idl/licenseapis
+    cmd: pkgx buf@latest mod open {{.MODULE}}
+
+  mod-update:
+    aliases:
+      - update
+    desc: "Update modules' dependencies by updating the buf.lock file"
+    cmds:
+      - for: { var: MODULES }
+        cmd: pkgx buf@latest mod update {{.ITEM}}
+
+  mod-prune:
+    aliases:
+      - prune
+    desc: "Prune unused dependencies from the buf.lock file"
+    cmds:
+      - for: { var: MODULES }
+        cmd: pkgx buf@latest mod prune {{.ITEM}}
+
+  push:
+    desc: "Push modules to the BSR"
+    cmds:
+      - for: { var: MODULES }
+        task: int-push
+        vars:
+          MODULE: "{{.ITEM}}"
+
+  int-push:
+    internal: true
+    dir: "{{.MODULE}}"
+    cmds:
+      - pkgx buf@latest push {{.MODULE}}

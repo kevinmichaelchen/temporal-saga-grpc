@@ -22,24 +22,7 @@ check_pkgx:
 
 .PHONY: all
 all: check_pkgx
-	pkgx killport 7233
-	pkgx temporal server start-dev &
-	pkgx task run:all
-
-.PHONY: buf-mod-update
-buf-mod-update:
-	@for i in $(shell pkgx fd buf.yaml | xargs dirname) ; do \
-	  buf mod update $$i ; \
-	done
-
-.PHONY: buf-push
-buf-push:
-	@for i in $(shell pkgx fd buf.yaml | xargs dirname) ; do \
-	  echo $$i ; \
-	  pushd . ; \
-	  cd $$i ; \
-	  pwd ; \
-	  buf push ; \
-	  popd ; \
-	  echo "" ; \
-	done
+	pkgx --sync
+	pkgx killport@latest 7233
+	pkgx temporal@latest server start-dev &
+	pkgx task@latest run:all
