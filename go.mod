@@ -14,7 +14,7 @@ require (
 	connectrpc.com/connect v1.12.0
 	connectrpc.com/grpchealth v1.3.0
 	connectrpc.com/otelconnect v0.6.0
-	github.com/bufbuild/protovalidate-go v0.4.1
+	github.com/bufbuild/protovalidate-go v0.4.2
 	github.com/google/uuid v1.4.0
 	github.com/rs/cors v1.10.1
 	github.com/sethvargo/go-envconfig v0.9.0
