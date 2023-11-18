@@ -3,7 +3,6 @@
 package connect
 
 import (
-	"connectrpc.com/grpcreflect"
 	"context"
 	"errors"
 	"fmt"
@@ -11,6 +10,7 @@ import (
 	"time"
 
 	"connectrpc.com/grpchealth"
+	"connectrpc.com/grpcreflect"
 	"github.com/bufbuild/protovalidate-go"
 	"github.com/sethvargo/go-envconfig"
 	"github.com/sirupsen/logrus"
