@@ -46,19 +46,64 @@ make all
 
 ### Step 2: Start a Temporal Workflow
 
+With `curl`:
+
 ```shell
 curl -v http://localhost:8081/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow \
   -H "Content-Type: application/json" \
-  -d '{"license": {"name": "L1"}, "org": {"name": "Org1"}, "profile": {"name": "Kevin Chen"}}'
+  --data-binary @- <<EOF
+  {
+    "license": {
+      "start": "2023-11-16T12:00:00Z",
+      "end": "2024-01-16T12:00:00Z"
+    },
+    "org": {
+      "name": "Org 1"
+    },
+    "profile": {
+      "name": "Kevin Chen"
+    }
+  }
+EOF
+```
 
+With [`HTTPie`](https://httpie.io/):
+
+```shell
 pkgx http POST \
   http://localhost:8081/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow \
-    license:='{"name": "L1"}' \
+    license:='{"start": "2023-11-16T12:00:00Z", "end": "2024-01-16T12:00:00Z"}' \
     org:='{"name": "Org1"}' \
     profile:='{"name": "Kevin Chen"}'
 ```
 
+With [`grpcurl`](https://github.com/fullstorydev/grpcurl):
+
+```shell
+pkgx grpcurl \
+  -use-reflection \
+  -plaintext \
+  -d @ localhost:8081 \
+  temporal.v1beta1.TemporalService/CreateOnboardingWorkflow <<EOM
+{
+  "license": {
+    "start": "2023-11-16T12:00:00Z",
+    "end": "2024-01-16T12:00:00Z"
+  },
+  "org": {
+    "name": "Org 1"
+  },
+  "profile": {
+    "name": "Kevin Chen"
+  }
+}
+EOM
+```
+
 ### Step 3: Check the UIs
 
-- See traces in Jaeger at [localhost:16686](http://localhost:16686).
-- See the Temporal Workflow at [localhost:8233](http://localhost:8233).
+- See traces in Jaeger at [localhost:16686][jaeger-ui].
+- See the Temporal Workflow at [localhost:8233][temporal-ui].
+
+[temporal-ui]: http://localhost:8233
+[jaeger-ui]: http://localhost:16686
