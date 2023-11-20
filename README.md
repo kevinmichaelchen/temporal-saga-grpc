@@ -32,19 +32,30 @@ The upstream microservices that are called during the workflow all use gRPC.
 
 ### Step 1: Spin everything up
 
-We use [pkgx][pkgx] to run Temporal's dev server. We use Docker to run
-[Jaeger][jaeger] (a telemetry backend).
-
-[pkgx]: https://pkgx.sh/
-[jaeger]: https://www.jaegertracing.io
-
 You can spin everything up with:
 
 ```shell
 make all
 ```
 
-### Step 2: Start a Temporal Workflow
+> [!NOTE]
+> Under the hood, we're use [pkgx][pkgx] to run Temporal's [dev server][temporal-cli]. We use Docker to run [Jaeger][jaeger] (a telemetry backend).
+
+[temporal-cli]: https://github.com/temporalio/cli
+[pkgx]: https://pkgx.sh/
+[jaeger]: https://www.jaegertracing.io
+
+### Step 2: Observe the workflow
+
+Let's get ready to observe this thing in action!
+
+- View traces in Jaeger — [localhost:16686][jaeger-ui].
+- View the workflow in Temporal's UI — [localhost:8233][temporal-ui].
+
+[temporal-ui]: http://localhost:8233
+[jaeger-ui]: http://localhost:16686
+
+### Step 3: Start a Temporal Workflow
 
 With `curl`:
 
@@ -71,10 +82,20 @@ With [`HTTPie`](https://httpie.io/):
 
 ```shell
 pkgx http POST \
-  http://localhost:8081/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow \
-    license:='{"start": "2023-11-16T12:00:00Z", "end": "2024-01-16T12:00:00Z"}' \
-    org:='{"name": "Org1"}' \
-    profile:='{"name": "Kevin Chen"}'
+  http://localhost:8081/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow <<<'
+  {
+    "license": {
+      "start": "2023-11-16T12:00:00Z",
+      "end": "2024-01-16T12:00:00Z"
+    },
+    "org": {
+      "name": "Org 1"
+    },
+    "profile": {
+      "name": "Kevin Chen"
+    }
+  }
+  '
 ```
 
 With [`grpcurl`](https://github.com/fullstorydev/grpcurl):
@@ -99,11 +120,3 @@ pkgx grpcurl \
 }
 EOM
 ```
-
-### Step 3: Check the UIs
-
-- See traces in Jaeger at [localhost:16686][jaeger-ui].
-- See the Temporal Workflow at [localhost:8233][temporal-ui].
-
-[temporal-ui]: http://localhost:8233
-[jaeger-ui]: http://localhost:16686
