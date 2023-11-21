@@ -35,7 +35,7 @@ The upstream microservices that are called during the workflow all use gRPC.
 You can spin everything up with:
 
 ```shell
-make all
+make
 ```
 
 > [!NOTE]
