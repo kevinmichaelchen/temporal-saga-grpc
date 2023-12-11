@@ -3,7 +3,7 @@ module github.com/kevinmichaelchen/temporal-saga-grpc
 go 1.21.4
 
 require (
-	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.12.0-20231116235005-c6c14421843f.1
+	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.13.0-20231116235005-c6c14421843f.1
 	buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20231116235005-c6c14421843f.2
 	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.12.0-20231116235006-ea3a50123280.1
 	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20231116235006-ea3a50123280.2
@@ -11,7 +11,7 @@ require (
 	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20231116235007-f7082abb76c7.2
 	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.12.0-20231116235008-cfdc53c8fba5.1
 	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.31.0-20231116235008-cfdc53c8fba5.2
-	connectrpc.com/connect v1.12.0
+	connectrpc.com/connect v1.13.0
 	connectrpc.com/grpchealth v1.3.0
 	connectrpc.com/grpcreflect v1.2.0
 	connectrpc.com/otelconnect v0.6.0
