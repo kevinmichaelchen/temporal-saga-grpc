@@ -13,8 +13,8 @@ buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.12.0-202311162350
 buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.12.0-20231116235007-f7082abb76c7.1/go.mod h1:C93pg4cLZdglFP1S3GeN4ZKyGEKljCNcpr3m7K/LAZE=
 buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20231116235007-f7082abb76c7.2 h1:0bIcvIE934ER0El4pGaPNb46jxfA6fx8JekfZdCL428=
 buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20231116235007-f7082abb76c7.2/go.mod h1:aCGl2xj3rIUrrI0bCTOTqPhMmmH29q3cBBPGFRSxrO4=
-buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.12.0-20231116235008-cfdc53c8fba5.1 h1:YLI0EgFlMZXK259NbEWwPxYWlj4UGptW16ISjQzts/M=
-buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.12.0-20231116235008-cfdc53c8fba5.1/go.mod h1:pAbSlVWV2H82kiSd87pcVR9ZsTdJZ5EzQ+7DFuRszMU=
+buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.13.0-20231116235008-cfdc53c8fba5.1 h1:zgtVX7JWSU7aGhN/4pvRWSG2DPoGYiiRmhWk9Im4QeI=
+buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.13.0-20231116235008-cfdc53c8fba5.1/go.mod h1:XHMHmmK/k6Nkl8ZdC21MbJ7+lYKMTBOxZUhqPjAtpO4=
 buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.31.0-20231116235008-cfdc53c8fba5.2 h1:70Bk6MWezG74x0tvedgOdeUwjm+C1ha7OARj4WkUOlI=
 buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.31.0-20231116235008-cfdc53c8fba5.2/go.mod h1:CqSdh5BZSGidYRvYpASidUy9+YQlipF95gWY3QoDlNY=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
