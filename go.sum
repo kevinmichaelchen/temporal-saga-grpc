@@ -1,8 +1,8 @@
 buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.31.0-20230609233005-3757a25ff0b9.2/go.mod h1:xafc+XIsTxTy76GJQ1TKgvJWsSugFBqMaN27WhUblew=
 buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.31.0-20231115204500-e097f827e652.2 h1:iEPA5SBtdLJNwQis/SrcCuDWJh5E1V0mVO4Ih7/mRbg=
 buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.31.0-20231115204500-e097f827e652.2/go.mod h1:xafc+XIsTxTy76GJQ1TKgvJWsSugFBqMaN27WhUblew=
-buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.12.0-20231116235005-c6c14421843f.1 h1:RJQ+II7jYU4Tb5Y3SIvyrHaHAf1wU4AX+l4HNzvniKE=
-buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.12.0-20231116235005-c6c14421843f.1/go.mod h1:CkEFu2v9CXsu73naSooNQs310pbhxVY0y0IsKp9aDLQ=
+buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.13.0-20231116235005-c6c14421843f.1 h1:q/CJjEiAj3iYliSFq7nQu4hdJ4okFWappioAtXv/ZVs=
+buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.13.0-20231116235005-c6c14421843f.1/go.mod h1:Cu8YBmvnDNjICwKpV0uK3nJxoRZVpvA1KjqnPnn+C5Q=
 buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20231116235005-c6c14421843f.2 h1:swoHyib72oMmCSHN5kXbiJoWwdltqjhy0eY3gzVLHQ4=
 buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20231116235005-c6c14421843f.2/go.mod h1:qxTnpqpViALbRJTEUqjOq7hvizs2PfeqCpwN4S9ixtI=
 buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.12.0-20231116235006-ea3a50123280.1 h1:rpModpe5PB1JnfXo/fMnUFHRL5rQDsEGJouG1eM5KFc=
