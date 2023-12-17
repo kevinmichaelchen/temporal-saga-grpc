@@ -5,7 +5,7 @@ go 1.21.4
 require (
 	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.13.0-20231116235005-c6c14421843f.1
 	buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20231116235005-c6c14421843f.2
-	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.12.0-20231116235006-ea3a50123280.1
+	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.13.0-20231116235006-ea3a50123280.1
 	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20231116235006-ea3a50123280.2
 	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.12.0-20231116235007-f7082abb76c7.1
 	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20231116235007-f7082abb76c7.2
