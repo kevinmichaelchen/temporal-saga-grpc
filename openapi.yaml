@@ -1,0 +1,211 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+  title: ""
+  version: 0.0.1
+paths:
+  /api/v1beta1/licenses:
+    post:
+      tags:
+        - LicenseService
+      operationId: LicenseService_CreateLicense
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateLicenseRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateLicenseResponse"
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+  /api/v1beta1/orgs:
+    post:
+      tags:
+        - OrgService
+      operationId: OrgService_CreateOrg
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrgRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateOrgResponse"
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+  /api/v1beta1/profiles:
+    post:
+      tags:
+        - ProfileService
+      operationId: ProfileService_CreateProfile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProfileRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateProfileResponse"
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+  /api/v1beta1/workflows/onboarding:
+    post:
+      tags:
+        - TemporalService
+      description: |-
+        CreateOnboardingWorkflow starts a Temporal Workflow that will:
+         1. Create an Org
+         2. Create a Profile
+         3. Create a License
+      operationId: TemporalService_CreateOnboardingWorkflow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOnboardingWorkflowRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateOnboardingWorkflowResponse"
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+components:
+  schemas:
+    CreateLicenseRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        fullName:
+          type: string
+    CreateLicenseResponse:
+      type: object
+      properties: {}
+    CreateOnboardingWorkflowRequest:
+      type: object
+      properties:
+        workflowOptions:
+          $ref: "#/components/schemas/WorkflowOptions"
+        license:
+          $ref: "#/components/schemas/License"
+        org:
+          $ref: "#/components/schemas/Org"
+        profile:
+          $ref: "#/components/schemas/Profile"
+    CreateOnboardingWorkflowResponse:
+      type: object
+      properties: {}
+    CreateOrgRequest:
+      type: object
+      properties:
+        name:
+          type: string
+    CreateOrgResponse:
+      type: object
+      properties: {}
+    CreateProfileRequest:
+      type: object
+      properties:
+        name:
+          type: string
+    CreateProfileResponse:
+      type: object
+      properties: {}
+    GoogleProtobufAny:
+      type: object
+      properties:
+        "@type":
+          type: string
+          description: The type of the serialized message.
+      additionalProperties: true
+      description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+    License:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+    Org:
+      type: object
+      properties:
+        name:
+          type: string
+    Profile:
+      type: object
+      properties:
+        name:
+          type: string
+    Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          format: int32
+        message:
+          type: string
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+        details:
+          type: array
+          items:
+            $ref: "#/components/schemas/GoogleProtobufAny"
+          description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+      description: "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors)."
+    WorkflowOptions:
+      type: object
+      properties:
+        workflowId:
+          type: string
+          description: |-
+            ID - The business identifier of the workflow execution.
+             Optional: defaulted to a uuid.
+tags:
+  - name: LicenseService
+    description: Service for managing licenses.
+  - name: OrgService
+    description: Service for managing Orgs.
+  - name: ProfileService
+    description: Service for managing Profiles.
+  - name: TemporalService
+    description: Service for managing Temporal workflows.
