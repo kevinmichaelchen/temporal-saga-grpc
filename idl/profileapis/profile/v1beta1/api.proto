@@ -2,9 +2,16 @@ syntax = "proto3";
 
 package profile.v1beta1;
 
+import "google/api/annotations.proto";
+
 // Service for managing Profiles.
 service ProfileService {
-  rpc CreateProfile(CreateProfileRequest) returns (CreateProfileResponse) {}
+  rpc CreateProfile(CreateProfileRequest) returns (CreateProfileResponse) {
+    option (google.api.http) = {
+      post: "/api/v1beta1/profiles"
+      body: "*"
+    };
+  }
 }
 
 message CreateProfileRequest {

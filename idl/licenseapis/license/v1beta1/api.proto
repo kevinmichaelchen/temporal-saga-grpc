@@ -3,10 +3,16 @@ syntax = "proto3";
 package license.v1beta1;
 
 import "buf/validate/validate.proto";
+import "google/api/annotations.proto";
 
 // Service for managing licenses.
 service LicenseService {
-  rpc CreateLicense(CreateLicenseRequest) returns (CreateLicenseResponse) {}
+  rpc CreateLicense(CreateLicenseRequest) returns (CreateLicenseResponse) {
+    option (google.api.http) = {
+      post: "/api/v1beta1/licenses"
+      body: "*"
+    };
+  }
 }
 
 message CreateLicenseRequest {
