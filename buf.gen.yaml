@@ -25,3 +25,7 @@ plugins:
     out: internal/idl
     opt:
       - paths=source_relative
+  - plugin: buf.build/grpc-ecosystem/openapiv2:v2.18.1
+    out: third_party/OpenAPI
+    opt:
+      - json_names_for_fields=false
