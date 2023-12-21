@@ -25,7 +25,10 @@ plugins:
     out: internal/idl
     opt:
       - paths=source_relative
-  - plugin: buf.build/grpc-ecosystem/openapiv2:v2.18.1
-    out: third_party/OpenAPI
+  # https://pkg.go.dev/github.com/googleapis/gnostic/apps/protoc-gen-openapi
+  # This directory contains a protoc plugin that generates an OpenAPI
+  # description for a REST API that corresponds to a Protocol Buffer service.
+  - plugin: buf.build/community/google-gnostic-openapi:v0.7.0
+    out: .
     opt:
-      - json_names_for_fields=false
+      - paths=source_relative
