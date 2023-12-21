@@ -1,5 +1,7 @@
 version: v1
 name: buf.build/kevinmichaelchen/profileapis
+deps:
+  - buf.build/googleapis/googleapis:a86849a25cc04f4dbe9b15ddddfbc488
 breaking:
   use:
     - FILE
