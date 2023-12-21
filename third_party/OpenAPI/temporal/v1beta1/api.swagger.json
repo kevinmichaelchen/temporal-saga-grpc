@@ -15,7 +15,41 @@
   "produces": [
     "application/json"
   ],
-  "paths": {},
+  "paths": {
+    "/api/v1beta1/workflows/onboarding": {
+      "post": {
+        "summary": "CreateOnboardingWorkflow starts a Temporal Workflow that will:\n1. Create an Org\n2. Create a Profile\n3. Create a License",
+        "operationId": "TemporalService_CreateOnboardingWorkflow",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1beta1CreateOnboardingWorkflowResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1beta1CreateOnboardingWorkflowRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TemporalService"
+        ]
+      }
+    }
+  },
   "definitions": {
     "protobufAny": {
       "type": "object",
@@ -42,6 +76,23 @@
             "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
+        }
+      }
+    },
+    "v1beta1CreateOnboardingWorkflowRequest": {
+      "type": "object",
+      "properties": {
+        "workflow_options": {
+          "$ref": "#/definitions/v1beta1WorkflowOptions"
+        },
+        "license": {
+          "$ref": "#/definitions/v1beta1License"
+        },
+        "org": {
+          "$ref": "#/definitions/v1beta1Org"
+        },
+        "profile": {
+          "$ref": "#/definitions/v1beta1Profile"
         }
       }
     },
