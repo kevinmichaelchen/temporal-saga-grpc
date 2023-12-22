@@ -11,8 +11,8 @@ buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20231116235
 buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20231116235006-ea3a50123280.2/go.mod h1:nM6qUXfxhyx+uMPe1GugfEuF9uaC6EvD1Sy+ib46ll8=
 buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.13.0-20231116235007-f7082abb76c7.1 h1:ahkiO2QCm3QuRtd2EEFLZviDTGPVxdmtHDCvUQ076Wo=
 buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.13.0-20231116235007-f7082abb76c7.1/go.mod h1:WYDOV5w5gFR02ZQEh8JuOGg+6SX88CDfR0ITQsvuIzA=
-buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20231116235007-f7082abb76c7.2 h1:0bIcvIE934ER0El4pGaPNb46jxfA6fx8JekfZdCL428=
-buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20231116235007-f7082abb76c7.2/go.mod h1:aCGl2xj3rIUrrI0bCTOTqPhMmmH29q3cBBPGFRSxrO4=
+buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20231221233023-f5590a88a2c9.2 h1:lVeq+GivmguWul2Rp7AAf7Cw6FCK15dcp2gXbJZiyD4=
+buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20231221233023-f5590a88a2c9.2/go.mod h1:aCGl2xj3rIUrrI0bCTOTqPhMmmH29q3cBBPGFRSxrO4=
 buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.13.0-20231116235008-cfdc53c8fba5.1 h1:zgtVX7JWSU7aGhN/4pvRWSG2DPoGYiiRmhWk9Im4QeI=
 buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.13.0-20231116235008-cfdc53c8fba5.1/go.mod h1:XHMHmmK/k6Nkl8ZdC21MbJ7+lYKMTBOxZUhqPjAtpO4=
 buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.31.0-20231116235008-cfdc53c8fba5.2 h1:70Bk6MWezG74x0tvedgOdeUwjm+C1ha7OARj4WkUOlI=
