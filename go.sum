@@ -5,10 +5,10 @@ buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.13.0-202311162350
 buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.13.0-20231116235005-c6c14421843f.1/go.mod h1:Cu8YBmvnDNjICwKpV0uK3nJxoRZVpvA1KjqnPnn+C5Q=
 buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20231116235005-c6c14421843f.2 h1:swoHyib72oMmCSHN5kXbiJoWwdltqjhy0eY3gzVLHQ4=
 buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20231116235005-c6c14421843f.2/go.mod h1:qxTnpqpViALbRJTEUqjOq7hvizs2PfeqCpwN4S9ixtI=
-buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.13.0-20231116235006-ea3a50123280.1 h1:pPs6OMUu8fagW0P1i8ryueiOxauKwQPRuA5kuBRSjlQ=
-buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.13.0-20231116235006-ea3a50123280.1/go.mod h1:k+LdsLGkG1G6Xt34glzby0lOn0KHO3dVWH0UgMwZf/Q=
-buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20231116235006-ea3a50123280.2 h1:rZmpjLpjFXl1W2PHzzJpCPa46WSGJsDqc5/xd0Iv/us=
-buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20231116235006-ea3a50123280.2/go.mod h1:nM6qUXfxhyx+uMPe1GugfEuF9uaC6EvD1Sy+ib46ll8=
+buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.13.0-20231221233022-78dfa023f659.1 h1:RCMRAUH6I4G6GZVhy9NfvjXnfM/1MPTX8UEZHuW3rbc=
+buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.13.0-20231221233022-78dfa023f659.1/go.mod h1:rJWfarujRo2FQAsT/8zuVAv/XYzDoZvhlDv66EfPyRk=
+buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20231221233022-78dfa023f659.2 h1:j6sd0tg0iE6Za008i5q3au+6JdoCm5JPDmgNMkgvRS8=
+buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20231221233022-78dfa023f659.2/go.mod h1:nM6qUXfxhyx+uMPe1GugfEuF9uaC6EvD1Sy+ib46ll8=
 buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.13.0-20231116235007-f7082abb76c7.1 h1:ahkiO2QCm3QuRtd2EEFLZviDTGPVxdmtHDCvUQ076Wo=
 buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.13.0-20231116235007-f7082abb76c7.1/go.mod h1:WYDOV5w5gFR02ZQEh8JuOGg+6SX88CDfR0ITQsvuIzA=
 buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20231116235007-f7082abb76c7.2 h1:0bIcvIE934ER0El4pGaPNb46jxfA6fx8JekfZdCL428=
