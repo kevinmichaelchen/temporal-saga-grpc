@@ -25,3 +25,6 @@ plugins:
     out: internal/idl
     opt:
       - paths=source_relative
+  - plugin: buf.build/connectrpc/es:v1.2.0
+    out: gen
+    opt: target=ts
