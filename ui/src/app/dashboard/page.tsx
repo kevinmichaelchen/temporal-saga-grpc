@@ -37,12 +37,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
+import { createPromiseClient } from "@connectrpc/connect";
+import { createConnectTransport } from "@connectrpc/connect-web";
+import { TemporalService } from "@buf/kevinmichaelchen_temporalapis.connectrpc_es/temporal/v1beta1/api_connect";
+import { Timestamp } from "@bufbuild/protobuf";
+
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
   return (
     <div>
       <h1>Hello, Dashboard Page!</h1>
-      <DialogDemo />
+      <CreateWorkflowDialog />
       <div>
         <Link href="http://localhost:8233" target="_blank">
           Temporal UI
@@ -89,7 +94,33 @@ const formSchema = z.object({
   }),
 });
 
-export function DialogDemo() {
+const temporalClient = createPromiseClient(
+  TemporalService,
+  createConnectTransport({
+    baseUrl: "http://localhost:8081",
+  }),
+);
+
+export function CreateWorkflowDialog() {
+  // Server Action: https://nextjs.org/blog/next-14#server-actions-stable
+  async function createOnboardingWorkflow({
+    orgName, start, end
+                                          }: {orgName: string, start: Date, end: Date}) {
+    "use server";
+    const response = await temporalClient.createOnboardingWorkflow({
+      org: {
+        name: "My Org"
+      },
+      license: {
+        start: Timestamp.fromDate(start),
+        end: Timestamp.fromDate(end)
+      },
+      profile: {
+        name: "Kevin"
+      }
+    });
+  }
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -113,7 +144,7 @@ export function DialogDemo() {
         <DialogHeader>
           <DialogTitle>Create Workflow</DialogTitle>
           <DialogDescription>
-            Fill out data fields. Click submit when you're done.
+            Fill out data fields. Click submit when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -173,7 +204,7 @@ export function DialogDemo() {
                     </div>
                   </FormControl>
                   <FormDescription>
-                    This is your license's start date.
+                    This is your license&apos;s start date.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
