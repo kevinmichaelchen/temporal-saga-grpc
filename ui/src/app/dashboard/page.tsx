@@ -37,11 +37,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
-import { createPromiseClient } from "@connectrpc/connect";
-import { createConnectTransport } from "@connectrpc/connect-web";
-import { TemporalService } from "@buf/kevinmichaelchen_temporalapis.connectrpc_es/temporal/v1beta1/api_connect";
-import { Timestamp } from "@bufbuild/protobuf";
-
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
   return (
@@ -94,33 +89,7 @@ const formSchema = z.object({
   }),
 });
 
-const temporalClient = createPromiseClient(
-  TemporalService,
-  createConnectTransport({
-    baseUrl: "http://localhost:8081",
-  }),
-);
-
 export function CreateWorkflowDialog() {
-  // Server Action: https://nextjs.org/blog/next-14#server-actions-stable
-  async function createOnboardingWorkflow({
-    orgName, start, end
-                                          }: {orgName: string, start: Date, end: Date}) {
-    "use server";
-    const response = await temporalClient.createOnboardingWorkflow({
-      org: {
-        name: "My Org"
-      },
-      license: {
-        start: Timestamp.fromDate(start),
-        end: Timestamp.fromDate(end)
-      },
-      profile: {
-        name: "Kevin"
-      }
-    });
-  }
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
