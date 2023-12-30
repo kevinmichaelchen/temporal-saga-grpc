@@ -1,0 +1,8 @@
+# https://bun.sh/docs/runtime/bunfig#install-registry
+[install]
+# set default registry as a string
+registry = "https://registry.npmjs.org"
+
+# https://bun.sh/docs/runtime/bunfig#install-scopes
+[install.scopes]
+buf = { url = "https://buf.build/gen/npm/v1/" }

@@ -63,4 +63,4 @@ tasks:
     internal: true
     dir: "{{.MODULE}}"
     cmds:
-      - pkgx buf@latest push {{.MODULE}}
+      - pkgx buf@latest push
