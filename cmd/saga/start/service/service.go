@@ -71,7 +71,9 @@ func (s *Service) CreateOnboardingWorkflow(
 
 	printResults(args, workflow.GetID(), workflow.GetRunID())
 
-	res := &temporalPB.CreateOnboardingWorkflowResponse{}
+	res := &temporalPB.CreateOnboardingWorkflowResponse{
+		//WorkflowID: workflow.GetID(),
+	}
 
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")

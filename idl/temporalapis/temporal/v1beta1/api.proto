@@ -27,7 +27,9 @@ message CreateOnboardingWorkflowRequest {
   Profile profile = 4;
 }
 
-message CreateOnboardingWorkflowResponse {}
+message CreateOnboardingWorkflowResponse {
+  string workflow_id = 1;
+}
 
 message License {
   google.protobuf.Timestamp start = 1;

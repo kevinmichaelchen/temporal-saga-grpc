@@ -1,17 +1,17 @@
 module github.com/kevinmichaelchen/temporal-saga-grpc
 
-go 1.21.4
+go 1.21.5
 
 require (
-	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.13.0-20231116235005-c6c14421843f.1
-	buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.31.0-20231116235005-c6c14421843f.2
-	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.13.0-20231116235006-ea3a50123280.1
-	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.31.0-20231116235006-ea3a50123280.2
-	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.13.0-20231116235007-f7082abb76c7.1
-	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.31.0-20231116235007-f7082abb76c7.2
-	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.13.0-20231116235008-cfdc53c8fba5.1
-	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.31.0-20231116235008-cfdc53c8fba5.2
-	connectrpc.com/connect v1.13.0
+	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.14.0-20231229224253-7d00f9066763.1
+	buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.32.0-20231229224253-7d00f9066763.1
+	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.14.0-20231229224254-797d24d804e3.1
+	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.32.0-20231229224254-797d24d804e3.1
+	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20231229224255-8dd81bf3a02e.1
+	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20231229224255-8dd81bf3a02e.1
+	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20231229224256-3c4bb6cf91f7.1
+	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20231229224256-3c4bb6cf91f7.1
+	connectrpc.com/connect v1.14.0
 	connectrpc.com/grpchealth v1.3.0
 	connectrpc.com/grpcreflect v1.2.0
 	connectrpc.com/otelconnect v0.6.0
@@ -28,11 +28,11 @@ require (
 	go.temporal.io/sdk/contrib/opentelemetry v0.3.0
 	go.uber.org/fx v1.20.1
 	golang.org/x/net v0.19.0
-	google.golang.org/protobuf v1.31.0
+	google.golang.org/protobuf v1.32.0
 )
 
 require (
-	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.31.0-20231115204500-e097f827e652.2 // indirect
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.32.0-20230609233005-3757a25ff0b9.1 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
