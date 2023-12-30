@@ -36,6 +36,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import {createOnboardingWorkflow} from "@/app/dashboard/actions";
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
@@ -80,10 +81,17 @@ const formatCaption: DateFormatter = (month, options) => {
 };
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  orgName: z.string().min(2, {
+    message: "Organization name must be at least 2 characters.",
+  }),
+  profileName: z.string().min(2, {
+    message: "User display name must be at least 2 characters.",
   }),
   startDate: z.date({
+    required_error: "Please select a date",
+    invalid_type_error: "That's not a date!",
+  }),
+  endDate: z.date({
     required_error: "Please select a date",
     invalid_type_error: "That's not a date!",
   }),
@@ -92,16 +100,19 @@ const formSchema = z.object({
 export function CreateWorkflowDialog() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-    },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
     toast("form submit" + JSON.stringify(values));
+    await createOnboardingWorkflow({
+      orgName: values.orgName,
+      profileName: values.profileName,
+      start: values.startDate,
+      end: values.startDate,
+    })
   }
 
   return (
@@ -117,15 +128,31 @@ export function CreateWorkflowDialog() {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
             <FormField
               control={form.control}
-              name="username"
+              name="orgName"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input placeholder="My Organization" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    This is your Organization&apos;s name.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="profileName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="John Doe" {...field} />
                   </FormControl>
                   <FormDescription>
                     This is your public display name.
@@ -174,6 +201,51 @@ export function CreateWorkflowDialog() {
                   </FormControl>
                   <FormDescription>
                     This is your license&apos;s start date.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="endDate"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Start Date</FormLabel>
+                  <FormControl>
+                    <div>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground",
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "yyyy-MM-dd")
+                            ) : (
+                              <span className="pr-1">Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            //proposed props
+                            formatters={{ formatCaption }}
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                  </FormControl>
+                  <FormDescription>
+                    This is your license&apos;s end date.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

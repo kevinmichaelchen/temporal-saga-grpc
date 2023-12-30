@@ -13,8 +13,8 @@ const temporalClient = createPromiseClient(
 );
 
 export async function createOnboardingWorkflow({
-                                                 orgName, start, end
-                                               }: { orgName: string, start: Date, end: Date }) {
+                                                 orgName, profileName, start, end
+                                               }: { orgName: string, profileName: string, start: Date, end: Date }) {
   "use server";
   const response = await temporalClient.createOnboardingWorkflow({
     org: {
@@ -25,7 +25,7 @@ export async function createOnboardingWorkflow({
       end: Timestamp.fromDate(end)
     },
     profile: {
-      name: "Kevin"
+      name: profileName,
     }
   });
 }
