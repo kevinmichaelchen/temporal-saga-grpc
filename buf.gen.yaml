@@ -8,23 +8,28 @@ managed:
       - buf.build/envoyproxy/protoc-gen-validate
       - buf.build/bufbuild/protovalidate
 plugins:
-  - plugin: buf.build/protocolbuffers/go:v1.28.1
+  # https://github.com/bufbuild/plugins/tree/main/plugins/protocolbuffers/go
+  - plugin: buf.build/protocolbuffers/go:v1.32.0
     out: internal/idl
     opt:
       - paths=source_relative
-  - plugin: buf.build/bufbuild/connect-go:v1.3.1
+  # https://github.com/bufbuild/plugins/tree/main/plugins/bufbuild/connect-go
+  - plugin: buf.build/bufbuild/connect-go:v1.9.0
     out: internal/idl
     opt:
       - paths=source_relative
-  - plugin: buf.build/grpc/go:v1.2.0
+  # https://github.com/bufbuild/plugins/tree/main/plugins/grpc/go
+  - plugin: buf.build/grpc/go:v1.3.0
     out: internal/idl
     opt:
       - paths=source_relative
       - require_unimplemented_servers=false
-  - plugin: buf.build/bufbuild/validate-go:v0.9.0
+  # https://github.com/bufbuild/plugins/tree/main/plugins/bufbuild/validate-go
+  - plugin: buf.build/bufbuild/validate-go:v1.0.2
     out: internal/idl
     opt:
       - paths=source_relative
+  # https://github.com/bufbuild/plugins/tree/main/plugins/connectrpc/es
   - plugin: buf.build/connectrpc/es:v1.2.0
     out: gen
     opt: target=ts
