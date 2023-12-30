@@ -7,7 +7,7 @@ import "google/protobuf/timestamp.proto";
 
 // Service for managing Temporal workflows.
 service TemporalService {
-  // CreateOnboardingWorkflow starts a Temporal Workflow that will:
+  // CreateOnboardingWorkflow - Starts a Temporal Workflow that will:
   // 1. Create an Org
   // 2. Create a Profile
   // 3. Create a License

@@ -6,6 +6,7 @@ import "buf/validate/validate.proto";
 
 // Service for managing licenses.
 service LicenseService {
+  // Creates a new License.
   rpc CreateLicense(CreateLicenseRequest) returns (CreateLicenseResponse) {}
 }
 

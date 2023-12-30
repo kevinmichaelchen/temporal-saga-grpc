@@ -4,6 +4,7 @@ package profile.v1beta1;
 
 // Service for managing Profiles.
 service ProfileService {
+  // CreateProfile - Creates a new user profile.
   rpc CreateProfile(CreateProfileRequest) returns (CreateProfileResponse) {}
 }
 

@@ -4,6 +4,7 @@ package org.v1beta1;
 
 // Service for managing Orgs.
 service OrgService {
+  // CreateOrg - Creates a new Organization.
   rpc CreateOrg(CreateOrgRequest) returns (CreateOrgResponse) {}
 }
 
