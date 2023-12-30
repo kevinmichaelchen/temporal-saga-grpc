@@ -36,7 +36,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import {createOnboardingWorkflow} from "@/app/dashboard/actions";
+import { createOnboardingWorkflow } from "@/app/dashboard/actions";
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
@@ -107,12 +107,13 @@ export function CreateWorkflowDialog() {
     // ✅ This will be type-safe and validated.
     console.log(values);
     toast("form submit" + JSON.stringify(values));
-    await createOnboardingWorkflow({
+    const response = await createOnboardingWorkflow({
       orgName: values.orgName,
       profileName: values.profileName,
       start: values.startDate,
       end: values.startDate,
-    })
+    });
+    toast(response.toJsonString());
   }
 
   return (
