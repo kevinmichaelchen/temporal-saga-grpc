@@ -72,7 +72,7 @@ func (s *Service) CreateOnboardingWorkflow(
 	printResults(args, workflow.GetID(), workflow.GetRunID())
 
 	res := &temporalPB.CreateOnboardingWorkflowResponse{
-		//WorkflowID: workflow.GetID(),
+		WorkflowId: workflow.GetID(),
 	}
 
 	out := connect.NewResponse(res)
