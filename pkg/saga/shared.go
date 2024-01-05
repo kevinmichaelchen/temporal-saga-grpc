@@ -12,17 +12,20 @@ type CreateLicenseInputArgs struct {
 	License License
 }
 
+// Org - Encapsulates all the necessary info to create an Org.
 type Org struct {
 	ID   string
 	Name string
 }
 
+// Profile - Encapsulates all the necessary info to create an Profile.
 type Profile struct {
 	ID       string
 	FullName string
 	OrgID    string
 }
 
+// License - Encapsulates all the necessary info to create an License.
 type License struct {
 	ID     string
 	Start  time.Time
