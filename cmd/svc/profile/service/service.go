@@ -14,7 +14,6 @@ import (
 	"github.com/volatiletech/sqlboiler/v4/boil"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/profile/models"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 )
 
 var _ profileConnect.ProfileServiceHandler = (*Service)(nil)
@@ -36,14 +35,12 @@ func (s *Service) CreateProfile(
 	ctx context.Context,
 	req *connect.Request[profilePB.CreateProfileRequest],
 ) (*connect.Response[profilePB.CreateProfileResponse], error) {
-	// Sleep for a bit to simulate the latency of a database lookup
-	simulated.Sleep()
-
-	// Simulate a potential error to test retry logic
-	err := simulated.PossibleError(simulated.MediumLow)
-	if err != nil {
-		return nil, err
-	}
+	// Log some info
+	logrus.
+		WithField("id", req.Msg.GetId()).
+		WithField("org_id", req.Msg.GetOrgId()).
+		WithField("name", req.Msg.GetFullName()).
+		Info("Creating Profile...")
 
 	profile := models.Profile{
 		ID:       req.Msg.GetId(),
@@ -51,18 +48,12 @@ func (s *Service) CreateProfile(
 		OrgID:    req.Msg.GetOrgId(),
 	}
 
-	err = profile.Insert(ctx, s.db, boil.Infer())
+	err := profile.Insert(ctx, s.db, boil.Infer())
 	if err != nil {
 		return nil, fmt.Errorf("unable to insert record: %w", err)
 	}
 
 	res := &profilePB.CreateProfileResponse{}
-
-	logrus.
-		WithField("id", req.Msg.GetId()).
-		WithField("org_id", req.Msg.GetOrgId()).
-		WithField("name", req.Msg.GetFullName()).
-		Info("Creating Profile")
 
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")

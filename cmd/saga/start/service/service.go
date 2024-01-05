@@ -66,6 +66,7 @@ func (s *Service) CreateOnboardingWorkflow(
 		Profile: saga.Profile{
 			ID:       profileID,
 			FullName: req.Msg.GetProfile().GetFullName(),
+			OrgID:    orgID,
 		},
 		License: saga.License{
 			ID:     licenseID,

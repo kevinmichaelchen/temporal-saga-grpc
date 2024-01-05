@@ -24,5 +24,7 @@ check_pkgx:
 all: check_pkgx
 	pkgx --sync
 	pkgx killport@latest 7233
+	sleep 1
 	pkgx temporal@latest server start-dev &
+	sleep 2
 	pkgx task@latest run:all

@@ -14,7 +14,6 @@ import (
 	"github.com/volatiletech/sqlboiler/v4/boil"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/models"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 )
 
 var _ orgConnect.OrgServiceHandler = (*Service)(nil)
@@ -36,21 +35,12 @@ func (s *Service) CreateOrg(
 	ctx context.Context,
 	req *connect.Request[orgPB.CreateOrgRequest],
 ) (*connect.Response[orgPB.CreateOrgResponse], error) {
-	// Sleep for a bit to simulate the latency of a database lookup
-	simulated.Sleep()
-
-	// Simulate a potential error to test retry logic
-	err := simulated.PossibleError(simulated.Low)
-	if err != nil {
-		return nil, err
-	}
-
 	org := models.Org{
 		ID:   req.Msg.GetId(),
 		Name: null.StringFrom(req.Msg.GetName()),
 	}
 
-	err = org.Insert(ctx, s.db, boil.Infer())
+	err := org.Insert(ctx, s.db, boil.Infer())
 	if err != nil {
 		return nil, fmt.Errorf("unable to insert record: %w", err)
 	}

@@ -54,6 +54,7 @@ tasks:
       - go run cmd/svc/license/main.go
     env:
       GRPC_CONNECT_PORT: 9090
+      DB_CONN_STRING: "postgres://postgres:postgrespassword@localhost:{{ .PORT_LICENSE }}/postgres?sslmode=disable"
 
   service-org:
     run: once
@@ -65,6 +66,7 @@ tasks:
       - go run cmd/svc/org/main.go
     env:
       GRPC_CONNECT_PORT: 9091
+      DB_CONN_STRING: "postgres://postgres:postgrespassword@localhost:{{ .PORT_ORG }}/postgres?sslmode=disable"
 
   service-profile:
     run: once
@@ -76,6 +78,7 @@ tasks:
       - go run cmd/svc/profile/main.go
     env:
       GRPC_CONNECT_PORT: 9092
+      DB_CONN_STRING: "postgres://postgres:postgrespassword@localhost:{{ .PORT_PROFILE }}/postgres?sslmode=disable"
 
   inspect:
     desc: "Inspect"

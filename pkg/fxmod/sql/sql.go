@@ -13,7 +13,7 @@ import (
 )
 
 // Module - An FX module for a SQL connection.
-var Module = fx.Module("logging",
+var Module = fx.Module("sql",
 	fx.Provide(
 		NewConnection,
 	),

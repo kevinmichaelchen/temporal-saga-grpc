@@ -14,7 +14,6 @@ import (
 	"github.com/volatiletech/sqlboiler/v4/boil"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/license/models"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 )
 
 var _ licenseConnect.LicenseServiceHandler = (*Service)(nil)
@@ -49,14 +48,12 @@ func (s *Service) CreateLicense(
 		return nil, fmt.Errorf("invalid request: %w", err)
 	}
 
-	// Sleep for a bit to simulate the latency of a database lookup
-	simulated.Sleep()
-
-	// Simulate a potential error to test retry logic
-	err = simulated.PossibleError(simulated.MediumHigh)
-	if err != nil {
-		return nil, err
-	}
+	logrus.
+		WithField("id", req.Msg.GetId()).
+		WithField("user_id", req.Msg.GetUserId()).
+		WithField("start", req.Msg.GetStart()).
+		WithField("end", req.Msg.GetEnd()).
+		Info("Creating License...")
 
 	license := models.License{
 		ID:        req.Msg.GetId(),
@@ -71,13 +68,6 @@ func (s *Service) CreateLicense(
 	}
 
 	res := &licensev1beta1.CreateLicenseResponse{}
-
-	logrus.
-		WithField("id", req.Msg.GetId()).
-		WithField("user_id", req.Msg.GetUserId()).
-		WithField("start", req.Msg.GetStart()).
-		WithField("end", req.Msg.GetEnd()).
-		Info("Creating License")
 
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")
