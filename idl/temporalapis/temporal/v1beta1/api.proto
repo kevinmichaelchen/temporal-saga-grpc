@@ -29,6 +29,9 @@ message CreateOnboardingWorkflowRequest {
 
 message CreateOnboardingWorkflowResponse {
   string workflow_id = 1;
+  string org_id = 2;
+  string profile_id = 3;
+  string license_id = 4;
 }
 
 message License {
