@@ -2,11 +2,11 @@
 package service
 
 import (
-	"context"
-
 	orgConnect "buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
 	orgPB "buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go/org/v1beta1"
 	"connectrpc.com/connect"
+	"context"
+	"database/sql"
 	"github.com/sirupsen/logrus"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
@@ -15,11 +15,15 @@ import (
 var _ orgConnect.OrgServiceHandler = (*Service)(nil)
 
 // Service - A controller for our business logic.
-type Service struct{}
+type Service struct {
+	db *sql.DB
+}
 
 // NewService - Returns a new Service.
-func NewService() *Service {
-	return &Service{}
+func NewService(db *sql.DB) *Service {
+	return &Service{
+		db: db,
+	}
 }
 
 // CreateOrg - Creates a new org.

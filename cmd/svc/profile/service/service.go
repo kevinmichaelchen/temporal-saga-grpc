@@ -2,11 +2,11 @@
 package service
 
 import (
-	"context"
-
 	profileConnect "buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go/profile/v1beta1/profilev1beta1connect"
 	profilePB "buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go/profile/v1beta1"
 	"connectrpc.com/connect"
+	"context"
+	"database/sql"
 	"github.com/sirupsen/logrus"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
@@ -15,11 +15,15 @@ import (
 var _ profileConnect.ProfileServiceHandler = (*Service)(nil)
 
 // Service - A controller for our business logic.
-type Service struct{}
+type Service struct {
+	db *sql.DB
+}
 
 // NewService - Returns a new Service.
-func NewService() *Service {
-	return &Service{}
+func NewService(db *sql.DB) *Service {
+	return &Service{
+		db: db,
+	}
 }
 
 // CreateProfile - Creates a new user profile.

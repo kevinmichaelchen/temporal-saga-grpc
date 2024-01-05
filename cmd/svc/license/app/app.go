@@ -4,6 +4,7 @@ package app
 import (
 	licenseConnect "buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go/license/v1beta1/licensev1beta1connect"
 	"connectrpc.com/connect"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/sql"
 	"go.uber.org/fx"
 
 	modService "github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/license/app/service"
@@ -38,4 +39,5 @@ var Module = fx.Options(
 	otel.CreateModule(otel.ModuleOptions{
 		ServiceName: "license-svc",
 	}),
+	sql.Module,
 )

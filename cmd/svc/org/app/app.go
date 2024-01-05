@@ -4,6 +4,7 @@ package app
 import (
 	"buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
 	"connectrpc.com/connect"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/sql"
 	"go.uber.org/fx"
 
 	modService "github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/app/service"
@@ -38,4 +39,5 @@ var Module = fx.Options(
 	otel.CreateModule(otel.ModuleOptions{
 		ServiceName: "org-svc",
 	}),
+	sql.Module,
 )

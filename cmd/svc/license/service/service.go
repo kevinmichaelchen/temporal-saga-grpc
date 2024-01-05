@@ -3,7 +3,11 @@ package service
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/license/models"
+	"github.com/volatiletech/sqlboiler/v4/boil"
+	"time"
 
 	licenseConnect "buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go/license/v1beta1/licensev1beta1connect"
 	licensev1beta1 "buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go/license/v1beta1"
@@ -17,16 +21,20 @@ import (
 var _ licenseConnect.LicenseServiceHandler = (*Service)(nil)
 
 // Service - A controller for our business logic.
-type Service struct{}
+type Service struct {
+	db *sql.DB
+}
 
 // NewService - Returns a new Service.
-func NewService() *Service {
-	return &Service{}
+func NewService(db *sql.DB) *Service {
+	return &Service{
+		db: db,
+	}
 }
 
 // CreateLicense - Creates a new license.
 func (s *Service) CreateLicense(
-	_ context.Context,
+	ctx context.Context,
 	req *connect.Request[licensev1beta1.CreateLicenseRequest],
 ) (*connect.Response[licensev1beta1.CreateLicenseResponse], error) {
 	validator, err := protovalidate.New()
@@ -49,6 +57,18 @@ func (s *Service) CreateLicense(
 	err = simulated.PossibleError(simulated.MediumHigh)
 	if err != nil {
 		return nil, err
+	}
+
+	license := models.License{
+		ID:        0,
+		StartTime: time.Time{},
+		EndTime:   time.Time{},
+		UserID:    0,
+	}
+
+	err = license.Insert(ctx, s.db, boil.Infer())
+	if err != nil {
+		return nil, fmt.Errorf("unable to insert record: %w", err)
 	}
 
 	res := &licensev1beta1.CreateLicenseResponse{}
