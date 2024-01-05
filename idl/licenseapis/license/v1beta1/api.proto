@@ -3,6 +3,7 @@ syntax = "proto3";
 package license.v1beta1;
 
 import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
 
 // Service for managing licenses.
 service LicenseService {
@@ -11,8 +12,16 @@ service LicenseService {
 }
 
 message CreateLicenseRequest {
-  string name = 1 [(buf.validate.field).string.min_len = 1];
-  string full_name = 2 [(buf.validate.field).string.min_len = 1];
+  google.protobuf.Timestamp start = 1;
+  google.protobuf.Timestamp end = 2;
+
+  option (buf.validate.message).cel = {
+    id: "transaction.expiration_date",
+    message: "end time must be after start time",
+    expression: "this.end > this.start"
+  };
+
+  string user_id = 3;
 }
 
 message CreateLicenseResponse {}

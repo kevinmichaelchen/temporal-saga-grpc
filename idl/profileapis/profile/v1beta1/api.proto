@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package profile.v1beta1;
 
+import "buf/validate/validate.proto";
+
 // Service for managing Profiles.
 service ProfileService {
   // CreateProfile - Creates a new user profile.
@@ -9,7 +11,8 @@ service ProfileService {
 }
 
 message CreateProfileRequest {
-  string name = 1;
+  string full_name = 1 [(buf.validate.field).string.min_len = 1];
+  string org_id = 2;
 }
 
 message CreateProfileResponse {}

@@ -40,6 +40,8 @@ message License {
     message: "end time must be after start time",
     expression: "this.end > this.start"
   };
+
+  string user_id = 3;
 }
 
 message Org {
@@ -47,5 +49,6 @@ message Org {
 }
 
 message Profile {
-  string name = 1 [(buf.validate.field).string.min_len = 1];
+  string full_name = 1 [(buf.validate.field).string.min_len = 1];
+  string org_id = 2;
 }

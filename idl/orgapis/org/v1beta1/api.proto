@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package org.v1beta1;
 
+import "buf/validate/validate.proto";
+
 // Service for managing Orgs.
 service OrgService {
   // CreateOrg - Creates a new Organization.
@@ -9,7 +11,7 @@ service OrgService {
 }
 
 message CreateOrgRequest {
-  string name = 1;
+  string name = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message CreateOrgResponse {}
