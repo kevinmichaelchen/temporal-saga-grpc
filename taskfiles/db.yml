@@ -1,0 +1,56 @@
+version: "3"
+
+vars:
+  PORT_ORG: 15432
+  PORT_PROFILE: 15433
+  PORT_LICENSE: 15434
+  SCHEMA_ORG: org.hcl
+  SCHEMA_PROFILE: profile.hcl
+  SCHEMA_LICENSE: license.hcl
+
+tasks:
+  inspect:
+    desc: "Inspect"
+    cmds:
+      - task: int-inspect
+        vars:
+          PORT: "{{ .PORT_ORG }}"
+      - task: int-inspect
+        vars:
+          PORT: "{{ .PORT_PROFILE }}"
+      - task: int-inspect
+        vars:
+          PORT: "{{ .PORT_LICENSE }}"
+
+  int-inspect:
+    internal: true
+    cmd: |
+      pkgx +atlasgo.io atlas \
+        schema inspect \
+        -u "postgres://postgres:postgrespassword@localhost:{{ .PORT }}/postgres?sslmode=disable" \
+        --schema public
+
+  migrate:
+    desc: "Applies database migrations"
+    cmds:
+      - task: int-migrate
+        vars:
+          PORT: "{{ .PORT_ORG }}"
+          SCHEMA_FILE: "{{ .SCHEMA_ORG }}"
+      - task: int-migrate
+        vars:
+          PORT: "{{ .PORT_PROFILE }}"
+          SCHEMA_FILE: "{{ .SCHEMA_PROFILE }}"
+      - task: int-migrate
+        vars:
+          PORT: "{{ .PORT_LICENSE }}"
+          SCHEMA_FILE: "{{ .SCHEMA_LICENSE }}"
+
+  int-migrate:
+    internal: true
+    cmd: |
+      pkgx +atlasgo.io atlas \
+        schema apply \
+        -u "postgres://postgres:postgrespassword@localhost:{{ .PORT }}/postgres?sslmode=disable" \
+        --to file://db/schema/{{ .SCHEMA_FILE }} \
+        --schema public

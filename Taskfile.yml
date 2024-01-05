@@ -3,6 +3,8 @@ version: "3"
 includes:
   buf:
     taskfile: ./taskfiles/buf.yml
+  db:
+    taskfile: ./taskfiles/db.yml
   docs:
     taskfile: ./taskfiles/docs.yml
   go:
