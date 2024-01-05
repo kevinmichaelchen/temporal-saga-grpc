@@ -22,12 +22,12 @@ import (
 )
 
 // License is an object representing the database table.
-type License struct { // Numeric, auto-incrementing primary key
-	ID        int       `boil:"id" json:"id" toml:"id" yaml:"id"`
+type License struct { // UUID primary key
+	ID        string    `boil:"id" json:"id" toml:"id" yaml:"id"`
 	StartTime time.Time `boil:"start_time" json:"start_time" toml:"start_time" yaml:"start_time"`
 	EndTime   time.Time `boil:"end_time" json:"end_time" toml:"end_time" yaml:"end_time"`
 	// The license's user
-	UserID int `boil:"user_id" json:"user_id" toml:"user_id" yaml:"user_id"`
+	UserID string `boil:"user_id" json:"user_id" toml:"user_id" yaml:"user_id"`
 
 	R *licenseR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L licenseL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -59,22 +59,26 @@ var LicenseTableColumns = struct {
 
 // Generated where
 
-type whereHelperint struct{ field string }
+type whereHelperstring struct{ field string }
 
-func (w whereHelperint) EQ(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.EQ, x) }
-func (w whereHelperint) NEQ(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
-func (w whereHelperint) LT(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.LT, x) }
-func (w whereHelperint) LTE(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.LTE, x) }
-func (w whereHelperint) GT(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
-func (w whereHelperint) GTE(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
-func (w whereHelperint) IN(slice []int) qm.QueryMod {
+func (w whereHelperstring) EQ(x string) qm.QueryMod     { return qmhelper.Where(w.field, qmhelper.EQ, x) }
+func (w whereHelperstring) NEQ(x string) qm.QueryMod    { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
+func (w whereHelperstring) LT(x string) qm.QueryMod     { return qmhelper.Where(w.field, qmhelper.LT, x) }
+func (w whereHelperstring) LTE(x string) qm.QueryMod    { return qmhelper.Where(w.field, qmhelper.LTE, x) }
+func (w whereHelperstring) GT(x string) qm.QueryMod     { return qmhelper.Where(w.field, qmhelper.GT, x) }
+func (w whereHelperstring) GTE(x string) qm.QueryMod    { return qmhelper.Where(w.field, qmhelper.GTE, x) }
+func (w whereHelperstring) LIKE(x string) qm.QueryMod   { return qm.Where(w.field+" LIKE ?", x) }
+func (w whereHelperstring) NLIKE(x string) qm.QueryMod  { return qm.Where(w.field+" NOT LIKE ?", x) }
+func (w whereHelperstring) ILIKE(x string) qm.QueryMod  { return qm.Where(w.field+" ILIKE ?", x) }
+func (w whereHelperstring) NILIKE(x string) qm.QueryMod { return qm.Where(w.field+" NOT ILIKE ?", x) }
+func (w whereHelperstring) IN(slice []string) qm.QueryMod {
 	values := make([]interface{}, 0, len(slice))
 	for _, value := range slice {
 		values = append(values, value)
 	}
 	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
 }
-func (w whereHelperint) NIN(slice []int) qm.QueryMod {
+func (w whereHelperstring) NIN(slice []string) qm.QueryMod {
 	values := make([]interface{}, 0, len(slice))
 	for _, value := range slice {
 		values = append(values, value)
@@ -104,15 +108,15 @@ func (w whereHelpertime_Time) GTE(x time.Time) qm.QueryMod {
 }
 
 var LicenseWhere = struct {
-	ID        whereHelperint
+	ID        whereHelperstring
 	StartTime whereHelpertime_Time
 	EndTime   whereHelpertime_Time
-	UserID    whereHelperint
+	UserID    whereHelperstring
 }{
-	ID:        whereHelperint{field: "\"license\".\"id\""},
+	ID:        whereHelperstring{field: "\"license\".\"id\""},
 	StartTime: whereHelpertime_Time{field: "\"license\".\"start_time\""},
 	EndTime:   whereHelpertime_Time{field: "\"license\".\"end_time\""},
-	UserID:    whereHelperint{field: "\"license\".\"user_id\""},
+	UserID:    whereHelperstring{field: "\"license\".\"user_id\""},
 }
 
 // LicenseRels is where relationship names are stored.
@@ -136,7 +140,7 @@ var (
 	licenseColumnsWithoutDefault = []string{"start_time", "end_time", "user_id"}
 	licenseColumnsWithDefault    = []string{"id"}
 	licensePrimaryKeyColumns     = []string{"id"}
-	licenseGeneratedColumns      = []string{"id"}
+	licenseGeneratedColumns      = []string{}
 )
 
 type (
@@ -430,7 +434,7 @@ func Licenses(mods ...qm.QueryMod) licenseQuery {
 
 // FindLicense retrieves a single record by ID with an executor.
 // If selectCols is empty Find will return all columns.
-func FindLicense(ctx context.Context, exec boil.ContextExecutor, iD int, selectCols ...string) (*License, error) {
+func FindLicense(ctx context.Context, exec boil.ContextExecutor, iD string, selectCols ...string) (*License, error) {
 	licenseObj := &License{}
 
 	sel := "*"
@@ -485,7 +489,6 @@ func (o *License) Insert(ctx context.Context, exec boil.ContextExecutor, columns
 			licenseColumnsWithoutDefault,
 			nzDefaults,
 		)
-		wl = strmangle.SetComplement(wl, licenseGeneratedColumns)
 
 		cache.valueMapping, err = queries.BindMapping(licenseType, licenseMapping, wl)
 		if err != nil {
@@ -556,7 +559,6 @@ func (o *License) Update(ctx context.Context, exec boil.ContextExecutor, columns
 			licenseAllColumns,
 			licensePrimaryKeyColumns,
 		)
-		wl = strmangle.SetComplement(wl, licenseGeneratedColumns)
 
 		if !columns.IsWhitelist() {
 			wl = strmangle.SetComplement(wl, []string{"created_at"})
@@ -726,9 +728,6 @@ func (o *License) Upsert(ctx context.Context, exec boil.ContextExecutor, updateO
 			licenseAllColumns,
 			licensePrimaryKeyColumns,
 		)
-
-		insert = strmangle.SetComplement(insert, licenseGeneratedColumns)
-		update = strmangle.SetComplement(update, licenseGeneratedColumns)
 
 		if updateOnConflict && len(update) == 0 {
 			return errors.New("models: unable to upsert license, could not build update column list")
@@ -934,7 +933,7 @@ func (o *LicenseSlice) ReloadAll(ctx context.Context, exec boil.ContextExecutor)
 }
 
 // LicenseExists checks if the License row exists.
-func LicenseExists(ctx context.Context, exec boil.ContextExecutor, iD int) (bool, error) {
+func LicenseExists(ctx context.Context, exec boil.ContextExecutor, iD string) (bool, error) {
 	var exists bool
 	sql := "select exists(select 1 from \"license\" where \"id\"=$1 limit 1)"
 

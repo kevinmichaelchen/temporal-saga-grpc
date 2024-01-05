@@ -23,12 +23,12 @@ import (
 )
 
 // Profile is an object representing the database table.
-type Profile struct { // Numeric, auto-incrementing primary key
-	ID int `boil:"id" json:"id" toml:"id" yaml:"id"`
+type Profile struct { // UUID primary key
+	ID string `boil:"id" json:"id" toml:"id" yaml:"id"`
 	// The user's full name
 	FullName null.String `boil:"full_name" json:"full_name,omitempty" toml:"full_name" yaml:"full_name,omitempty"`
 	// The user's organization
-	OrgID int `boil:"org_id" json:"org_id" toml:"org_id" yaml:"org_id"`
+	OrgID string `boil:"org_id" json:"org_id" toml:"org_id" yaml:"org_id"`
 
 	R *profileR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L profileL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -56,22 +56,26 @@ var ProfileTableColumns = struct {
 
 // Generated where
 
-type whereHelperint struct{ field string }
+type whereHelperstring struct{ field string }
 
-func (w whereHelperint) EQ(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.EQ, x) }
-func (w whereHelperint) NEQ(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
-func (w whereHelperint) LT(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.LT, x) }
-func (w whereHelperint) LTE(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.LTE, x) }
-func (w whereHelperint) GT(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
-func (w whereHelperint) GTE(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
-func (w whereHelperint) IN(slice []int) qm.QueryMod {
+func (w whereHelperstring) EQ(x string) qm.QueryMod     { return qmhelper.Where(w.field, qmhelper.EQ, x) }
+func (w whereHelperstring) NEQ(x string) qm.QueryMod    { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
+func (w whereHelperstring) LT(x string) qm.QueryMod     { return qmhelper.Where(w.field, qmhelper.LT, x) }
+func (w whereHelperstring) LTE(x string) qm.QueryMod    { return qmhelper.Where(w.field, qmhelper.LTE, x) }
+func (w whereHelperstring) GT(x string) qm.QueryMod     { return qmhelper.Where(w.field, qmhelper.GT, x) }
+func (w whereHelperstring) GTE(x string) qm.QueryMod    { return qmhelper.Where(w.field, qmhelper.GTE, x) }
+func (w whereHelperstring) LIKE(x string) qm.QueryMod   { return qm.Where(w.field+" LIKE ?", x) }
+func (w whereHelperstring) NLIKE(x string) qm.QueryMod  { return qm.Where(w.field+" NOT LIKE ?", x) }
+func (w whereHelperstring) ILIKE(x string) qm.QueryMod  { return qm.Where(w.field+" ILIKE ?", x) }
+func (w whereHelperstring) NILIKE(x string) qm.QueryMod { return qm.Where(w.field+" NOT ILIKE ?", x) }
+func (w whereHelperstring) IN(slice []string) qm.QueryMod {
 	values := make([]interface{}, 0, len(slice))
 	for _, value := range slice {
 		values = append(values, value)
 	}
 	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
 }
-func (w whereHelperint) NIN(slice []int) qm.QueryMod {
+func (w whereHelperstring) NIN(slice []string) qm.QueryMod {
 	values := make([]interface{}, 0, len(slice))
 	for _, value := range slice {
 		values = append(values, value)
@@ -130,13 +134,13 @@ func (w whereHelpernull_String) IsNull() qm.QueryMod    { return qmhelper.WhereI
 func (w whereHelpernull_String) IsNotNull() qm.QueryMod { return qmhelper.WhereIsNotNull(w.field) }
 
 var ProfileWhere = struct {
-	ID       whereHelperint
+	ID       whereHelperstring
 	FullName whereHelpernull_String
-	OrgID    whereHelperint
+	OrgID    whereHelperstring
 }{
-	ID:       whereHelperint{field: "\"profile\".\"id\""},
+	ID:       whereHelperstring{field: "\"profile\".\"id\""},
 	FullName: whereHelpernull_String{field: "\"profile\".\"full_name\""},
-	OrgID:    whereHelperint{field: "\"profile\".\"org_id\""},
+	OrgID:    whereHelperstring{field: "\"profile\".\"org_id\""},
 }
 
 // ProfileRels is where relationship names are stored.
@@ -160,7 +164,7 @@ var (
 	profileColumnsWithoutDefault = []string{"org_id"}
 	profileColumnsWithDefault    = []string{"id", "full_name"}
 	profilePrimaryKeyColumns     = []string{"id"}
-	profileGeneratedColumns      = []string{"id"}
+	profileGeneratedColumns      = []string{}
 )
 
 type (
@@ -454,7 +458,7 @@ func Profiles(mods ...qm.QueryMod) profileQuery {
 
 // FindProfile retrieves a single record by ID with an executor.
 // If selectCols is empty Find will return all columns.
-func FindProfile(ctx context.Context, exec boil.ContextExecutor, iD int, selectCols ...string) (*Profile, error) {
+func FindProfile(ctx context.Context, exec boil.ContextExecutor, iD string, selectCols ...string) (*Profile, error) {
 	profileObj := &Profile{}
 
 	sel := "*"
@@ -509,7 +513,6 @@ func (o *Profile) Insert(ctx context.Context, exec boil.ContextExecutor, columns
 			profileColumnsWithoutDefault,
 			nzDefaults,
 		)
-		wl = strmangle.SetComplement(wl, profileGeneratedColumns)
 
 		cache.valueMapping, err = queries.BindMapping(profileType, profileMapping, wl)
 		if err != nil {
@@ -580,7 +583,6 @@ func (o *Profile) Update(ctx context.Context, exec boil.ContextExecutor, columns
 			profileAllColumns,
 			profilePrimaryKeyColumns,
 		)
-		wl = strmangle.SetComplement(wl, profileGeneratedColumns)
 
 		if !columns.IsWhitelist() {
 			wl = strmangle.SetComplement(wl, []string{"created_at"})
@@ -750,9 +752,6 @@ func (o *Profile) Upsert(ctx context.Context, exec boil.ContextExecutor, updateO
 			profileAllColumns,
 			profilePrimaryKeyColumns,
 		)
-
-		insert = strmangle.SetComplement(insert, profileGeneratedColumns)
-		update = strmangle.SetComplement(update, profileGeneratedColumns)
 
 		if updateOnConflict && len(update) == 0 {
 			return errors.New("models: unable to upsert profile, could not build update column list")
@@ -958,7 +957,7 @@ func (o *ProfileSlice) ReloadAll(ctx context.Context, exec boil.ContextExecutor)
 }
 
 // ProfileExists checks if the Profile row exists.
-func ProfileExists(ctx context.Context, exec boil.ContextExecutor, iD int) (bool, error) {
+func ProfileExists(ctx context.Context, exec boil.ContextExecutor, iD string) (bool, error) {
 	var exists bool
 	sql := "select exists(select 1 from \"profile\" where \"id\"=$1 limit 1)"
 

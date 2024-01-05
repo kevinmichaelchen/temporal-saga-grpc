@@ -23,8 +23,8 @@ import (
 )
 
 // Org is an object representing the database table.
-type Org struct { // Numeric, auto-incrementing primary key
-	ID int `boil:"id" json:"id" toml:"id" yaml:"id"`
+type Org struct { // UUID primary key
+	ID string `boil:"id" json:"id" toml:"id" yaml:"id"`
 	// The organization's name
 	Name null.String `boil:"name" json:"name,omitempty" toml:"name" yaml:"name,omitempty"`
 
@@ -50,22 +50,26 @@ var OrgTableColumns = struct {
 
 // Generated where
 
-type whereHelperint struct{ field string }
+type whereHelperstring struct{ field string }
 
-func (w whereHelperint) EQ(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.EQ, x) }
-func (w whereHelperint) NEQ(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
-func (w whereHelperint) LT(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.LT, x) }
-func (w whereHelperint) LTE(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.LTE, x) }
-func (w whereHelperint) GT(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
-func (w whereHelperint) GTE(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
-func (w whereHelperint) IN(slice []int) qm.QueryMod {
+func (w whereHelperstring) EQ(x string) qm.QueryMod     { return qmhelper.Where(w.field, qmhelper.EQ, x) }
+func (w whereHelperstring) NEQ(x string) qm.QueryMod    { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
+func (w whereHelperstring) LT(x string) qm.QueryMod     { return qmhelper.Where(w.field, qmhelper.LT, x) }
+func (w whereHelperstring) LTE(x string) qm.QueryMod    { return qmhelper.Where(w.field, qmhelper.LTE, x) }
+func (w whereHelperstring) GT(x string) qm.QueryMod     { return qmhelper.Where(w.field, qmhelper.GT, x) }
+func (w whereHelperstring) GTE(x string) qm.QueryMod    { return qmhelper.Where(w.field, qmhelper.GTE, x) }
+func (w whereHelperstring) LIKE(x string) qm.QueryMod   { return qm.Where(w.field+" LIKE ?", x) }
+func (w whereHelperstring) NLIKE(x string) qm.QueryMod  { return qm.Where(w.field+" NOT LIKE ?", x) }
+func (w whereHelperstring) ILIKE(x string) qm.QueryMod  { return qm.Where(w.field+" ILIKE ?", x) }
+func (w whereHelperstring) NILIKE(x string) qm.QueryMod { return qm.Where(w.field+" NOT ILIKE ?", x) }
+func (w whereHelperstring) IN(slice []string) qm.QueryMod {
 	values := make([]interface{}, 0, len(slice))
 	for _, value := range slice {
 		values = append(values, value)
 	}
 	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
 }
-func (w whereHelperint) NIN(slice []int) qm.QueryMod {
+func (w whereHelperstring) NIN(slice []string) qm.QueryMod {
 	values := make([]interface{}, 0, len(slice))
 	for _, value := range slice {
 		values = append(values, value)
@@ -124,10 +128,10 @@ func (w whereHelpernull_String) IsNull() qm.QueryMod    { return qmhelper.WhereI
 func (w whereHelpernull_String) IsNotNull() qm.QueryMod { return qmhelper.WhereIsNotNull(w.field) }
 
 var OrgWhere = struct {
-	ID   whereHelperint
+	ID   whereHelperstring
 	Name whereHelpernull_String
 }{
-	ID:   whereHelperint{field: "\"org\".\"id\""},
+	ID:   whereHelperstring{field: "\"org\".\"id\""},
 	Name: whereHelpernull_String{field: "\"org\".\"name\""},
 }
 
@@ -152,7 +156,7 @@ var (
 	orgColumnsWithoutDefault = []string{}
 	orgColumnsWithDefault    = []string{"id", "name"}
 	orgPrimaryKeyColumns     = []string{"id"}
-	orgGeneratedColumns      = []string{"id"}
+	orgGeneratedColumns      = []string{}
 )
 
 type (
@@ -446,7 +450,7 @@ func Orgs(mods ...qm.QueryMod) orgQuery {
 
 // FindOrg retrieves a single record by ID with an executor.
 // If selectCols is empty Find will return all columns.
-func FindOrg(ctx context.Context, exec boil.ContextExecutor, iD int, selectCols ...string) (*Org, error) {
+func FindOrg(ctx context.Context, exec boil.ContextExecutor, iD string, selectCols ...string) (*Org, error) {
 	orgObj := &Org{}
 
 	sel := "*"
@@ -501,7 +505,6 @@ func (o *Org) Insert(ctx context.Context, exec boil.ContextExecutor, columns boi
 			orgColumnsWithoutDefault,
 			nzDefaults,
 		)
-		wl = strmangle.SetComplement(wl, orgGeneratedColumns)
 
 		cache.valueMapping, err = queries.BindMapping(orgType, orgMapping, wl)
 		if err != nil {
@@ -572,7 +575,6 @@ func (o *Org) Update(ctx context.Context, exec boil.ContextExecutor, columns boi
 			orgAllColumns,
 			orgPrimaryKeyColumns,
 		)
-		wl = strmangle.SetComplement(wl, orgGeneratedColumns)
 
 		if !columns.IsWhitelist() {
 			wl = strmangle.SetComplement(wl, []string{"created_at"})
@@ -742,9 +744,6 @@ func (o *Org) Upsert(ctx context.Context, exec boil.ContextExecutor, updateOnCon
 			orgAllColumns,
 			orgPrimaryKeyColumns,
 		)
-
-		insert = strmangle.SetComplement(insert, orgGeneratedColumns)
-		update = strmangle.SetComplement(update, orgGeneratedColumns)
 
 		if updateOnConflict && len(update) == 0 {
 			return errors.New("models: unable to upsert org, could not build update column list")
@@ -950,7 +949,7 @@ func (o *OrgSlice) ReloadAll(ctx context.Context, exec boil.ContextExecutor) err
 }
 
 // OrgExists checks if the Org row exists.
-func OrgExists(ctx context.Context, exec boil.ContextExecutor, iD int) (bool, error) {
+func OrgExists(ctx context.Context, exec boil.ContextExecutor, iD string) (bool, error) {
 	var exists bool
 	sql := "select exists(select 1 from \"org\" where \"id\"=$1 limit 1)"
 

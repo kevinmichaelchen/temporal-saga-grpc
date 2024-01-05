@@ -4,12 +4,16 @@ package service
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
 	profileConnect "buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go/profile/v1beta1/profilev1beta1connect"
 	profilePB "buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go/profile/v1beta1"
 	"connectrpc.com/connect"
 	"github.com/sirupsen/logrus"
+	"github.com/volatiletech/null/v8"
+	"github.com/volatiletech/sqlboiler/v4/boil"
 
+	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/profile/models"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 )
 
@@ -29,7 +33,7 @@ func NewService(db *sql.DB) *Service {
 
 // CreateProfile - Creates a new user profile.
 func (s *Service) CreateProfile(
-	_ context.Context,
+	ctx context.Context,
 	req *connect.Request[profilePB.CreateProfileRequest],
 ) (*connect.Response[profilePB.CreateProfileResponse], error) {
 	// Sleep for a bit to simulate the latency of a database lookup
@@ -39,6 +43,17 @@ func (s *Service) CreateProfile(
 	err := simulated.PossibleError(simulated.MediumLow)
 	if err != nil {
 		return nil, err
+	}
+
+	profile := models.Profile{
+		ID:       req.Msg.GetId(),
+		FullName: null.StringFrom(req.Msg.GetFullName()),
+		OrgID:    req.Msg.GetOrgId(),
+	}
+
+	err = profile.Insert(ctx, s.db, boil.Infer())
+	if err != nil {
+		return nil, fmt.Errorf("unable to insert record: %w", err)
 	}
 
 	res := &profilePB.CreateProfileResponse{}

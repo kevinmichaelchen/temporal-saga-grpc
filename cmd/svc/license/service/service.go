@@ -5,7 +5,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"time"
 
 	licenseConnect "buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go/license/v1beta1/licensev1beta1connect"
 	licensev1beta1 "buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go/license/v1beta1"
@@ -60,10 +59,10 @@ func (s *Service) CreateLicense(
 	}
 
 	license := models.License{
-		ID:        0,
-		StartTime: time.Time{},
-		EndTime:   time.Time{},
-		UserID:    0,
+		ID:        req.Msg.GetId(),
+		StartTime: req.Msg.GetStart().AsTime(),
+		EndTime:   req.Msg.GetEnd().AsTime(),
+		UserID:    req.Msg.GetUserId(),
 	}
 
 	err = license.Insert(ctx, s.db, boil.Infer())
