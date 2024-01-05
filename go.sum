@@ -12,10 +12,10 @@ buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-202401052309
 buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20240105230937-9f5a2b967cc7.1/go.mod h1:yZWWCij9/6ffN2PJwEYWgs7DjkWa5cXl2AR8Xvnc+Ng=
 buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240105230937-9f5a2b967cc7.1 h1:YaUHKKR7AZRrnCiZ+QOQuw2wQB0DlOe8KBdN7bDymhs=
 buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240105230937-9f5a2b967cc7.1/go.mod h1:mdFxPRDe6P7qFVw9urFLZ3SkG+ZdPW5q5QXFGjGr8DE=
-buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20240105224636-721997cf176e.1 h1:JRUSsAPd9V5UQFPYs1dckEwRS0R/bAQtCRlRRQ+n9Pw=
-buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20240105224636-721997cf176e.1/go.mod h1:2PeRAbDFPMunT2xjMRMjvkzCGgilVlNWYwgYRatp3/4=
-buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20240105224636-721997cf176e.1 h1:3dN5NHBYnXnHPa2qG22eeVYNG/ZwAni9potlZz6XcNA=
-buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20240105224636-721997cf176e.1/go.mod h1:2Mpji+rUNpkV7r9a5cIDXpKJMRYmp0I0XrM61EBLEDY=
+buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20240105233422-8054bf72d102.1 h1:DjZa2Ji1Rje54fcm1SU2EfRRyEwfHNrt1SIz2JxaFMA=
+buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20240105233422-8054bf72d102.1/go.mod h1:lAv2Uero9GS0WGHvco9tw82GY5J/U0uuBdccsHV4Acc=
+buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20240105233422-8054bf72d102.1 h1:TOugHIye1MzyV7Vjzff13UZWidUVPp0xwmejtOBEXew=
+buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20240105233422-8054bf72d102.1/go.mod h1:2Mpji+rUNpkV7r9a5cIDXpKJMRYmp0I0XrM61EBLEDY=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.38.0/go.mod h1:990N+gfupTy94rShfmMCWGDn0LpTmnzTp2qbd1dvSRU=

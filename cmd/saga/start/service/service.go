@@ -56,6 +56,7 @@ func (s *Service) CreateOnboardingWorkflow(
 
 	orgID := uuid.New().String()
 	profileID := uuid.New().String()
+	licenseID := uuid.New().String()
 
 	args := saga.CreateLicenseInputArgs{
 		Org: saga.Org{
@@ -67,7 +68,7 @@ func (s *Service) CreateOnboardingWorkflow(
 			FullName: req.Msg.GetProfile().GetFullName(),
 		},
 		License: saga.License{
-			ID:     uuid.New().String(),
+			ID:     licenseID,
 			Start:  req.Msg.GetLicense().GetStart().AsTime(),
 			End:    req.Msg.GetLicense().GetEnd().AsTime(),
 			UserID: profileID,
@@ -88,6 +89,9 @@ func (s *Service) CreateOnboardingWorkflow(
 
 	res := &temporalPB.CreateOnboardingWorkflowResponse{
 		WorkflowId: workflow.GetID(),
+		OrgId:      orgID,
+		ProfileId:  profileID,
+		LicenseId:  licenseID,
 	}
 
 	out := connect.NewResponse(res)

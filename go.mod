@@ -9,8 +9,8 @@ require (
 	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.32.0-20240105230936-cc69561a5883.1
 	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20240105230937-9f5a2b967cc7.1
 	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240105230937-9f5a2b967cc7.1
-	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20240105224636-721997cf176e.1
-	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20240105224636-721997cf176e.1
+	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20240105233422-8054bf72d102.1
+	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20240105233422-8054bf72d102.1
 	connectrpc.com/connect v1.14.0
 	connectrpc.com/grpchealth v1.3.0
 	connectrpc.com/grpcreflect v1.2.0

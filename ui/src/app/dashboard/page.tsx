@@ -113,7 +113,7 @@ export function CreateWorkflowDialog() {
       start: values.startDate,
       end: values.endDate,
     });
-    toast(response.toJsonString());
+    toast(JSON.stringify(response));
   }
 
   return (
