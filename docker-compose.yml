@@ -1,6 +1,33 @@
 version: "3.9"
 
 services:
+  db-org: &db_org
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: postgrespassword
+    restart: always
+    ports:
+      - "127.0.0.1:15432:5432"
+    volumes:
+      - pg_data_org:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 3s
+      retries: 5
+  db-profile:
+    <<: *db_org
+    ports:
+      - "127.0.0.1:15433:5432"
+    volumes:
+      - pg_data_profile:/var/lib/postgresql/data
+  db-license:
+    <<: *db_org
+    ports:
+      - "127.0.0.1:15434:5432"
+    volumes:
+      - pg_data_license:/var/lib/postgresql/data
+
   # All traces, metrics, and logs will first go into the
   # OpenTelemetry Collector, and from there they can be
   # sent to wherever.
@@ -32,3 +59,8 @@ services:
       - 5778 # serves sampling strategies
     ports:
       - "127.0.0.1:16686:16686" # jaeger ui
+
+volumes:
+  pg_data_org:
+  pg_data_profile:
+  pg_data_license:
