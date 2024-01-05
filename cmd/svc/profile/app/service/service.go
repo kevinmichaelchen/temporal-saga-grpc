@@ -3,6 +3,7 @@ package service
 
 import (
 	"database/sql"
+
 	"go.uber.org/fx"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/profile/service"

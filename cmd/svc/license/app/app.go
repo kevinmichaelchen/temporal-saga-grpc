@@ -4,7 +4,6 @@ package app
 import (
 	licenseConnect "buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go/license/v1beta1/licensev1beta1connect"
 	"connectrpc.com/connect"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/sql"
 	"go.uber.org/fx"
 
 	modService "github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/license/app/service"
@@ -13,6 +12,7 @@ import (
 	modConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/logging"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/otel"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/sql"
 )
 
 // Module - An FX module for the application.

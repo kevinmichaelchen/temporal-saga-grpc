@@ -4,7 +4,6 @@ package app
 import (
 	profilev1beta1connect "buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go/profile/v1beta1/profilev1beta1connect"
 	"connectrpc.com/connect"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/sql"
 	"go.uber.org/fx"
 
 	modService "github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/profile/app/service"
@@ -13,6 +12,7 @@ import (
 	modConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/logging"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/otel"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/sql"
 )
 
 // Module - An FX module for the application.

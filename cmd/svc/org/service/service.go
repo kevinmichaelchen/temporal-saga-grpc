@@ -2,11 +2,12 @@
 package service
 
 import (
+	"context"
+	"database/sql"
+
 	orgConnect "buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
 	orgPB "buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go/org/v1beta1"
 	"connectrpc.com/connect"
-	"context"
-	"database/sql"
 	"github.com/sirupsen/logrus"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"

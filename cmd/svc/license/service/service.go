@@ -5,8 +5,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/license/models"
-	"github.com/volatiletech/sqlboiler/v4/boil"
 	"time"
 
 	licenseConnect "buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go/license/v1beta1/licensev1beta1connect"
@@ -14,7 +12,9 @@ import (
 	"connectrpc.com/connect"
 	"github.com/bufbuild/protovalidate-go"
 	"github.com/sirupsen/logrus"
+	"github.com/volatiletech/sqlboiler/v4/boil"
 
+	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/license/models"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
 )
 
