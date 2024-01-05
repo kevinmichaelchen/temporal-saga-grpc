@@ -3,14 +3,14 @@ module github.com/kevinmichaelchen/temporal-saga-grpc
 go 1.21.5
 
 require (
-	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.14.0-20231230182852-a5b0c8441680.1
-	buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.32.0-20231230182852-a5b0c8441680.1
-	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.14.0-20231230143300-f1e12ab42c62.1
-	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.32.0-20231230143300-f1e12ab42c62.1
-	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20231230143301-839882cce539.1
-	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20231230143301-839882cce539.1
-	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20231230182854-8d9d2e3ad33c.1
-	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20231230182854-8d9d2e3ad33c.1
+	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.14.0-20240105230935-96a83ee74301.1
+	buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.32.0-20240105230935-96a83ee74301.1
+	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.14.0-20240105230936-cc69561a5883.1
+	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.32.0-20240105230936-cc69561a5883.1
+	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20240105230937-9f5a2b967cc7.1
+	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240105230937-9f5a2b967cc7.1
+	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20240105224636-721997cf176e.1
+	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20240105224636-721997cf176e.1
 	connectrpc.com/connect v1.14.0
 	connectrpc.com/grpchealth v1.3.0
 	connectrpc.com/grpcreflect v1.2.0
@@ -25,7 +25,7 @@ require (
 	github.com/stretchr/testify v1.8.4
 	github.com/volatiletech/null/v8 v8.1.2
 	github.com/volatiletech/sqlboiler/v4 v4.15.0
-	github.com/volatiletech/strmangle v0.0.5
+	github.com/volatiletech/strmangle v0.0.6
 	go.opentelemetry.io/otel v1.21.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.21.0
 	go.opentelemetry.io/otel/sdk v1.21.0

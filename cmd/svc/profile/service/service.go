@@ -43,7 +43,11 @@ func (s *Service) CreateProfile(
 
 	res := &profilePB.CreateProfileResponse{}
 
-	logrus.WithField("name", req.Msg.GetName()).Info("Creating Profile")
+	logrus.
+		WithField("id", req.Msg.GetId()).
+		WithField("org_id", req.Msg.GetOrgId()).
+		WithField("name", req.Msg.GetFullName()).
+		Info("Creating Profile")
 
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")

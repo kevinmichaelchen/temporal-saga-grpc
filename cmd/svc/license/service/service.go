@@ -73,7 +73,12 @@ func (s *Service) CreateLicense(
 
 	res := &licensev1beta1.CreateLicenseResponse{}
 
-	logrus.WithField("name", req.Msg.GetName()).Info("Creating License")
+	logrus.
+		WithField("id", req.Msg.GetId()).
+		WithField("user_id", req.Msg.GetUserId()).
+		WithField("start", req.Msg.GetStart()).
+		WithField("end", req.Msg.GetEnd()).
+		Info("Creating License")
 
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")
