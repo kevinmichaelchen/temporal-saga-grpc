@@ -16,6 +16,7 @@ tasks:
     cmds:
       - pkgx docker-clean stop
       - docker compose up -d
+      - task: db:migrate
 
   worker:
     run: once

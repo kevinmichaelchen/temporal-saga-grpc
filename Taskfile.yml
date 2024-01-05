@@ -11,6 +11,8 @@ includes:
     taskfile: ./taskfiles/golang.yml
   run:
     taskfile: ./taskfiles/run.yml
+  sqlboiler:
+    taskfile: ./taskfiles/sqlboiler.yml
 
 tasks:
   generate:

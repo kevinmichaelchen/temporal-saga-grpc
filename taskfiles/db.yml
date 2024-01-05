@@ -53,4 +53,5 @@ tasks:
         schema apply \
         -u "postgres://postgres:postgrespassword@localhost:{{ .PORT }}/postgres?sslmode=disable" \
         --to file://db/schema/{{ .SCHEMA_FILE }} \
-        --schema public
+        --schema public \
+        --auto-approve
