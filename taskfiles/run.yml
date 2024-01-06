@@ -35,6 +35,10 @@ tasks:
       - task: infra
     desc: "Runs Temporal worker"
     cmd: go run cmd/saga/worker/main.go
+    env:
+      PORT_API_LICENSE: "{{ .PORT_API_LICENSE }}"
+      PORT_API_ORG: "{{ .PORT_API_ORG }}"
+      PORT_API_PROFILE: "{{ .PORT_API_PROFILE }}"
 
   starter:
     run: once

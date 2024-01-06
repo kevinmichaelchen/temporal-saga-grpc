@@ -10,6 +10,7 @@ import (
 	"buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
 	"buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go/profile/v1beta1/profilev1beta1connect"
 	"connectrpc.com/connect"
+	"github.com/sethvargo/go-envconfig"
 	"github.com/sirupsen/logrus"
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/worker"
@@ -19,15 +20,10 @@ import (
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 )
 
-const (
-	servicePortLicense = 9090
-	servicePortOrg     = 9091
-	servicePortProfile = 9092
-)
-
 // Module - An FX module for a Temporal worker.
 var Module = fx.Module("worker",
 	fx.Provide(
+		NewConfig,
 		NewController,
 		NewWorker,
 		NewLicenseClient,
@@ -39,6 +35,25 @@ var Module = fx.Module("worker",
 	),
 )
 
+// Config - Environment-based config.
+type Config struct {
+	PortAPILicense int `env:"PORT_API_LICENSE"`
+	PortAPIOrg     int `env:"PORT_API_ORG"`
+	PortAPIProfile int `env:"PORT_API_PROFILE"`
+}
+
+// NewConfig - Reads config from environment.
+func NewConfig() (*Config, error) {
+	var cfg Config
+
+	err := envconfig.Process(context.Background(), &cfg)
+	if err != nil {
+		return nil, fmt.Errorf("unable to read config from environment: %w", err)
+	}
+
+	return &cfg, nil
+}
+
 // NewController - Returns a new controller for our Temporal workflow.
 func NewController(
 	licenseClient licensev1beta1connect.LicenseServiceClient,
@@ -49,8 +64,8 @@ func NewController(
 }
 
 // NewLicenseClient - Returns a new Connect client for the License service.
-func NewLicenseClient() licensev1beta1connect.LicenseServiceClient {
-	addr := fmt.Sprintf("http://localhost:%d", servicePortLicense)
+func NewLicenseClient(cfg *Config) licensev1beta1connect.LicenseServiceClient {
+	addr := fmt.Sprintf("http://localhost:%d", cfg.PortAPILicense)
 
 	return licensev1beta1connect.NewLicenseServiceClient(
 		http.DefaultClient,
@@ -60,8 +75,8 @@ func NewLicenseClient() licensev1beta1connect.LicenseServiceClient {
 }
 
 // NewOrgClient - Returns a new Connect client for the Org service.
-func NewOrgClient() orgv1beta1connect.OrgServiceClient {
-	addr := fmt.Sprintf("http://localhost:%d", servicePortOrg)
+func NewOrgClient(cfg *Config) orgv1beta1connect.OrgServiceClient {
+	addr := fmt.Sprintf("http://localhost:%d", cfg.PortAPIOrg)
 
 	return orgv1beta1connect.NewOrgServiceClient(
 		http.DefaultClient,
@@ -71,8 +86,8 @@ func NewOrgClient() orgv1beta1connect.OrgServiceClient {
 }
 
 // NewProfileClient - Returns a new Connect client for the Profile service.
-func NewProfileClient() profilev1beta1connect.ProfileServiceClient {
-	addr := fmt.Sprintf("http://localhost:%d", servicePortProfile)
+func NewProfileClient(cfg *Config) profilev1beta1connect.ProfileServiceClient {
+	addr := fmt.Sprintf("http://localhost:%d", cfg.PortAPIProfile)
 
 	return profilev1beta1connect.NewProfileServiceClient(
 		http.DefaultClient,
