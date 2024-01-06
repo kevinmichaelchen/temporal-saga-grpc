@@ -1,9 +1,12 @@
 version: '3'
 
 vars:
-  PORT_ORG: 15432
-  PORT_PROFILE: 15433
-  PORT_LICENSE: 15434
+  PORT_API_ORG: 9091
+  PORT_API_LICENSE: 9090
+  PORT_API_PROFILE: 9092
+  PORT_DB_ORG: 15432
+  PORT_DB_PROFILE: 15433
+  PORT_DB_LICENSE: 15434
   SCHEMA_ORG: org.hcl
   SCHEMA_PROFILE: profile.hcl
   SCHEMA_LICENSE: license.hcl
@@ -44,54 +47,59 @@ tasks:
     env:
       GRPC_CONNECT_PORT: 8081
 
-  service-license:
-    run: once
+  int-run-service:
+    internal: true
     deps:
       - task: infra
+    cmds:
+      - "pkgx killport {{ .PORT_API }}"
+      - "go run cmd/svc/{{ .NAME }}/main.go"
+    env:
+      GRPC_CONNECT_PORT: "{{ .PORT_API }}"
+      DB_CONN_STRING: "postgres://postgres:postgrespassword@localhost:{{ .PORT_DB }}/postgres?sslmode=disable"
+
+  service-license:
+    run: once
     desc: "Runs license service"
     cmds:
-      - pkgx killport 9090
-      - go run cmd/svc/license/main.go
-    env:
-      GRPC_CONNECT_PORT: 9090
-      DB_CONN_STRING: "postgres://postgres:postgrespassword@localhost:{{ .PORT_LICENSE }}/postgres?sslmode=disable"
+      - task: int-run-service
+        vars:
+          PORT_API: "{{ .PORT_API_LICENSE }}"
+          PORT_DB: "{{ .PORT_DB_LICENSE }}"
+          NAME: license
 
   service-org:
     run: once
-    deps:
-      - task: infra
-    desc: "Runs Org service"
+    desc: "Runs org service"
     cmds:
-      - pkgx killport 9091
-      - go run cmd/svc/org/main.go
-    env:
-      GRPC_CONNECT_PORT: 9091
-      DB_CONN_STRING: "postgres://postgres:postgrespassword@localhost:{{ .PORT_ORG }}/postgres?sslmode=disable"
+      - task: int-run-service
+        vars:
+          PORT_API: "{{ .PORT_API_ORG }}"
+          PORT_DB: "{{ .PORT_DB_ORG }}"
+          NAME: org
 
   service-profile:
     run: once
-    deps:
-      - task: infra
     desc: "Runs profile service"
     cmds:
-      - pkgx killport 9092
-      - go run cmd/svc/profile/main.go
-    env:
-      GRPC_CONNECT_PORT: 9092
-      DB_CONN_STRING: "postgres://postgres:postgrespassword@localhost:{{ .PORT_PROFILE }}/postgres?sslmode=disable"
+      - task: int-run-service
+        vars:
+          PORT_API: "{{ .PORT_API_PROFILE }}"
+          PORT_DB: "{{ .PORT_DB_PROFILE }}"
+          NAME: profile
 
   inspect:
     desc: "Inspect"
     cmds:
       - task: int-inspect
         vars:
-          PORT: "{{ .PORT_ORG }}"
+          PORT: "{{ .PORT_DB_ORG }}"
       - task: int-inspect
         vars:
-          PORT: "{{ .PORT_PROFILE }}"
+          PORT: "{{ .PORT_DB_PROFILE }}"
       - task: int-inspect
         vars:
-          PORT: "{{ .PORT_LICENSE }}"
+          PORT: "{{ .PORT_DB_LICENSE }}"
 
   int-inspect:
     internal: true
@@ -106,15 +114,15 @@ tasks:
     cmds:
       - task: int-migrate
         vars:
-          PORT: "{{ .PORT_ORG }}"
+          PORT: "{{ .PORT_DB_ORG }}"
           SCHEMA_FILE: "{{ .SCHEMA_ORG }}"
       - task: int-migrate
         vars:
-          PORT: "{{ .PORT_PROFILE }}"
+          PORT: "{{ .PORT_DB_PROFILE }}"
           SCHEMA_FILE: "{{ .SCHEMA_PROFILE }}"
       - task: int-migrate
         vars:
-          PORT: "{{ .PORT_LICENSE }}"
+          PORT: "{{ .PORT_DB_LICENSE }}"
           SCHEMA_FILE: "{{ .SCHEMA_LICENSE }}"
 
   int-migrate:
