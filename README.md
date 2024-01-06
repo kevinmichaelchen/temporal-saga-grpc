@@ -75,7 +75,7 @@ curl -v http://localhost:8081/temporal.v1beta1.TemporalService/CreateOnboardingW
       "name": "Org 1"
     },
     "profile": {
-      "name": "Kevin Chen"
+      "full_name": "Kevin Chen"
     }
   }
 EOF
@@ -95,7 +95,7 @@ pkgx http POST \
       "name": "Org 1"
     },
     "profile": {
-      "name": "Kevin Chen"
+      "full_name": "Kevin Chen"
     }
   }
   '
