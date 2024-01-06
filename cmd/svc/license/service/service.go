@@ -12,6 +12,8 @@ import (
 	"github.com/bufbuild/protovalidate-go"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/sqlboiler/v4/boil"
+	"github.com/volatiletech/sqlboiler/v4/queries/qm"
+	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/license/models"
 )
@@ -73,4 +75,53 @@ func (s *Service) CreateLicense(
 	out.Header().Set("API-Version", "v1beta1")
 
 	return out, nil
+}
+
+// GetLicense - Gets a License.
+func (s *Service) GetLicense(
+	ctx context.Context,
+	req *connect.Request[licensev1beta1.GetLicenseRequest],
+) (*connect.Response[licensev1beta1.GetLicenseResponse], error) {
+	record, err := models.FindLicense(ctx, s.db, req.Msg.GetId())
+	if err != nil {
+		return nil, fmt.Errorf("unable to retrieve item: %w", err)
+	}
+
+	return connect.NewResponse(&licensev1beta1.GetLicenseResponse{
+		License: &licensev1beta1.License{
+			Id:     record.ID,
+			Start:  timestamppb.New(record.StartTime),
+			End:    timestamppb.New(record.EndTime),
+			UserId: record.UserID,
+		},
+	}), nil
+}
+
+// ListLicenses - Lists licenses.
+func (s *Service) ListLicenses(
+	ctx context.Context,
+	req *connect.Request[licensev1beta1.ListLicensesRequest],
+) (*connect.Response[licensev1beta1.ListLicensesResponse], error) {
+	var mods []qm.QueryMod
+	// TODO account for parent and page_token fields
+	mods = append(mods, qm.Limit(max(1, int(req.Msg.GetPageSize()))))
+
+	items, err := models.Licenses(mods...).All(ctx, s.db)
+	if err != nil {
+		return nil, fmt.Errorf("unable to retrieve items: %w", err)
+	}
+
+	var licenses []*licensev1beta1.License
+	for _, item := range items {
+		licenses = append(licenses, &licensev1beta1.License{
+			Id:     item.ID,
+			Start:  timestamppb.New(item.StartTime),
+			End:    timestamppb.New(item.EndTime),
+			UserId: item.UserID,
+		})
+	}
+
+	return connect.NewResponse(&licensev1beta1.ListLicensesResponse{
+		Licenses: licenses,
+	}), nil
 }

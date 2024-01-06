@@ -10,6 +10,14 @@ service OrgService {
   rpc CreateOrg(CreateOrgRequest) returns (CreateOrgResponse) {
     option idempotency_level = IDEMPOTENT;
   }
+  // GetOrg - Gets an Organization.
+  rpc GetOrg(GetOrgRequest) returns (GetOrgResponse) {
+    option idempotency_level = IDEMPOTENT;
+  }
+  // ListOrgs - Lists Organizations.
+  rpc ListOrgs(ListOrgsRequest) returns (ListOrgsResponse) {
+    option idempotency_level = IDEMPOTENT;
+  }
 }
 
 message CreateOrgRequest {
@@ -18,3 +26,27 @@ message CreateOrgRequest {
 }
 
 message CreateOrgResponse {}
+
+message Org {
+  string id = 1;
+  string name = 2;
+}
+
+message GetOrgRequest {
+  string id = 1;
+}
+
+message GetOrgResponse {
+  Org org = 1;
+}
+
+message ListOrgsRequest {
+  string parent = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message ListOrgsResponse {
+  repeated Org orgs = 1;
+  string next_page_token = 2;
+}

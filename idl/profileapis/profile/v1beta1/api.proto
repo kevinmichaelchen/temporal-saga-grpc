@@ -10,6 +10,14 @@ service ProfileService {
   rpc CreateProfile(CreateProfileRequest) returns (CreateProfileResponse) {
     option idempotency_level = IDEMPOTENT;
   }
+  // GetProfile - Gets a Profile.
+  rpc GetProfile(GetProfileRequest) returns (GetProfileResponse) {
+    option idempotency_level = IDEMPOTENT;
+  }
+  // ListProfiles - Lists Profiles.
+  rpc ListProfiles(ListProfilesRequest) returns (ListProfilesResponse) {
+    option idempotency_level = IDEMPOTENT;
+  }
 }
 
 message CreateProfileRequest {
@@ -19,3 +27,28 @@ message CreateProfileRequest {
 }
 
 message CreateProfileResponse {}
+
+message Profile {
+  string id = 1;
+  string full_name = 2;
+  string org_id = 3;
+}
+
+message GetProfileRequest {
+  string id = 1;
+}
+
+message GetProfileResponse {
+  Profile profile = 1;
+}
+
+message ListProfilesRequest {
+  string parent = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message ListProfilesResponse {
+  repeated Profile profiles = 1;
+  string next_page_token = 2;
+}

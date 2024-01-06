@@ -12,6 +12,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/null/v8"
 	"github.com/volatiletech/sqlboiler/v4/boil"
+	"github.com/volatiletech/sqlboiler/v4/queries/qm"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/profile/models"
 )
@@ -59,4 +60,51 @@ func (s *Service) CreateProfile(
 	out.Header().Set("API-Version", "v1beta1")
 
 	return out, nil
+}
+
+// GetProfile - Gets a profile.
+func (s *Service) GetProfile(
+	ctx context.Context,
+	req *connect.Request[profilePB.GetProfileRequest],
+) (*connect.Response[profilePB.GetProfileResponse], error) {
+	record, err := models.FindProfile(ctx, s.db, req.Msg.GetId())
+	if err != nil {
+		return nil, fmt.Errorf("unable to retrieve item: %w", err)
+	}
+
+	return connect.NewResponse(&profilePB.GetProfileResponse{
+		Profile: &profilePB.Profile{
+			Id:       record.ID,
+			FullName: record.FullName.String,
+			OrgId:    record.OrgID,
+		},
+	}), nil
+}
+
+// ListProfiles - Lists profiles.
+func (s *Service) ListProfiles(
+	ctx context.Context,
+	req *connect.Request[profilePB.ListProfilesRequest],
+) (*connect.Response[profilePB.ListProfilesResponse], error) {
+	var mods []qm.QueryMod
+	// TODO account for parent and page_token fields
+	mods = append(mods, qm.Limit(max(1, int(req.Msg.GetPageSize()))))
+
+	items, err := models.Profiles(mods...).All(ctx, s.db)
+	if err != nil {
+		return nil, fmt.Errorf("unable to retrieve items: %w", err)
+	}
+
+	var profiles []*profilePB.Profile
+	for _, item := range items {
+		profiles = append(profiles, &profilePB.Profile{
+			Id:       item.ID,
+			FullName: item.FullName.String,
+			OrgId:    item.OrgID,
+		})
+	}
+
+	return connect.NewResponse(&profilePB.ListProfilesResponse{
+		Profiles: profiles,
+	}), nil
 }
