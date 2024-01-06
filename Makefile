@@ -19,12 +19,16 @@ check_pkgx:
 		exit 1; \
 	fi
 	@echo "pkgx is installed."
+	pkgx --sync
 
 .PHONY: all
-all: check_pkgx
-	pkgx --sync
-	pkgx killport@latest 7233
-	sleep 1
+all: check_pkgx stop
 	pkgx temporal@latest server start-dev &
 	sleep 2
 	pkgx task@latest run:all
+
+.PHONY: stop
+stop:
+	pkgx killport@latest 7233
+	sleep 1
+	pkgx docker-clean stop

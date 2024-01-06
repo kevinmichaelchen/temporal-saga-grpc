@@ -24,7 +24,7 @@ import (
 // CreateModule - The primary function for building an FX module for Connect Go
 // APIs.
 func CreateModule(opts *ModuleOptions) fx.Option {
-	return fx.Module("grpc",
+	return fx.Module("connect",
 		fx.Provide(
 			opts.HandlerProvider,
 			func() *ModuleOptions {

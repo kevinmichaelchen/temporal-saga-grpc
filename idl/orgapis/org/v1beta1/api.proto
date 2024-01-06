@@ -3,6 +3,7 @@ syntax = "proto3";
 package org.v1beta1;
 
 import "buf/validate/validate.proto";
+import "google/api/annotations.proto";
 
 // Service for managing Orgs.
 service OrgService {
@@ -12,11 +13,13 @@ service OrgService {
   }
   // GetOrg - Gets an Organization.
   rpc GetOrg(GetOrgRequest) returns (GetOrgResponse) {
-    option idempotency_level = IDEMPOTENT;
+    option (google.api.http).get = "/orgs/{id}";
+    option idempotency_level = NO_SIDE_EFFECTS;
   }
   // ListOrgs - Lists Organizations.
   rpc ListOrgs(ListOrgsRequest) returns (ListOrgsResponse) {
-    option idempotency_level = IDEMPOTENT;
+    option (google.api.http).get = "/orgs";
+    option idempotency_level = NO_SIDE_EFFECTS;
   }
 }
 
