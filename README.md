@@ -38,7 +38,9 @@ You can spin everything up with:
 make
 ```
 
-> [!NOTE] Under the hood, we use [pkgx][pkgx] to run Temporal's [dev
+> [!NOTE]
+> 
+> Under the hood, we use [pkgx][pkgx] to run Temporal's [dev
 > server][temporal-cli], and Docker to run [Jaeger][jaeger] (a telemetry
 > backend).
 

@@ -4,6 +4,7 @@ vars: {
   icons: {
     gopher: https://www.svgrepo.com/show/373635/go-gopher.svg
     temporal: ./docs/diagrams/temporal.svg
+    postgres: https://icons.terrastruct.com/dev%2Fpostgresql-words.svg
   }
 }
 
@@ -25,15 +26,36 @@ cloud: Cloud {
     icon: ${icons.gopher}
   }
 
+  db-license: {
+    shape: image
+    icon: ${icons.postgres}
+  }
+
+  svc-license -> db-license
+
   svc-profile: Profile µService {
     shape: image
     icon: ${icons.gopher}
   }
 
+  db-profile: {
+    shape: image
+    icon: ${icons.postgres}
+  }
+
+  svc-profile -> db-profile
+
   svc-org: Org µService {
     shape: image
     icon: ${icons.gopher}
   }
+
+  db-org: {
+    shape: image
+    icon: ${icons.postgres}
+  }
+
+  svc-org -> db-org
 
   worker -> svc-license: Create License {
     style: {
