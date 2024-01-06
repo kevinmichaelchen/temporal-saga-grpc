@@ -12,6 +12,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/null/v8"
 	"github.com/volatiletech/sqlboiler/v4/boil"
+	"github.com/volatiletech/sqlboiler/v4/queries/qm"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/models"
 )
@@ -56,4 +57,48 @@ func (s *Service) CreateOrg(
 	out.Header().Set("API-Version", "v1beta1")
 
 	return out, nil
+}
+
+// GetOrg - Gets an org.
+func (s *Service) GetOrg(
+	ctx context.Context,
+	req *connect.Request[orgPB.GetOrgRequest],
+) (*connect.Response[orgPB.GetOrgResponse], error) {
+	record, err := models.FindOrg(ctx, s.db, req.Msg.GetId())
+	if err != nil {
+		return nil, fmt.Errorf("unable to retrieve item: %w", err)
+	}
+
+	return connect.NewResponse(&orgPB.GetOrgResponse{
+		Org: &orgPB.Org{
+			Id:   record.ID,
+			Name: record.Name.String,
+		},
+	}), nil
+}
+
+// ListOrgs - Lists orgs.
+func (s *Service) ListOrgs(
+	ctx context.Context,
+	req *connect.Request[orgPB.ListOrgsRequest],
+) (*connect.Response[orgPB.ListOrgsResponse], error) {
+	var mods []qm.QueryMod
+	mods = append(mods, qm.Limit(max(1, int(req.Msg.GetPageSize()))))
+
+	items, err := models.Orgs(mods...).All(ctx, s.db)
+	if err != nil {
+		return nil, fmt.Errorf("unable to retrieve items: %w", err)
+	}
+
+	var orgs []*orgPB.Org
+	for _, item := range items {
+		orgs = append(orgs, &orgPB.Org{
+			Id:   item.ID,
+			Name: item.Name.String,
+		})
+	}
+
+	return connect.NewResponse(&orgPB.ListOrgsResponse{
+		Orgs: orgs,
+	}), nil
 }

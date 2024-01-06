@@ -11,6 +11,14 @@ service LicenseService {
   rpc CreateLicense(CreateLicenseRequest) returns (CreateLicenseResponse) {
     option idempotency_level = IDEMPOTENT;
   }
+  // Get a License.
+  rpc GetLicense(GetLicenseRequest) returns (GetLicenseResponse) {
+    option idempotency_level = IDEMPOTENT;
+  }
+  // ListLicenses - Lists Licenses.
+  rpc ListLicenses(ListLicensesRequest) returns (ListLicensesResponse) {
+    option idempotency_level = IDEMPOTENT;
+  }
 }
 
 message CreateLicenseRequest {
@@ -28,3 +36,29 @@ message CreateLicenseRequest {
 }
 
 message CreateLicenseResponse {}
+
+message License {
+  string id = 1;
+  google.protobuf.Timestamp start = 2;
+  google.protobuf.Timestamp end = 3;
+  string user_id = 4;
+}
+
+message GetLicenseRequest {
+  string id = 1;
+}
+
+message GetLicenseResponse {
+  License license = 1;
+}
+
+message ListLicensesRequest {
+  string parent = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message ListLicensesResponse {
+  repeated License licenses = 1;
+  string next_page_token = 2;
+}
