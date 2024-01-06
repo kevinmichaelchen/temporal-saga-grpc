@@ -3,6 +3,7 @@ syntax = "proto3";
 package license.v1beta1;
 
 import "buf/validate/validate.proto";
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
 // Service for managing licenses.
@@ -13,11 +14,13 @@ service LicenseService {
   }
   // Get a License.
   rpc GetLicense(GetLicenseRequest) returns (GetLicenseResponse) {
-    option idempotency_level = IDEMPOTENT;
+    option (google.api.http).get = "/licenses/{id}";
+    option idempotency_level = NO_SIDE_EFFECTS;
   }
   // ListLicenses - Lists Licenses.
   rpc ListLicenses(ListLicensesRequest) returns (ListLicensesResponse) {
-    option idempotency_level = IDEMPOTENT;
+    option (google.api.http).get = "/licenses";
+    option idempotency_level = NO_SIDE_EFFECTS;
   }
 }
 

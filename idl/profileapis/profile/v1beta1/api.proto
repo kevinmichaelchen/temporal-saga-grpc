@@ -3,6 +3,7 @@ syntax = "proto3";
 package profile.v1beta1;
 
 import "buf/validate/validate.proto";
+import "google/api/annotations.proto";
 
 // Service for managing Profiles.
 service ProfileService {
@@ -12,11 +13,13 @@ service ProfileService {
   }
   // GetProfile - Gets a Profile.
   rpc GetProfile(GetProfileRequest) returns (GetProfileResponse) {
-    option idempotency_level = IDEMPOTENT;
+    option (google.api.http).get = "/profiles/{id}";
+    option idempotency_level = NO_SIDE_EFFECTS;
   }
   // ListProfiles - Lists Profiles.
   rpc ListProfiles(ListProfilesRequest) returns (ListProfilesResponse) {
-    option idempotency_level = IDEMPOTENT;
+    option (google.api.http).get = "/profiles";
+    option idempotency_level = NO_SIDE_EFFECTS;
   }
 }
 
