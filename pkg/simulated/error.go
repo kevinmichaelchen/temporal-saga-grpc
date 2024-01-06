@@ -46,6 +46,13 @@ func (p ErrorProbability) Int() int {
 	return 50
 }
 
+// SleepAndPossibleError - Sleeps and returns an error at random.
+func SleepAndPossibleError(ep ErrorProbability) error {
+	Sleep()
+
+	return PossibleError(ep)
+}
+
 // PossibleError - Returns an error (or none) at random.
 func PossibleError(ep ErrorProbability) error {
 	probability := ep.Int()

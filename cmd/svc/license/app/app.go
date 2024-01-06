@@ -12,6 +12,7 @@ import (
 	modConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/logging"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/otel"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/sql"
 )
 
 // Module - An FX module for the application.
@@ -38,4 +39,5 @@ var Module = fx.Options(
 	otel.CreateModule(otel.ModuleOptions{
 		ServiceName: "license-svc",
 	}),
+	sql.Module,
 )

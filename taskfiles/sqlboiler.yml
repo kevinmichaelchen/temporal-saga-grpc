@@ -1,0 +1,20 @@
+version: "3"
+
+tasks:
+  gen:
+    desc: "Auto-generate SQLBoiler SQL models"
+    cmds:
+      - go install github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-psql@latest
+      - for: [ license, org, profile ]
+        task: int-gen-boiler
+        vars:
+          SERVICE: "{{.ITEM}}"
+
+  int-gen-boiler:
+    internal: true
+    dir: "cmd/svc/{{ .SERVICE }}"
+    sources:
+      - sqlboiler.toml
+    generates:
+      - ./models/*.go
+    cmd: pkgx sqlboiler psql --no-tests --output models

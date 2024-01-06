@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 tasks:
   lint:
@@ -33,4 +33,6 @@ tasks:
           -s standard \
           -s default \
           -s "prefix(github.com/kevinmichaelchen/temporal-saga-grpc)" \
+          -s blank \
+          -s dot \
           .

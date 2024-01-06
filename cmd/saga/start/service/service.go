@@ -9,6 +9,7 @@ import (
 	temporalPB "buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go/temporal/v1beta1"
 	"connectrpc.com/connect"
 	"github.com/bufbuild/protovalidate-go"
+	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 	"go.temporal.io/sdk/client"
 
@@ -53,10 +54,26 @@ func (s *Service) CreateOnboardingWorkflow(
 		TaskQueue: saga.CreateLicenseTaskQueue,
 	}
 
+	orgID := uuid.New().String()
+	profileID := uuid.New().String()
+	licenseID := uuid.New().String()
+
 	args := saga.CreateLicenseInputArgs{
-		OrgName:     req.Msg.GetOrg().GetName(),
-		ProfileName: req.Msg.GetProfile().GetName(),
-		LicenseName: "New License",
+		Org: saga.Org{
+			ID:   orgID,
+			Name: req.Msg.GetOrg().GetName(),
+		},
+		Profile: saga.Profile{
+			ID:       profileID,
+			FullName: req.Msg.GetProfile().GetFullName(),
+			OrgID:    orgID,
+		},
+		License: saga.License{
+			ID:     licenseID,
+			Start:  req.Msg.GetLicense().GetStart().AsTime(),
+			End:    req.Msg.GetLicense().GetEnd().AsTime(),
+			UserID: profileID,
+		},
 	}
 
 	workflow, err := temporalClient.ExecuteWorkflow(
@@ -73,6 +90,9 @@ func (s *Service) CreateOnboardingWorkflow(
 
 	res := &temporalPB.CreateOnboardingWorkflowResponse{
 		WorkflowId: workflow.GetID(),
+		OrgId:      orgID,
+		ProfileId:  profileID,
+		LicenseId:  licenseID,
 	}
 
 	out := connect.NewResponse(res)
@@ -83,9 +103,8 @@ func (s *Service) CreateOnboardingWorkflow(
 
 func printResults(args saga.CreateLicenseInputArgs, workflowID, runID string) {
 	logrus.WithFields(logrus.Fields{
-		"org_name":             args.OrgName,
-		"profile_name":         args.ProfileName,
-		"license_name":         args.LicenseName,
+		"org_name":             args.Org.Name,
+		"profile_name":         args.Profile.FullName,
 		"temporal.workflow_id": workflowID,
 		"temporal.run_id":      runID,
 	}).Info("Successfully completed Workflow")

@@ -2,6 +2,8 @@
 package service
 
 import (
+	"database/sql"
+
 	"go.uber.org/fx"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/service"
@@ -15,6 +17,6 @@ var Module = fx.Module("service",
 )
 
 // NewService - Returns a new controller for our business logic.
-func NewService() *service.Service {
-	return service.NewService()
+func NewService(db *sql.DB) *service.Service {
+	return service.NewService(db)
 }

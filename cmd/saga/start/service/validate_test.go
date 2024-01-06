@@ -29,7 +29,7 @@ func TestValidate(t *testing.T) {
 				Name: "Name",
 			},
 			Profile: &temporalPB.Profile{
-				Name: "Name",
+				FullName: "Name",
 			},
 		}
 	}

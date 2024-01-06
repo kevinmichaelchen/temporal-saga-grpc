@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import { toast } from 'sonner'
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -21,22 +21,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { DateFormatter } from 'react-day-picker'
-import { CalendarIcon } from '@radix-ui/react-icons'
-import { cn } from '@/lib/utils'
-import { format } from 'date-fns'
-import { Calendar } from '@/components/ui/calendar'
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { DateFormatter } from "react-day-picker";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
-import { createOnboardingWorkflow } from '@/app/dashboard/actions'
+} from "@/components/ui/popover";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { createOnboardingWorkflow } from "@/app/dashboard/actions";
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
@@ -50,70 +50,70 @@ export default function Page() {
         </Link>
       </div>
     </div>
-  )
+  );
 }
 
 const seasonEmoji: Record<string, string> = {
-  winter: '⛄️',
-  spring: '🌸',
-  summer: '🌻',
-  autumn: '🍂',
-}
+  winter: "⛄️",
+  spring: "🌸",
+  summer: "🌻",
+  autumn: "🍂",
+};
 
 const getSeason = (month: Date): string => {
-  const monthNumber = month.getMonth()
-  if (monthNumber >= 0 && monthNumber < 3) return 'winter'
-  if (monthNumber >= 3 && monthNumber < 6) return 'spring'
-  if (monthNumber >= 6 && monthNumber < 9) return 'summer'
-  else return 'autumn'
-}
+  const monthNumber = month.getMonth();
+  if (monthNumber >= 0 && monthNumber < 3) return "winter";
+  if (monthNumber >= 3 && monthNumber < 6) return "spring";
+  if (monthNumber >= 6 && monthNumber < 9) return "summer";
+  else return "autumn";
+};
 
 const formatCaption: DateFormatter = (month, options) => {
-  const season = getSeason(month)
+  const season = getSeason(month);
   return (
     <>
       <span role="img" aria-label={season}>
         {seasonEmoji[season]}
-      </span>{' '}
-      {format(month, 'LLLL', { locale: options?.locale })}
+      </span>{" "}
+      {format(month, "LLLL", { locale: options?.locale })}
     </>
-  )
-}
+  );
+};
 
 const formSchema = z.object({
   orgName: z.string().min(2, {
-    message: 'Organization name must be at least 2 characters.',
+    message: "Organization name must be at least 2 characters.",
   }),
   profileName: z.string().min(2, {
-    message: 'User display name must be at least 2 characters.',
+    message: "User display name must be at least 2 characters.",
   }),
   startDate: z.date({
-    required_error: 'Please select a date',
+    required_error: "Please select a date",
     invalid_type_error: "That's not a date!",
   }),
   endDate: z.date({
-    required_error: 'Please select a date',
+    required_error: "Please select a date",
     invalid_type_error: "That's not a date!",
   }),
-})
+});
 
 export function CreateWorkflowDialog() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-  })
+  });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
-    toast('form submit' + JSON.stringify(values))
+    console.log(values);
+    toast("form submit" + JSON.stringify(values));
     const response = await createOnboardingWorkflow({
       orgName: values.orgName,
       profileName: values.profileName,
       start: values.startDate,
-      end: values.startDate,
-    })
-    toast(response.toJsonString())
+      end: values.endDate,
+    });
+    toast(JSON.stringify(response));
   }
 
   return (
@@ -173,14 +173,14 @@ export function CreateWorkflowDialog() {
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
-                            variant={'outline'}
+                            variant={"outline"}
                             className={cn(
-                              'pl-3 text-left font-normal',
-                              !field.value && 'text-muted-foreground',
+                              "pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground",
                             )}
                           >
                             {field.value ? (
-                              format(field.value, 'yyyy-MM-dd')
+                              format(field.value, "yyyy-MM-dd")
                             ) : (
                               <span className="pr-1">Pick a date</span>
                             )}
@@ -212,27 +212,27 @@ export function CreateWorkflowDialog() {
               name="endDate"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Start Date</FormLabel>
+                  <FormLabel>End Date</FormLabel>
                   <FormControl>
                     <div>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
-                            variant={'outline'}
+                            variant={"outline"}
                             className={cn(
-                              'pl-3 text-left font-normal',
-                              !field.value && 'text-muted-foreground',
+                              "pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground",
                             )}
                           >
                             {field.value ? (
-                              format(field.value, 'yyyy-MM-dd')
+                              format(field.value, "yyyy-MM-dd")
                             ) : (
                               <span className="pr-1">Pick a date</span>
                             )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
+                        <PopoverContent className="w-auto p-0" align="end">
                           <Calendar
                             mode="single"
                             //proposed props
@@ -259,5 +259,5 @@ export function CreateWorkflowDialog() {
         </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

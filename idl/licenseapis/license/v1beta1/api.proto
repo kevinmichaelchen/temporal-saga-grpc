@@ -3,16 +3,28 @@ syntax = "proto3";
 package license.v1beta1;
 
 import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
 
 // Service for managing licenses.
 service LicenseService {
   // Creates a new License.
-  rpc CreateLicense(CreateLicenseRequest) returns (CreateLicenseResponse) {}
+  rpc CreateLicense(CreateLicenseRequest) returns (CreateLicenseResponse) {
+    option idempotency_level = IDEMPOTENT;
+  }
 }
 
 message CreateLicenseRequest {
-  string name = 1 [(buf.validate.field).string.min_len = 1];
-  string full_name = 2 [(buf.validate.field).string.min_len = 1];
+  string id = 1;
+  google.protobuf.Timestamp start = 2;
+  google.protobuf.Timestamp end = 3;
+
+  option (buf.validate.message).cel = {
+    id: "transaction.expiration_date",
+    message: "end time must be after start time",
+    expression: "this.end > this.start"
+  };
+
+  string user_id = 4;
 }
 
 message CreateLicenseResponse {}

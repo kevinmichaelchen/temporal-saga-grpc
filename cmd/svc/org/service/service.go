@@ -3,42 +3,54 @@ package service
 
 import (
 	"context"
+	"database/sql"
+	"fmt"
 
 	orgConnect "buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
 	orgPB "buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go/org/v1beta1"
 	"connectrpc.com/connect"
 	"github.com/sirupsen/logrus"
+	"github.com/volatiletech/null/v8"
+	"github.com/volatiletech/sqlboiler/v4/boil"
 
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/simulated"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/models"
 )
 
 var _ orgConnect.OrgServiceHandler = (*Service)(nil)
 
 // Service - A controller for our business logic.
-type Service struct{}
+type Service struct {
+	db *sql.DB
+}
 
 // NewService - Returns a new Service.
-func NewService() *Service {
-	return &Service{}
+func NewService(db *sql.DB) *Service {
+	return &Service{
+		db: db,
+	}
 }
 
 // CreateOrg - Creates a new org.
 func (s *Service) CreateOrg(
-	_ context.Context,
+	ctx context.Context,
 	req *connect.Request[orgPB.CreateOrgRequest],
 ) (*connect.Response[orgPB.CreateOrgResponse], error) {
-	// Sleep for a bit to simulate the latency of a database lookup
-	simulated.Sleep()
+	org := models.Org{
+		ID:   req.Msg.GetId(),
+		Name: null.StringFrom(req.Msg.GetName()),
+	}
 
-	// Simulate a potential error to test retry logic
-	err := simulated.PossibleError(simulated.Low)
+	err := org.Insert(ctx, s.db, boil.Infer())
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("unable to insert record: %w", err)
 	}
 
 	res := &orgPB.CreateOrgResponse{}
 
-	logrus.WithField("name", req.Msg.GetName()).Info("Creating Org")
+	logrus.
+		WithField("id", req.Msg.GetId()).
+		WithField("name", req.Msg.GetName()).
+		Info("Creating Org")
 
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")

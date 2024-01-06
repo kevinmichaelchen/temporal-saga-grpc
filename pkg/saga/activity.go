@@ -8,13 +8,15 @@ import (
 	org "buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go/org/v1beta1"
 	profile "buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go/profile/v1beta1"
 	"connectrpc.com/connect"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // CreateOrg - A Temporal Activity for creating an Org.
 func (c *Controller) CreateOrg(ctx context.Context, args CreateLicenseInputArgs) error {
 	_, err := c.orgClient.CreateOrg(ctx, connect.NewRequest(
 		&org.CreateOrgRequest{
-			Name: args.OrgName,
+			Id:   args.Org.ID,
+			Name: args.Org.Name,
 		},
 	))
 	if err != nil {
@@ -28,7 +30,9 @@ func (c *Controller) CreateOrg(ctx context.Context, args CreateLicenseInputArgs)
 func (c *Controller) CreateProfile(ctx context.Context, args CreateLicenseInputArgs) error {
 	_, err := c.profileClient.CreateProfile(ctx, connect.NewRequest(
 		&profile.CreateProfileRequest{
-			Name: args.ProfileName,
+			Id:       args.Profile.ID,
+			OrgId:    args.Profile.OrgID,
+			FullName: args.Profile.FullName,
 		},
 	))
 	if err != nil {
@@ -42,7 +46,10 @@ func (c *Controller) CreateProfile(ctx context.Context, args CreateLicenseInputA
 func (c *Controller) CreateLicense(ctx context.Context, args CreateLicenseInputArgs) error {
 	_, err := c.licenseClient.CreateLicense(ctx, connect.NewRequest(
 		&license.CreateLicenseRequest{
-			Name: args.LicenseName,
+			Id:     args.License.ID,
+			Start:  timestamppb.New(args.License.Start),
+			End:    timestamppb.New(args.License.End),
+			UserId: args.License.UserID,
 		},
 	))
 	if err != nil {

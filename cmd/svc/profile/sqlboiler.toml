@@ -1,0 +1,9 @@
+[psql]
+schema = "public"
+dbname = "postgres"
+host = "localhost"
+port = 15433
+user = "postgres"
+pass = "postgrespassword"
+sslmode = "disable"
+no-tests = true

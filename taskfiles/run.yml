@@ -1,5 +1,13 @@
 version: '3'
 
+vars:
+  PORT_ORG: 15432
+  PORT_PROFILE: 15433
+  PORT_LICENSE: 15434
+  SCHEMA_ORG: org.hcl
+  SCHEMA_PROFILE: profile.hcl
+  SCHEMA_LICENSE: license.hcl
+
 tasks:
   all:
     desc: "Starts everything"
@@ -16,6 +24,7 @@ tasks:
     cmds:
       - pkgx docker-clean stop
       - docker compose up -d
+      - task: migrate
 
   worker:
     run: once
@@ -45,6 +54,7 @@ tasks:
       - go run cmd/svc/license/main.go
     env:
       GRPC_CONNECT_PORT: 9090
+      DB_CONN_STRING: "postgres://postgres:postgrespassword@localhost:{{ .PORT_LICENSE }}/postgres?sslmode=disable"
 
   service-org:
     run: once
@@ -56,6 +66,7 @@ tasks:
       - go run cmd/svc/org/main.go
     env:
       GRPC_CONNECT_PORT: 9091
+      DB_CONN_STRING: "postgres://postgres:postgrespassword@localhost:{{ .PORT_ORG }}/postgres?sslmode=disable"
 
   service-profile:
     run: once
@@ -67,3 +78,63 @@ tasks:
       - go run cmd/svc/profile/main.go
     env:
       GRPC_CONNECT_PORT: 9092
+      DB_CONN_STRING: "postgres://postgres:postgrespassword@localhost:{{ .PORT_PROFILE }}/postgres?sslmode=disable"
+
+  inspect:
+    desc: "Inspect"
+    cmds:
+      - task: int-inspect
+        vars:
+          PORT: "{{ .PORT_ORG }}"
+      - task: int-inspect
+        vars:
+          PORT: "{{ .PORT_PROFILE }}"
+      - task: int-inspect
+        vars:
+          PORT: "{{ .PORT_LICENSE }}"
+
+  int-inspect:
+    internal: true
+    cmd: |
+      pkgx +atlasgo.io atlas \
+        schema inspect \
+        -u "postgres://postgres:postgrespassword@localhost:{{ .PORT }}/postgres?sslmode=disable" \
+        --schema public
+
+  migrate:
+    desc: "Applies database migrations"
+    cmds:
+      - task: int-migrate
+        vars:
+          PORT: "{{ .PORT_ORG }}"
+          SCHEMA_FILE: "{{ .SCHEMA_ORG }}"
+      - task: int-migrate
+        vars:
+          PORT: "{{ .PORT_PROFILE }}"
+          SCHEMA_FILE: "{{ .SCHEMA_PROFILE }}"
+      - task: int-migrate
+        vars:
+          PORT: "{{ .PORT_LICENSE }}"
+          SCHEMA_FILE: "{{ .SCHEMA_LICENSE }}"
+
+  int-migrate:
+    internal: true
+    env:
+      PGHOST: localhost
+      PGPORT: "{{ .PORT }}"
+      PGUSER: postgres
+      PGPASSWORD: postgrespassword
+      PGDATABASE: postgres
+    cmds:
+      # Wait for Postgres to start. Yes, we need this...
+      - "pkgx eb -x 20 -- lsof -i :{{ .PORT }}"
+      # Wait for Postgres to get ready. Yes, we need this as well...
+      - |
+        pkgx eb -x 20 -- pkgx pg_isready && [[ "$?" -eq 0 ]]
+      - |
+        pkgx +atlasgo.io atlas \
+          schema apply \
+          -u "postgres://postgres:postgrespassword@localhost:{{ .PORT }}/postgres?sslmode=disable" \
+          --to file://db/schema/{{ .SCHEMA_FILE }} \
+          --schema public \
+          --auto-approve
