@@ -177,7 +177,7 @@ func Register(
 	opts *ModuleOptions,
 	mux *http.ServeMux,
 	handlerOutput HandlerOutput,
-	_ http.Handler,
+	transcoderHandler http.Handler,
 ) {
 	checker := grpchealth.NewStaticChecker(opts.Service)
 	mux.Handle(grpchealth.NewHandler(checker))
@@ -188,5 +188,12 @@ func Register(
 	// so most servers should mount both handlers.
 	mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
 
-	mux.Handle(handlerOutput.Path, handlerOutput.Handler)
+	if true {
+		// using the connect handler that's been wrapped
+		// w/ NewTranscoder(NewService) fails w/ "Not Found"
+		mux.Handle(handlerOutput.Path, transcoderHandler)
+	} else {
+		// using the "normal" connect handler works fine
+		mux.Handle(handlerOutput.Path, handlerOutput.Handler)
+	}
 }
