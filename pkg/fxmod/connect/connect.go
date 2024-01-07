@@ -151,12 +151,6 @@ func NewTranscoder(
 	opts *ModuleOptions,
 	handlerOutput HandlerOutput,
 ) (http.Handler, error) {
-	// HTTP transcoding annotations are used to also support REST-ful URI paths for each method.
-	//
-	// The returned handler also acts like a middleware, transparently "upgrading"
-	// the RPC handlers to support incoming request protocols they wouldn't otherwise
-	// support. This can be used to upgrade Connect handlers to support REST requests
-	// (based on HTTP transcoding configuration)
 	handler, err := vanguard.NewTranscoder(
 		[]*vanguard.Service{
 			vanguard.NewService(
@@ -177,7 +171,7 @@ func Register(
 	opts *ModuleOptions,
 	mux *http.ServeMux,
 	handlerOutput HandlerOutput,
-	_ http.Handler,
+	transcoderHandler http.Handler,
 ) {
 	checker := grpchealth.NewStaticChecker(opts.Service)
 	mux.Handle(grpchealth.NewHandler(checker))
@@ -188,5 +182,9 @@ func Register(
 	// so most servers should mount both handlers.
 	mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
 
+	// Register the vanguard transcoder as broadly as possible
+	mux.Handle("/", transcoderHandler)
+
+	// Register the Connect handler on its own path
 	mux.Handle(handlerOutput.Path, handlerOutput.Handler)
 }
