@@ -24,7 +24,7 @@ check_pkgx:
 .PHONY: all
 all: check_pkgx stop
 	pkgx temporal@latest server start-dev &
-	sleep 2
+	pkgx eb -x 20 -- lsof -i :7233
 	pkgx task@latest run:all
 
 .PHONY: stop

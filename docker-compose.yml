@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: postgrespassword
     restart: always
     ports:
-      - "127.0.0.1:15432:5432"
+      - "127.0.0.1:${PORT_DB_ORG}:5432"
     volumes:
       - pg_data_org:/var/lib/postgresql/data
     healthcheck:
@@ -18,13 +18,13 @@ services:
   db-profile:
     <<: *db_org
     ports:
-      - "127.0.0.1:15433:5432"
+      - "127.0.0.1:${PORT_DB_PROFILE}:5432"
     volumes:
       - pg_data_profile:/var/lib/postgresql/data
   db-license:
     <<: *db_org
     ports:
-      - "127.0.0.1:15434:5432"
+      - "127.0.0.1:${PORT_DB_LICENSE}:5432"
     volumes:
       - pg_data_license:/var/lib/postgresql/data
 
