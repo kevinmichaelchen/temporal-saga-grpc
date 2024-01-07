@@ -31,4 +31,4 @@ all: check_pkgx stop
 stop:
 	pkgx killport@latest 7233
 	sleep 1
-	pkgx docker-clean stop
+	pkgx docker compose stop

@@ -30,9 +30,7 @@ var Module = fx.Options(
 				Handler: handler,
 			}
 		},
-		Services: []string{
-			"profilev1beta1.ProfileService",
-		},
+		Service: profilev1beta1connect.ProfileServiceName,
 	}),
 	logging.Module,
 	modService.Module,

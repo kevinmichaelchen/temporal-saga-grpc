@@ -31,9 +31,7 @@ var Module = fx.Options(
 				Handler: handler,
 			}
 		},
-		Services: []string{
-			"temporalv1beta1.TemporalService",
-		},
+		Service: temporalConnect.TemporalServiceName,
 	}),
 	logging.Module,
 	modService.Module,

@@ -30,9 +30,7 @@ var Module = fx.Options(
 				Handler: handler,
 			}
 		},
-		Services: []string{
-			"licensev1beta1.LicenseService",
-		},
+		Service: licenseConnect.LicenseServiceName,
 	}),
 	logging.Module,
 	modService.Module,
