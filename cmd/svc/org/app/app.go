@@ -30,9 +30,7 @@ var Module = fx.Options(
 				Handler: handler,
 			}
 		},
-		Services: []string{
-			"orgv1beta1.OrgService",
-		},
+		Service: orgv1beta1connect.OrgServiceName,
 	}),
 	logging.Module,
 	modService.Module,

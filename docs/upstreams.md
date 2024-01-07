@@ -8,36 +8,29 @@ Some quick curl commands to communicate with each of the 3 microservices.
 ### Org Service
 
 ```shell
-curl -v http://localhost:9090/org.v1beta1.OrgService/CreateOrg \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Org1"}'
-
-http POST \
+pkgx http POST \
   http://localhost:9090/org.v1beta1.OrgService/CreateOrg \
     name="Org1"
+
+pkgx http http://localhost:9090/orgs/"$(pkgx gum input --placeholder "id")"
 ```
 
 ### Profile Service
 
 ```shell
-curl -v http://localhost:9091/profile.v1beta1.ProfileService/CreateProfile \
-  -H "Content-Type: application/json" \
-  -d '{"full_name": "Kevin Chen"}'
-
-http POST \
+pkgx http POST \
   http://localhost:9091/profile.v1beta1.ProfileService/CreateProfile \
     full_name="Kevin Chen"
+
+pkgx http http://localhost:9091/profiles/"$(pkgx gum input --placeholder "id")"
 ```
 
 ### License Service
 
 ```shell
-curl -v http://localhost:9092/license.v1beta1.LicenseService/CreateLicense \
-  -H "Content-Type: application/json" \
-  -d '{"start": "2023-11-16T12:00:00Z", "end": "2024-01-16T12:00:00Z"}'
+pkgx http POST \
+  http://localhost:9092/license.v1beta1.LicenseService/GetLicense \
+    id="$(pkgx gum input --placeholder "id")"
 
-http POST \
-  http://localhost:9092/license.v1beta1.LicenseService/CreateLicense \
-    start="2023-11-16T12:00:00Z" \
-    end="2024-01-16T12:00:00Z"
+pkgx http http://localhost:9092/licenses/"$(pkgx gum input --placeholder "id")"
 ```

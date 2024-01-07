@@ -118,7 +118,7 @@ pkgx grpcurl \
     "name": "Org 1"
   },
   "profile": {
-    "name": "Kevin Chen"
+    "full_name": "Kevin Chen"
   }
 }
 EOM

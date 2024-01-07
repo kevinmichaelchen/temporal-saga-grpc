@@ -11,6 +11,7 @@ import (
 
 	"connectrpc.com/grpchealth"
 	"connectrpc.com/grpcreflect"
+	"connectrpc.com/vanguard"
 	"github.com/bufbuild/protovalidate-go"
 	"github.com/sethvargo/go-envconfig"
 	"github.com/sirupsen/logrus"
@@ -33,6 +34,7 @@ func CreateModule(opts *ModuleOptions) fx.Option {
 			NewConfig,
 			NewServer,
 			NewValidator,
+			NewTranscoder,
 		),
 		fx.Invoke(
 			Register,
@@ -64,11 +66,10 @@ type ModuleOptions struct {
 	// HandlerProvider - Provides a Connect Go HTTP handler and the path to
 	// mount it on.
 	HandlerProvider any
-	// Services - Fully-qualified protobuf service names.
-	// For example:
-	//   - "acme.user.v1.UserService"
-	//   - "acme.userv1beta.UserService"
-	Services []string
+	// Service - Fully-qualified protobuf service names.
+	// (For example, "acme.user.v1.UserService"). Generated Connect service
+	// files have this declared as a constant.
+	Service string
 }
 
 // Config - Contains env vars for our Connect Go server.
@@ -144,24 +145,44 @@ func NewServer(lifecycle fx.Lifecycle, cfg Config) *http.ServeMux {
 	return mux
 }
 
+// NewTranscoder - Creates a transcoder from the REST protocol to the Connect
+// protocol.
+func NewTranscoder(
+	opts *ModuleOptions,
+	handlerOutput HandlerOutput,
+) (http.Handler, error) {
+	// HTTP transcoding annotations are used to also support REST-ful URI paths for each method.
+	//
+	// The returned handler also acts like a middleware, transparently "upgrading"
+	// the RPC handlers to support incoming request protocols they wouldn't otherwise
+	// support. This can be used to upgrade Connect handlers to support REST requests
+	// (based on HTTP transcoding configuration)
+	handler, err := vanguard.NewTranscoder(
+		[]*vanguard.Service{
+			vanguard.NewService(
+				opts.Service,
+				handlerOutput.Handler,
+			),
+		},
+	)
+	if err != nil {
+		return nil, fmt.Errorf("unable to create connect transcoder: %w", err)
+	}
+
+	return handler, nil
+}
+
 // Register - Registers the Connect Go service to its HTTP handlers.
 func Register(
 	opts *ModuleOptions,
 	mux *http.ServeMux,
 	handlerOutput HandlerOutput,
+	_ http.Handler,
 ) {
-	checker := grpchealth.NewStaticChecker(
-		// protoc-gen-connect-go generates package-level constants
-		// for these fully-qualified protobuf service names, so we'd be able
-		// to reference foov1beta1.FooService as opposed to
-		// foo.v1beta1.FooService.
-		opts.Services...,
-	)
+	checker := grpchealth.NewStaticChecker(opts.Service)
 	mux.Handle(grpchealth.NewHandler(checker))
 
-	reflector := grpcreflect.NewStaticReflector(
-		opts.Services...,
-	)
+	reflector := grpcreflect.NewStaticReflector(opts.Service)
 	mux.Handle(grpcreflect.NewHandlerV1(reflector))
 	// Many tools still expect the older version of the server reflection API,
 	// so most servers should mount both handlers.
