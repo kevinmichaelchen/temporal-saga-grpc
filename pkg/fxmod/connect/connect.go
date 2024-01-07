@@ -3,7 +3,6 @@
 package connect
 
 import (
-	"connectrpc.com/vanguard"
 	"context"
 	"errors"
 	"fmt"
@@ -12,6 +11,7 @@ import (
 
 	"connectrpc.com/grpchealth"
 	"connectrpc.com/grpcreflect"
+	"connectrpc.com/vanguard"
 	"github.com/bufbuild/protovalidate-go"
 	"github.com/sethvargo/go-envconfig"
 	"github.com/sirupsen/logrus"
@@ -145,6 +145,8 @@ func NewServer(lifecycle fx.Lifecycle, cfg Config) *http.ServeMux {
 	return mux
 }
 
+// NewTranscoder - Creates a transcoder from the REST protocol to the Connect
+// protocol.
 func NewTranscoder(
 	opts *ModuleOptions,
 	handlerOutput HandlerOutput,
@@ -175,7 +177,7 @@ func Register(
 	opts *ModuleOptions,
 	mux *http.ServeMux,
 	handlerOutput HandlerOutput,
-	handler http.Handler,
+	_ http.Handler,
 ) {
 	checker := grpchealth.NewStaticChecker(opts.Service)
 	mux.Handle(grpchealth.NewHandler(checker))
@@ -186,5 +188,5 @@ func Register(
 	// so most servers should mount both handlers.
 	mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
 
-	mux.Handle(handlerOutput.Path, handler)
+	mux.Handle(handlerOutput.Path, handlerOutput.Handler)
 }
