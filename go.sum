@@ -8,10 +8,10 @@ buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.14.0-20240106023354-7
 buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.14.0-20240106023354-7971463d1bab.1/go.mod h1:tq6x6ypkRXOLfa/pojKOaoAtdiwaNhK520RwZdnYRMU=
 buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.32.0-20240106023354-7971463d1bab.1 h1:XGdlUgsatFaPXeMj+KSSIBxC+esBQMK6vLvaSV71iYA=
 buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.32.0-20240106023354-7971463d1bab.1/go.mod h1:VX7SaxTl48U3BUn1ZWGPaw3Z3trZei6Lijff1hWDCmM=
-buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20240106023355-4074133bf516.1 h1:oVo3ozoMXc1uqT9cQIs4duxnJ4XEAvMLu20aP98ahGQ=
-buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20240106023355-4074133bf516.1/go.mod h1:ErjiGiWNjH317M2DV6eeGDYZgvgLmwX7kzFBqHEYo6Q=
-buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240106023355-4074133bf516.1 h1:g4MnvhuIRX2BQ4BTkSwwkzv6GDJ/jlZNcB4gycwm1ko=
-buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240106023355-4074133bf516.1/go.mod h1:mdFxPRDe6P7qFVw9urFLZ3SkG+ZdPW5q5QXFGjGr8DE=
+buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20240106205505-b9e708fca28b.1 h1:cgSKeciv01vCAfQCYibfDg9g1AS4fhFxownohj8xkOw=
+buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20240106205505-b9e708fca28b.1/go.mod h1:2dUbwNV8mKlg9Qpi810iOp2HS20mWXE+lc0AZzjDeTA=
+buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240106205505-b9e708fca28b.1 h1:OxanMnA5tBRlkGXsWfY8jexNaUFrY3DH2TuOZwR1kPg=
+buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240106205505-b9e708fca28b.1/go.mod h1:mdFxPRDe6P7qFVw9urFLZ3SkG+ZdPW5q5QXFGjGr8DE=
 buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20240105233422-8054bf72d102.1 h1:DjZa2Ji1Rje54fcm1SU2EfRRyEwfHNrt1SIz2JxaFMA=
 buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20240105233422-8054bf72d102.1/go.mod h1:lAv2Uero9GS0WGHvco9tw82GY5J/U0uuBdccsHV4Acc=
 buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20240105233422-8054bf72d102.1 h1:TOugHIye1MzyV7Vjzff13UZWidUVPp0xwmejtOBEXew=
