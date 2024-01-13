@@ -4,13 +4,13 @@ package service
 import (
 	"context"
 	"fmt"
+	"github.com/charmbracelet/log"
 
 	temporalConnect "buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go/temporal/v1beta1/temporalv1beta1connect"
 	temporalPB "buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go/temporal/v1beta1"
 	"connectrpc.com/connect"
 	"github.com/bufbuild/protovalidate-go"
 	"github.com/google/uuid"
-	"github.com/sirupsen/logrus"
 	"go.temporal.io/sdk/client"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
@@ -102,10 +102,10 @@ func (s *Service) CreateOnboardingWorkflow(
 }
 
 func printResults(args saga.CreateLicenseInputArgs, workflowID, runID string) {
-	logrus.WithFields(logrus.Fields{
-		"org_name":             args.Org.Name,
-		"profile_name":         args.Profile.FullName,
-		"temporal.workflow_id": workflowID,
-		"temporal.run_id":      runID,
-	}).Info("Successfully completed Workflow")
+	log.Info("Successfully completed Workflow",
+		"org_name", args.Org.Name,
+		"profile_name", args.Profile.FullName,
+		"temporal.workflow_id", workflowID,
+		"temporal.run_id", runID,
+	)
 }

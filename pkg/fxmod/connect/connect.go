@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net"
 	"net/http"
 	"time"
 
@@ -40,12 +41,12 @@ func CreateModule(opts *ModuleOptions) fx.Option {
 			),
 		),
 		fx.Invoke(
-			RegisterHealthAndReflection,
+			RegisterConnectHandler,
 			fx.Annotate(
 				RegisterVanguardTranscoder,
 				fx.ParamTags(``, `name:"vanguard"`),
 			),
-			RegisterConnectHandler,
+			RegisterHealthAndReflection,
 		),
 	)
 }
@@ -87,8 +88,7 @@ type Config struct {
 
 // NestedConfig - Contains env vars for our Connect Go server.
 type NestedConfig struct {
-	Host string `env:"HOST,default=localhost"`
-	Port int    `env:"PORT,required"`
+	Port int `env:"PORT,required"`
 }
 
 // NewConfig - Reads configs from the environment.
@@ -106,9 +106,9 @@ func NewConfig() (Config, error) {
 // NewServer - Creates a new HTTP request multiplexer for our Connect Go APIs.
 func NewServer(lifecycle fx.Lifecycle, cfg Config) *http.ServeMux {
 	mux := http.NewServeMux()
-	address := fmt.Sprintf("%s:%d", cfg.ConnectConfig.Host, cfg.ConnectConfig.Port)
+	address := fmt.Sprintf("127.0.0.1:%d", cfg.ConnectConfig.Port)
 	srv := &http.Server{
-		Addr: address,
+		Addr: ":http",
 		// Use h2c, so we can serve HTTP/2 without TLS.
 		Handler: h2c.NewHandler(
 			cors.NewCORS().Handler(mux),
@@ -131,9 +131,14 @@ func NewServer(lifecycle fx.Lifecycle, cfg Config) *http.ServeMux {
 			// In production, we'd want to separate the Listen and Serve phases for
 			// better error-handling.
 			go func() {
-				err := srv.ListenAndServe()
+				listener, err := net.Listen("tcp", address)
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				err = srv.Serve(listener)
 				if err != nil && !errors.Is(err, http.ErrServerClosed) {
-					log.Error("connect-go ListenAndServe failed", "err", err)
+					log.Error("connect-go Serve failed", "err", err)
 				}
 			}()
 			log.Info("Listening for connect-go", "address", address)
@@ -197,7 +202,7 @@ func RegisterVanguardTranscoder(
 ) {
 	log.Info("Registering Vanguard transcoder", "handler", transcoderHandler)
 	// Register the vanguard transcoder as broadly as possible
-	mux.Handle("/", transcoderHandler)
+	mux.Handle("/", TraceHandler(transcoderHandler))
 }
 
 // RegisterConnectHandler - Registers Connect handler.

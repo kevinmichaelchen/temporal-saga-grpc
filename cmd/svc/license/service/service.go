@@ -5,12 +5,12 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/charmbracelet/log"
 
 	licenseConnect "buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go/license/v1beta1/licensev1beta1connect"
 	licensev1beta1 "buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go/license/v1beta1"
 	"connectrpc.com/connect"
 	"github.com/bufbuild/protovalidate-go"
-	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -50,12 +50,12 @@ func (s *Service) CreateLicense(
 		return nil, fmt.Errorf("invalid request: %w", err)
 	}
 
-	logrus.
-		WithField("id", req.Msg.GetId()).
-		WithField("user_id", req.Msg.GetUserId()).
-		WithField("start", req.Msg.GetStart()).
-		WithField("end", req.Msg.GetEnd()).
-		Info("Creating License...")
+	log.Info("Creating License...",
+		"id", req.Msg.GetId(),
+		"user_id", req.Msg.GetUserId(),
+		"start", req.Msg.GetStart(),
+		"end", req.Msg.GetEnd(),
+	)
 
 	license := models.License{
 		ID:        req.Msg.GetId(),

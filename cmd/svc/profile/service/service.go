@@ -5,11 +5,11 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/charmbracelet/log"
 
 	profileConnect "buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go/profile/v1beta1/profilev1beta1connect"
 	profilePB "buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go/profile/v1beta1"
 	"connectrpc.com/connect"
-	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/null/v8"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
@@ -36,12 +36,11 @@ func (s *Service) CreateProfile(
 	ctx context.Context,
 	req *connect.Request[profilePB.CreateProfileRequest],
 ) (*connect.Response[profilePB.CreateProfileResponse], error) {
-	// Log some info
-	logrus.
-		WithField("id", req.Msg.GetId()).
-		WithField("org_id", req.Msg.GetOrgId()).
-		WithField("name", req.Msg.GetFullName()).
-		Info("Creating Profile...")
+	log.Info("Creating Profile...",
+		"id", req.Msg.GetId(),
+		"org_id", req.Msg.GetOrgId(),
+		"name", req.Msg.GetFullName(),
+	)
 
 	profile := models.Profile{
 		ID:       req.Msg.GetId(),
