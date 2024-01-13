@@ -47,7 +47,7 @@ func (s *Service) CreateOrg(
 		Name: null.StringFrom(req.Msg.GetName()),
 	}
 
-	err := org.Insert(ctx, s.db, boil.Infer())
+	err := org.Upsert(ctx, s.db, true, []string{models.OrgColumns.ID}, boil.Infer(), boil.Infer())
 	if err != nil {
 		log.Error("Failed to create Org",
 			"id", req.Msg.GetId(),
