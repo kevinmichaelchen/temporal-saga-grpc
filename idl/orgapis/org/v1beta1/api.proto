@@ -9,6 +9,8 @@ import "google/api/annotations.proto";
 service OrgService {
   // CreateOrg - Creates a new Organization.
   rpc CreateOrg(CreateOrgRequest) returns (CreateOrgResponse) {
+    option (google.api.http).post = "/orgs/{id}";
+    option (google.api.http).body = "*";
     option idempotency_level = IDEMPOTENT;
   }
   // GetOrg - Gets an Organization.

@@ -10,6 +10,8 @@ import "google/protobuf/timestamp.proto";
 service LicenseService {
   // Creates a new License.
   rpc CreateLicense(CreateLicenseRequest) returns (CreateLicenseResponse) {
+    option (google.api.http).post = "/licenses/{id}";
+    option (google.api.http).body = "*";
     option idempotency_level = IDEMPOTENT;
   }
   // Get a License.

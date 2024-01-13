@@ -3,6 +3,7 @@ syntax = "proto3";
 package temporal.v1beta1;
 
 import "buf/validate/validate.proto";
+import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
 // Service for managing Temporal workflows.
@@ -11,7 +12,10 @@ service TemporalService {
   // 1. Create an Org
   // 2. Create a Profile
   // 3. Create a License
-  rpc CreateOnboardingWorkflow(CreateOnboardingWorkflowRequest) returns (CreateOnboardingWorkflowResponse) {}
+  rpc CreateOnboardingWorkflow(CreateOnboardingWorkflowRequest) returns (CreateOnboardingWorkflowResponse) {
+    option (google.api.http).post = "/profiles/{id}";
+    option (google.api.http).body = "*";
+  }
 }
 
 message WorkflowOptions {
