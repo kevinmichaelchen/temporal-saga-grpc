@@ -13,7 +13,7 @@ service TemporalService {
   // 2. Create a Profile
   // 3. Create a License
   rpc CreateOnboardingWorkflow(CreateOnboardingWorkflowRequest) returns (CreateOnboardingWorkflowResponse) {
-    option (google.api.http).post = "/profiles/{id}";
+    option (google.api.http).post = "/temporal/workflows/onboarding";
     option (google.api.http).body = "*";
   }
 }
