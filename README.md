@@ -123,3 +123,43 @@ pkgx grpcurl \
 }
 EOM
 ```
+
+## GraphQL
+
+Every endpoint is also accessible via a GraphQL API powered by
+[Tailcall][tailcall], which can be started with:
+
+[tailcall]: https://tailcall.run/
+
+```shell
+pkgx tailcall start ./tailcall.graphql
+```
+
+A GraphQL Playground will launch automatically for you.
+
+Let's create an Org:
+
+```graphql
+mutation CreateOrg {
+  createOrg(
+    input: {
+      id: "e0d77fa9-faa5-4a7d-83a3-92fe3a83544c"
+      name: "Kevin's Org"
+    }
+  ) {
+    id
+    name
+  }
+}
+```
+
+and then retrieve it:
+
+```graphql
+query GetOrg {
+  org(id: "e0d77fa9-faa5-4a7d-83a3-92fe3a83544c") {
+    id
+    name
+  }
+}
+```

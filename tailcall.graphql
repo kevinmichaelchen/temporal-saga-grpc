@@ -1,0 +1,47 @@
+schema
+  # Specify server configuration.
+  # Start tailcall server at 0.0.0.0:8000
+  # Enable GraphiQL playground
+  @server(port: 8000, graphiql: true)
+
+  # Specify a base url for all HTTP requests.
+  @upstream(timeout: 5) {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  org(id: ID!): GetOrgResponse!
+    @http(
+      baseURL: "http://localhost:9090"
+      path: "/orgs/{{args.id}}"
+    )
+}
+
+type Mutation {
+  createOrg(input: CreateOrgInput!): Org
+    @http(
+      baseURL: "http://localhost:9090"
+      method: "POST"
+      path: "/orgs/{{args.input.id}}"
+      body: "{{args.input}}"
+    )
+}
+
+type Org {
+  id: ID!
+  name: String!
+}
+
+input GetOrgRequest {
+  id: String!
+}
+
+type GetOrgResponse {
+  org: Org!
+}
+
+input CreateOrgInput {
+  id: ID!
+  name: String!
+}
