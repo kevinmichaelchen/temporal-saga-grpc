@@ -9,6 +9,8 @@ import "google/api/annotations.proto";
 service ProfileService {
   // CreateProfile - Creates a new user profile.
   rpc CreateProfile(CreateProfileRequest) returns (CreateProfileResponse) {
+    option (google.api.http).post = "/profiles/{id}";
+    option (google.api.http).body = "*";
     option idempotency_level = IDEMPOTENT;
   }
   // GetProfile - Gets a Profile.

@@ -1,7 +1,7 @@
 version: v1
 name: buf.build/kevinmichaelchen/orgapis
 deps:
-  - buf.build/bufbuild/protovalidate:e097f827e65240ac9fd4b1158849a8fc
+  - buf.build/bufbuild/protovalidate
   - buf.build/googleapis/googleapis
 breaking:
   use:
