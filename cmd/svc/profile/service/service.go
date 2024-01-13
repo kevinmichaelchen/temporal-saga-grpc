@@ -5,11 +5,11 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/charmbracelet/log"
 
 	profileConnect "buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go/profile/v1beta1/profilev1beta1connect"
 	profilePB "buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go/profile/v1beta1"
 	"connectrpc.com/connect"
+	"github.com/charmbracelet/log"
 	"github.com/volatiletech/null/v8"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"

@@ -4,12 +4,12 @@ package service
 import (
 	"context"
 	"fmt"
-	"github.com/charmbracelet/log"
 
 	temporalConnect "buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go/temporal/v1beta1/temporalv1beta1connect"
 	temporalPB "buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go/temporal/v1beta1"
 	"connectrpc.com/connect"
 	"github.com/bufbuild/protovalidate-go"
+	"github.com/charmbracelet/log"
 	"github.com/google/uuid"
 	"go.temporal.io/sdk/client"
 

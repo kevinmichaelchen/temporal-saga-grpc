@@ -5,11 +5,11 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/charmbracelet/log"
 
 	orgConnect "buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
 	orgPB "buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go/org/v1beta1"
 	"connectrpc.com/connect"
+	"github.com/charmbracelet/log"
 	"github.com/volatiletech/null/v8"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"

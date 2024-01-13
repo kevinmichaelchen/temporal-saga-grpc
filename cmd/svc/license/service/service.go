@@ -5,12 +5,12 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/charmbracelet/log"
 
 	licenseConnect "buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go/license/v1beta1/licensev1beta1connect"
 	licensev1beta1 "buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go/license/v1beta1"
 	"connectrpc.com/connect"
 	"github.com/bufbuild/protovalidate-go"
+	"github.com/charmbracelet/log"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
 	"google.golang.org/protobuf/types/known/timestamppb"

@@ -165,6 +165,7 @@ func NewTranscoder(
 	handlerOutput HandlerOutput,
 ) (http.Handler, error) {
 	log.Info("Creating new Vanguard transcoder", "service", opts.Service, "handler", handlerOutput.Handler)
+
 	handler, err := vanguard.NewTranscoder(
 		[]*vanguard.Service{
 			vanguard.NewService(

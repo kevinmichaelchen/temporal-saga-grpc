@@ -4,13 +4,13 @@ package worker
 import (
 	"context"
 	"fmt"
-	"github.com/charmbracelet/log"
 	"net/http"
 
 	"buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go/license/v1beta1/licensev1beta1connect"
 	"buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
 	"buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go/profile/v1beta1/profilev1beta1connect"
 	"connectrpc.com/connect"
+	"github.com/charmbracelet/log"
 	"github.com/sethvargo/go-envconfig"
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/worker"

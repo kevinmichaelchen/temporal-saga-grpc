@@ -34,6 +34,7 @@ run:
   # on Windows.
   skip-files:
     - internal/handler/graphql/schema.resolvers.go
+    - pkg/fxmod/connect/trace.go
   # - ".*\\.my\\.go$"
   # - lib/bad.go
   # by default isn't set. If set we pass it to "go list -mod={option}". From "go help modules":

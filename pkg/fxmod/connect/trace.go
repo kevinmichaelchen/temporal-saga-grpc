@@ -4,11 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/charmbracelet/log"
 	"io"
 	"net/http"
 	"strings"
 	"sync/atomic"
+
+	"github.com/charmbracelet/log"
 )
 
 var idSource atomic.Int64
