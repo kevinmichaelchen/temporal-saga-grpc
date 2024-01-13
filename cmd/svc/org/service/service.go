@@ -88,6 +88,7 @@ func (s *Service) GetOrg(
 			"id", req.Msg.GetId(),
 			"err", err,
 		)
+
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, connect.NewError(
 				connect.CodeNotFound,
