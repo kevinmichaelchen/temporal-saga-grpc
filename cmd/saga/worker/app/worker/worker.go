@@ -10,8 +10,8 @@ import (
 	"buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
 	"buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go/profile/v1beta1/profilev1beta1connect"
 	"connectrpc.com/connect"
+	"github.com/charmbracelet/log"
 	"github.com/sethvargo/go-envconfig"
-	"github.com/sirupsen/logrus"
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/worker"
 	"go.uber.org/fx"
@@ -107,7 +107,7 @@ func NewWorker(
 		// worker.Start() only return errors on start, so we need to catch
 		// errors during run
 		OnFatalError: func(err error) {
-			logrus.WithError(err).Error("Worker failed!")
+			log.Error("Worker failed!", "err", err)
 		},
 	})
 

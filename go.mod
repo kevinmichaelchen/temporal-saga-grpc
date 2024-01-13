@@ -5,10 +5,10 @@ go 1.21.5
 require (
 	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.14.0-20240106205504-60998e437501.1
 	buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.32.0-20240106205504-60998e437501.1
-	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.14.0-20240106023354-7971463d1bab.1
-	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.32.0-20240106023354-7971463d1bab.1
-	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20240106023355-4074133bf516.1
-	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240106023355-4074133bf516.1
+	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.14.0-20240106205505-a94dc0e1d507.1
+	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.32.0-20240106205505-a94dc0e1d507.1
+	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20240106205505-b9e708fca28b.1
+	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240106205505-b9e708fca28b.1
 	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20240105233422-8054bf72d102.1
 	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20240105233422-8054bf72d102.1
 	connectrpc.com/connect v1.14.0
@@ -17,6 +17,7 @@ require (
 	connectrpc.com/otelconnect v0.6.0
 	connectrpc.com/vanguard v0.1.0
 	github.com/bufbuild/protovalidate-go v0.4.3
+	github.com/charmbracelet/log v0.3.1
 	github.com/friendsofgo/errors v0.9.2
 	github.com/google/uuid v1.5.0
 	github.com/jackc/pgx/v5 v5.5.1
@@ -40,9 +41,12 @@ require (
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.32.0-20231115204500-e097f827e652.1 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
+	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
+	github.com/charmbracelet/lipgloss v0.9.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
+	github.com/go-logfmt/logfmt v0.6.0 // indirect
 	github.com/go-logr/logr v1.3.0 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/gofrs/uuid v4.2.0+incompatible // indirect
@@ -58,8 +62,14 @@ require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
+	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
+	github.com/mattn/go-isatty v0.0.18 // indirect
+	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/muesli/reflow v0.3.0 // indirect
+	github.com/muesli/termenv v0.15.2 // indirect
 	github.com/pborman/uuid v1.2.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/robfig/cron v1.2.0 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/stoewer/go-strcase v1.3.0 // indirect
@@ -76,7 +86,7 @@ require (
 	go.uber.org/multierr v1.6.0 // indirect
 	go.uber.org/zap v1.23.0 // indirect
 	golang.org/x/crypto v0.18.0 // indirect
-	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
+	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
 	golang.org/x/sync v0.3.0 // indirect
 	golang.org/x/sys v0.16.0 // indirect
 	golang.org/x/text v0.14.0 // indirect

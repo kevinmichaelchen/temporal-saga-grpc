@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net"
 	"net/http"
 	"time"
 
@@ -13,8 +14,8 @@ import (
 	"connectrpc.com/grpcreflect"
 	"connectrpc.com/vanguard"
 	"github.com/bufbuild/protovalidate-go"
+	"github.com/charmbracelet/log"
 	"github.com/sethvargo/go-envconfig"
-	"github.com/sirupsen/logrus"
 	"go.uber.org/fx"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -34,10 +35,18 @@ func CreateModule(opts *ModuleOptions) fx.Option {
 			NewConfig,
 			NewServer,
 			NewValidator,
-			NewTranscoder,
+			fx.Annotate(
+				NewTranscoder,
+				fx.ResultTags(`name:"vanguard"`),
+			),
 		),
 		fx.Invoke(
-			Register,
+			RegisterConnectHandler,
+			fx.Annotate(
+				RegisterVanguardTranscoder,
+				fx.ParamTags(``, `name:"vanguard"`),
+			),
+			RegisterHealthAndReflection,
 		),
 	)
 }
@@ -79,8 +88,7 @@ type Config struct {
 
 // NestedConfig - Contains env vars for our Connect Go server.
 type NestedConfig struct {
-	Host string `env:"HOST,default=localhost"`
-	Port int    `env:"PORT,required"`
+	Port int `env:"PORT,required"`
 }
 
 // NewConfig - Reads configs from the environment.
@@ -98,9 +106,9 @@ func NewConfig() (Config, error) {
 // NewServer - Creates a new HTTP request multiplexer for our Connect Go APIs.
 func NewServer(lifecycle fx.Lifecycle, cfg Config) *http.ServeMux {
 	mux := http.NewServeMux()
-	address := fmt.Sprintf("%s:%d", cfg.ConnectConfig.Host, cfg.ConnectConfig.Port)
+	address := fmt.Sprintf("127.0.0.1:%d", cfg.ConnectConfig.Port)
 	srv := &http.Server{
-		Addr: address,
+		Addr: ":http",
 		// Use h2c, so we can serve HTTP/2 without TLS.
 		Handler: h2c.NewHandler(
 			cors.NewCORS().Handler(mux),
@@ -123,12 +131,17 @@ func NewServer(lifecycle fx.Lifecycle, cfg Config) *http.ServeMux {
 			// In production, we'd want to separate the Listen and Serve phases for
 			// better error-handling.
 			go func() {
-				err := srv.ListenAndServe()
+				listener, err := net.Listen("tcp", address)
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				err = srv.Serve(listener)
 				if err != nil && !errors.Is(err, http.ErrServerClosed) {
-					logrus.WithError(err).Error("connect-go ListenAndServe failed")
+					log.Error("connect-go Serve failed", "err", err)
 				}
 			}()
-			logrus.WithField("address", address).Info("Listening for connect-go")
+			log.Info("Listening for connect-go", "address", address)
 
 			return nil
 		},
@@ -151,12 +164,8 @@ func NewTranscoder(
 	opts *ModuleOptions,
 	handlerOutput HandlerOutput,
 ) (http.Handler, error) {
-	// HTTP transcoding annotations are used to also support REST-ful URI paths for each method.
-	//
-	// The returned handler also acts like a middleware, transparently "upgrading"
-	// the RPC handlers to support incoming request protocols they wouldn't otherwise
-	// support. This can be used to upgrade Connect handlers to support REST requests
-	// (based on HTTP transcoding configuration)
+	log.Info("Creating new Vanguard transcoder", "service", opts.Service, "handler", handlerOutput.Handler)
+
 	handler, err := vanguard.NewTranscoder(
 		[]*vanguard.Service{
 			vanguard.NewService(
@@ -172,12 +181,10 @@ func NewTranscoder(
 	return handler, nil
 }
 
-// Register - Registers the Connect Go service to its HTTP handlers.
-func Register(
+// RegisterHealthAndReflection - Registers health and reflection handlers.
+func RegisterHealthAndReflection(
 	opts *ModuleOptions,
 	mux *http.ServeMux,
-	handlerOutput HandlerOutput,
-	_ http.Handler,
 ) {
 	checker := grpchealth.NewStaticChecker(opts.Service)
 	mux.Handle(grpchealth.NewHandler(checker))
@@ -187,6 +194,24 @@ func Register(
 	// Many tools still expect the older version of the server reflection API,
 	// so most servers should mount both handlers.
 	mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
+}
 
+// RegisterVanguardTranscoder - Registers Vanguard transcoder.
+func RegisterVanguardTranscoder(
+	mux *http.ServeMux,
+	transcoderHandler http.Handler,
+) {
+	log.Info("Registering Vanguard transcoder", "handler", transcoderHandler)
+	// Register the vanguard transcoder as broadly as possible
+	mux.Handle("/", TraceHandler(transcoderHandler))
+}
+
+// RegisterConnectHandler - Registers Connect handler.
+func RegisterConnectHandler(
+	mux *http.ServeMux,
+	handlerOutput HandlerOutput,
+) {
+	log.Info("Registering Connect handler", "path", handlerOutput.Path, "handler", handlerOutput.Handler)
+	// Register the Connect handler on its own path
 	mux.Handle(handlerOutput.Path, handlerOutput.Handler)
 }

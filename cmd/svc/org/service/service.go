@@ -9,7 +9,7 @@ import (
 	orgConnect "buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
 	orgPB "buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go/org/v1beta1"
 	"connectrpc.com/connect"
-	"github.com/sirupsen/logrus"
+	"github.com/charmbracelet/log"
 	"github.com/volatiletech/null/v8"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
@@ -36,6 +36,11 @@ func (s *Service) CreateOrg(
 	ctx context.Context,
 	req *connect.Request[orgPB.CreateOrgRequest],
 ) (*connect.Response[orgPB.CreateOrgResponse], error) {
+	log.Info("Creating Org...",
+		"id", req.Msg.GetId(),
+		"name", req.Msg.GetName(),
+	)
+
 	org := models.Org{
 		ID:   req.Msg.GetId(),
 		Name: null.StringFrom(req.Msg.GetName()),
@@ -47,11 +52,6 @@ func (s *Service) CreateOrg(
 	}
 
 	res := &orgPB.CreateOrgResponse{}
-
-	logrus.
-		WithField("id", req.Msg.GetId()).
-		WithField("name", req.Msg.GetName()).
-		Info("Creating Org")
 
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")

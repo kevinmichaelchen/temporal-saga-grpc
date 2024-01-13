@@ -2,7 +2,7 @@
 package app
 
 import (
-	profilev1beta1connect "buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go/profile/v1beta1/profilev1beta1connect"
+	profileConnect "buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go/profile/v1beta1/profilev1beta1connect"
 	"connectrpc.com/connect"
 	"go.uber.org/fx"
 
@@ -20,7 +20,7 @@ var Module = fx.Options(
 	modConnect.CreateModule(&modConnect.ModuleOptions{
 		HandlerProvider: func(svc *service.Service) modConnect.HandlerOutput {
 			// Register our Connect-Go server
-			path, handler := profilev1beta1connect.NewProfileServiceHandler(
+			path, handler := profileConnect.NewProfileServiceHandler(
 				svc,
 				connect.WithInterceptors(pkgConnect.Interceptors()...),
 			)
@@ -30,7 +30,7 @@ var Module = fx.Options(
 				Handler: handler,
 			}
 		},
-		Service: profilev1beta1connect.ProfileServiceName,
+		Service: profileConnect.ProfileServiceName,
 	}),
 	logging.Module,
 	modService.Module,

@@ -10,7 +10,7 @@ import (
 func main() {
 	a := fx.New(
 		app.Module,
-		// TODO configure logrus
+		// TODO configure logger
 		// For details, see https://github.com/uber-go/fx/blob/master/fxevent/zap.go
 	)
 	a.Run()

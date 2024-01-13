@@ -2,7 +2,7 @@
 package app
 
 import (
-	"buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
+	orgConnect "buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
 	"connectrpc.com/connect"
 	"go.uber.org/fx"
 
@@ -20,7 +20,7 @@ var Module = fx.Options(
 	modConnect.CreateModule(&modConnect.ModuleOptions{
 		HandlerProvider: func(svc *service.Service) modConnect.HandlerOutput {
 			// Register our Connect-Go server
-			path, handler := orgv1beta1connect.NewOrgServiceHandler(
+			path, handler := orgConnect.NewOrgServiceHandler(
 				svc,
 				connect.WithInterceptors(pkgConnect.Interceptors()...),
 			)
@@ -30,7 +30,7 @@ var Module = fx.Options(
 				Handler: handler,
 			}
 		},
-		Service: orgv1beta1connect.OrgServiceName,
+		Service: orgConnect.OrgServiceName,
 	}),
 	logging.Module,
 	modService.Module,
