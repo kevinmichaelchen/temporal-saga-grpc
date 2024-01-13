@@ -49,8 +49,21 @@ func (s *Service) CreateOrg(
 
 	err := org.Insert(ctx, s.db, boil.Infer())
 	if err != nil {
-		return nil, fmt.Errorf("unable to insert record: %w", err)
+		log.Error("Failed to create Org",
+			"id", req.Msg.GetId(),
+			"err", err,
+		)
+
+		return nil, connect.NewError(
+			connect.CodeInternal,
+			fmt.Errorf("unable to insert record: %w", err),
+		)
 	}
+
+	log.Info("Successfully created Org.",
+		"id", req.Msg.GetId(),
+		"name", req.Msg.GetName(),
+	)
 
 	res := &orgPB.CreateOrgResponse{}
 
@@ -65,8 +78,16 @@ func (s *Service) GetOrg(
 	ctx context.Context,
 	req *connect.Request[orgPB.GetOrgRequest],
 ) (*connect.Response[orgPB.GetOrgResponse], error) {
+	log.Info("Retrieving Org...",
+		"id", req.Msg.GetId(),
+	)
+
 	record, err := models.FindOrg(ctx, s.db, req.Msg.GetId())
 	if err != nil {
+		log.Error("Failed to retrieve Org",
+			"id", req.Msg.GetId(),
+			"err", err,
+		)
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, connect.NewError(
 				connect.CodeNotFound,
@@ -74,8 +95,15 @@ func (s *Service) GetOrg(
 			)
 		}
 
-		return nil, fmt.Errorf("unable to retrieve item: %w", err)
+		return nil, connect.NewError(
+			connect.CodeInternal,
+			fmt.Errorf("unable to retrieve item: %w", err),
+		)
 	}
+
+	log.Info("Successfully retrieved Org...",
+		"id", req.Msg.GetId(),
+	)
 
 	return connect.NewResponse(&orgPB.GetOrgResponse{
 		Org: &orgPB.Org{
