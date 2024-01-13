@@ -4,6 +4,7 @@ package service
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 
 	licenseConnect "buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go/license/v1beta1/licensev1beta1connect"
@@ -47,7 +48,10 @@ func (s *Service) CreateLicense(
 
 	err = validator.Validate(req.Msg)
 	if err != nil {
-		return nil, fmt.Errorf("invalid request: %w", err)
+		return nil, connect.NewError(
+			connect.CodeInvalidArgument,
+			fmt.Errorf("unable to validate request: %w", err),
+		)
 	}
 
 	log.Info("Creating License...",
@@ -84,6 +88,13 @@ func (s *Service) GetLicense(
 ) (*connect.Response[licensev1beta1.GetLicenseResponse], error) {
 	record, err := models.FindLicense(ctx, s.db, req.Msg.GetId())
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, connect.NewError(
+				connect.CodeNotFound,
+				fmt.Errorf("unable to retrieve item: %w", err),
+			)
+		}
+
 		return nil, fmt.Errorf("unable to retrieve item: %w", err)
 	}
 
@@ -108,6 +119,13 @@ func (s *Service) ListLicenses(
 
 	items, err := models.Licenses(mods...).All(ctx, s.db)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, connect.NewError(
+				connect.CodeNotFound,
+				fmt.Errorf("unable to retrieve items: %w", err),
+			)
+		}
+
 		return nil, fmt.Errorf("unable to retrieve items: %w", err)
 	}
 

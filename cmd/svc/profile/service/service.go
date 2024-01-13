@@ -4,6 +4,7 @@ package service
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 
 	profileConnect "buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go/profile/v1beta1/profilev1beta1connect"
@@ -68,6 +69,13 @@ func (s *Service) GetProfile(
 ) (*connect.Response[profilePB.GetProfileResponse], error) {
 	record, err := models.FindProfile(ctx, s.db, req.Msg.GetId())
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, connect.NewError(
+				connect.CodeNotFound,
+				fmt.Errorf("unable to retrieve item: %w", err),
+			)
+		}
+
 		return nil, fmt.Errorf("unable to retrieve item: %w", err)
 	}
 
@@ -91,6 +99,13 @@ func (s *Service) ListProfiles(
 
 	items, err := models.Profiles(mods...).All(ctx, s.db)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, connect.NewError(
+				connect.CodeNotFound,
+				fmt.Errorf("unable to retrieve items: %w", err),
+			)
+		}
+
 		return nil, fmt.Errorf("unable to retrieve items: %w", err)
 	}
 

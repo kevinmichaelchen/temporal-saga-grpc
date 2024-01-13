@@ -4,6 +4,7 @@ package service
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 
 	orgConnect "buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go/org/v1beta1/orgv1beta1connect"
@@ -66,6 +67,13 @@ func (s *Service) GetOrg(
 ) (*connect.Response[orgPB.GetOrgResponse], error) {
 	record, err := models.FindOrg(ctx, s.db, req.Msg.GetId())
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, connect.NewError(
+				connect.CodeNotFound,
+				fmt.Errorf("unable to retrieve item: %w", err),
+			)
+		}
+
 		return nil, fmt.Errorf("unable to retrieve item: %w", err)
 	}
 
@@ -87,6 +95,13 @@ func (s *Service) ListOrgs(
 
 	items, err := models.Orgs(mods...).All(ctx, s.db)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, connect.NewError(
+				connect.CodeNotFound,
+				fmt.Errorf("unable to retrieve items: %w", err),
+			)
+		}
+
 		return nil, fmt.Errorf("unable to retrieve items: %w", err)
 	}
 
