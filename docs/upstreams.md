@@ -1,6 +1,18 @@
 This project has 3 gRPC servers that are upstream (called by) the License
 worker.
 
+## REST
+
+```shell
+pkgx http http://localhost:9090/orgs/123
+pkgx http http://localhost:9091/profiles/123
+pkgx http http://localhost:9092/licenses/123
+
+pkgx http POST http://localhost:9090/org.v1beta1.OrgService/GetOrg id="123"
+pkgx http POST http://localhost:9091/profile.v1beta1.ProfileService/GetProfile id="123"
+pkgx http POST http://localhost:9092/license.v1beta1.LicenseService/GetLicense id="123"
+```
+
 ## Communicating
 
 Some quick curl commands to communicate with each of the 3 microservices.

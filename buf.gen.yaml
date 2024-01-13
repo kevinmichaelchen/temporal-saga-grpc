@@ -13,8 +13,8 @@ plugins:
     out: internal/idl
     opt:
       - paths=source_relative
-  # https://github.com/bufbuild/plugins/tree/main/plugins/bufbuild/connect-go
-  - plugin: buf.build/bufbuild/connect-go:v1.9.0
+  # https://github.com/bufbuild/plugins/tree/main/plugins/connectrpc/go
+  - plugin: buf.build/connectrpc/go:v1.14.0
     out: internal/idl
     opt:
       - paths=source_relative
