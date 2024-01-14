@@ -1,0 +1,22 @@
+
+type Org {
+  id: ID!
+  name: String!
+}
+
+input GetOrgRequest {
+  id: String!
+}
+
+type GetOrgResponse {
+  org: Org!
+}
+
+input CreateOrgInput {
+  id: ID!
+  name: String!
+}
+
+type CreateOrgResponse {
+  org: Org!
+}
