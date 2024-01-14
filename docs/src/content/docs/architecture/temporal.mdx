@@ -25,7 +25,7 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 Distributed systems have never been easier (and, paradoxically, maybe harder) to build. In past roles, I saw systems built to varying degrees of success. I've seen engineers not concern themselves with data consistency issues, dismissing them as “edge cases”.
 
-## Personal Story
+### “Just Use a Goroutine”
 
 “Let's just wrap this function in a Goroutine. It's a distributed system. Boom. Done.” By 2019, in my professional career of only a few years, I had encountered this line of thinking more than once.
 
@@ -70,6 +70,8 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 The [Transactional Outbox][outbox] pattern solves the edge cases. It may feel like “over-engineering” to some, but in reality it's a good engineering practice.
 
 [outbox]: https://microservices.io/patterns/data/transactional-outbox.html
+
+### Infrastructure Proliferation
 
 By 2021, I had heard of [“Sagas”][sagas], but had never used them in my professional career. Instead, what I had seen time and time again, was microservices [_choreography_][choreography] with message brokers like [Kafka][kafka].
 

@@ -27,38 +27,47 @@ Over time, I kept adding more and more cool tools and libraries. An apt name for
 
 :::
 
-## Running things
+## What's in the box?
 
-- [pkgx][pkgx] is without a doubt the best package and command runner out there. and [Taskfile][taskfile] for optimal local DevEx (seamless, portable, invisible)
+Enough chatter. What's the tech stack look like?
 
-## APIs
+### 🧰 Running things
 
-- [Tailcall][tailcall] and [GraphQL][graphql]
-- [Buf][buf] for [Protocol Buffer][protobuf] tooling
-- [ConnectRPC][connect] for backing APIs
-- [Vanguard][vanguard] to transcode REST to ConnectRPC
+- [**pkgx**][pkgx] is without a doubt the best package and command runner out there.
+- [**Taskfile**][taskfile] is a superior version of Makefile.
 
-## Data
+Combine both for an optimal local DevEx (seamless, portable, invisible).
 
-- [Atlas][atlas] for declarative database migrations
-- [Postgres][postgres]
-- [SQLBoiler][sqlboiler] as a Go ORM
+### 👽 APIs
 
-## Observability
+- [**GraphQL**][graphql] is a pretty widely recognized standard. Great for aggregating data and lots of frontend support.
+- GraphQL is hard to build in the backend, and [**Protocol Buffers**][protobuf] are the undisputed champion of schema modeling.
+- If you’re using Protobufs, choosing not to use [**Buf**][buf] isn’t really a choice.
+- To actually build an API from your Protobufs, [**ConnectRPC**][connect] is the way to go.
+- The problem is that ConnectRPC isn’t GraphQL. To bridge that gap, use [**Vanguard**][vanguard] (for transcoding) and [**Tailcall**][tailcall] (for API composition).
 
-- [OpenTelemetry][otel] (OTel)
-- [Jaeger][jaeger] (soon to be replaced by [HyperDX][hyperdx])
+### 🗃️ Data
 
-## Frontend
+- [**Atlas**][atlas] for declarative database migrations — because no one likes having to look at hundreds of migration files or having to guess what the schema currently looks like.
+- [**Postgres**][postgres] — need I say more?
+- [**SQLBoiler**][sqlboiler] as a great Go ORM.
 
-- [NextJS][nextjs] React framework
-- [shadcn/ui][shadcn-ui] for beautiful [Radix][radix]/[Tailwind][tailwind] components
+### 🔭 Observability
 
-## Misc
+- [**OpenTelemetry**][otel] (OTel) is the industry standard.
+- [**Jaeger**][jaeger] lets you visualize distributed traces.
+- [**HyperDX**][hyperdx] is another open-source platform I'm keen to try.
 
-- [Docker][docker]
-- [FX][fx] for [dependency injection][di]
-- [Golang][golang]
+### 🎨 Frontend
+
+- [**NextJS**][nextjs] as the React framework
+- [**`shadcn/ui`**][shadcn-ui] for beautiful [Radix][radix]/[Tailwind][tailwind] components.
+
+### 🤷 Misc
+
+- [**Docker**][docker]
+- [**`uber-go/fx`**][fx] for [dependency injection][di]
+- [**Golang**][golang]
 
 [atlas]: https://atlasgo.io/
 [buf]: https://buf.build/
