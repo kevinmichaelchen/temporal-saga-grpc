@@ -4,7 +4,7 @@
 
 <p align="center">
 
-![./docs/diagrams/architecture.svg](./docs/diagrams/architecture.svg)
+![./docs/diagrams/architecture.svg](./diagrams/architecture.svg)
 
 </p>
 

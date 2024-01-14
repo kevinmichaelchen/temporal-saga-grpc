@@ -19,12 +19,20 @@ export default defineConfig({
       lastUpdated: true,
       sidebar: [
         {
-          label: "Guides",
+          label: "Architecture",
           items: [
             // Each item here is one entry in the navigation menu.
             {
-              label: "Example Guide",
-              link: "/guides/example/",
+              label: "Overview",
+              link: "/architecture/overview/",
+            },
+            {
+              label: "Why Temporal?",
+              link: "/architecture/why-temporal/",
+            },
+            {
+              label: "Buf",
+              link: "/architecture/buf/",
             },
           ],
         },
