@@ -13,11 +13,7 @@ This project demonstrates using
 <a target="_blank" href="https://microservices.io/patterns/data/saga.html">saga</a>
 (effectively a distributed transaction) that interacts with multiple services
 and has a robust, edge-case-proof rollback strategy, as well as durable function
-execution.
-
-**Temporal abstracts away failures.**
-
-The upstream microservices that are called during the workflow all use gRPC.
+execution. **Temporal abstracts away failures.**
 
 ## Resources:
 
@@ -40,8 +36,9 @@ make
 
 > [!NOTE]
 >
-> Under the hood, we use [pkgx][pkgx] to run Temporal's [dev
-> server][temporal-cli], and Docker to run [Jaeger][jaeger] (a telemetry
+> Under the hood, we use [pkgx][pkgx] to run a bunch of internal tools,
+> including Temporal's [dev server][temporal-cli]. We use Docker to run the
+> infrastructure components, such as Postgres and [Jaeger][jaeger] (a telemetry
 > backend).
 
 [temporal-cli]: https://github.com/temporalio/cli
@@ -134,23 +131,57 @@ Every endpoint is also accessible via a GraphQL API powered by
 ```shell
 pkgx tailcall start \
   ./tailcall/server.graphql \
-  ./tailcall/org.graphql
+  ./tailcall/org.graphql \
+  ./tailcall/profile.graphql \
+  ./tailcall/license.graphql
 ```
 
 A GraphQL Playground will launch automatically for you.
 
-Let's create an Org:
+Let's create some data:
 
 ```graphql
-mutation CreateOrg {
+mutation Create {
   createOrg(
     input: {
-      id: "e0d77fa9-faa5-4a7d-83a3-92fe3a83544c"
+      id: "00000000-0000-0000-0000-000000000000"
       name: "Kevin's Org"
     }
   ) {
-    id
-    name
+    org {
+      id
+      name
+    }
+  }
+
+  createProfile(
+    input: {
+      id: "00000000-0000-0000-0000-000000000000"
+      fullName: "Kevin Chen"
+      orgId: "00000000-0000-0000-0000-000000000000"
+    }
+  ) {
+    profile {
+      id
+      fullName
+      orgId
+    }
+  }
+
+  createLicense(
+    input: {
+      id: "00000000-0000-0000-0000-000000000000"
+      start: "2024-01-01T15:50-04:00"
+      end: "2024-01-07T15:50-04:00"
+      userId: "00000000-0000-0000-0000-000000000000"
+    }
+  ) {
+    license {
+      id
+      start
+      end
+      userId
+    }
   }
 }
 ```
@@ -160,8 +191,10 @@ and then retrieve it:
 ```graphql
 query GetOrg {
   org(id: "e0d77fa9-faa5-4a7d-83a3-92fe3a83544c") {
-    id
-    name
+    org {
+      id
+      name
+    }
   }
 }
 ```

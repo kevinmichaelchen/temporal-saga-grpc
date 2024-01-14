@@ -70,8 +70,20 @@ func (s *Service) CreateLicense(
 
 	err = license.Upsert(ctx, s.db, true, []string{models.LicenseColumns.ID}, boil.Infer(), boil.Infer())
 	if err != nil {
+		log.Error("Failed to create License",
+			"id", req.Msg.GetId(),
+			"err", err,
+		)
+
 		return nil, fmt.Errorf("unable to insert record: %w", err)
 	}
+
+	log.Info("Successfully created License.",
+		"id", req.Msg.GetId(),
+		"user_id", req.Msg.GetUserId(),
+		"start", req.Msg.GetStart(),
+		"end", req.Msg.GetEnd(),
+	)
 
 	res := &licensev1beta1.CreateLicenseResponse{
 		License: &licensev1beta1.License{
