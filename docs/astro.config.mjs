@@ -28,10 +28,10 @@ export default defineConfig({
             },
             {
               label: "Why Temporal?",
-              link: "/architecture/why-temporal/",
+              link: "/architecture/temporal/",
             },
             {
-              label: "Buf",
+              label: "Why Buf?",
               link: "/architecture/buf/",
             },
           ],

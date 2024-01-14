@@ -5,10 +5,16 @@ description: Using Buf for developing with Protocol Buffers
 
 ## What is Buf?
 
-Buf provides value in two forms:
+[Buf][buf] is a tool that makes working with [Protocol Buffers][protobuf] a lot nicer.
+
+[buf]: https://buf.build/
+[protobuf]: https://protobuf.dev/
+
+It provides value in two forms:
 
 1. The [Buf CLI][cli] for code generation, breaking change detection, linting, and formatting.
-1. The [Buf Schema Registry][bsr] for storing and managing Protobuf files as versioned modules, allowing you to consume and publish APIs without friction.
+1. The [Buf Schema Registry][bsr] (BSR) for storing and managing Protobuf files as versioned modules, allowing you to consume and publish APIs without friction.
+   - The BSR did to Protobufs what VCS systems (like GitHub) did to source code.
 
 [bsr]: https://buf.build/docs/bsr/introduction
 [cli]: https://buf.build/docs/ecosystem/cli-overview
