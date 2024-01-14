@@ -68,7 +68,7 @@ func (s *Service) CreateLicense(
 		UserID:    req.Msg.GetUserId(),
 	}
 
-	err = license.Insert(ctx, s.db, boil.Infer())
+	err = license.Upsert(ctx, s.db, true, []string{models.LicenseColumns.ID}, boil.Infer(), boil.Infer())
 	if err != nil {
 		return nil, fmt.Errorf("unable to insert record: %w", err)
 	}
