@@ -39,7 +39,7 @@ make
 ```
 
 > [!NOTE]
-> 
+>
 > Under the hood, we use [pkgx][pkgx] to run Temporal's [dev
 > server][temporal-cli], and Docker to run [Jaeger][jaeger] (a telemetry
 > backend).
@@ -132,7 +132,9 @@ Every endpoint is also accessible via a GraphQL API powered by
 [tailcall]: https://tailcall.run/
 
 ```shell
-pkgx tailcall start ./tailcall.graphql
+pkgx tailcall start \
+  ./tailcall/server.graphql \
+  ./tailcall/org.graphql
 ```
 
 A GraphQL Playground will launch automatically for you.
