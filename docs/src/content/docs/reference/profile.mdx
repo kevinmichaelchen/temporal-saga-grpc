@@ -2,3 +2,88 @@
 title: User Profile API
 description: An overview of the User Profile API
 ---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+## GetProfile
+
+### GraphQL
+
+```graphql
+query GetProfile {
+  profile(id: "d0d77fa9-faa5-4a7d-83a3-92fe3a83544c") {
+    profile {
+      id
+      fullName
+    }
+  }
+}
+```
+
+### Connect
+
+<Tabs>
+  <TabItem label="HTTPie">
+  ```shell
+  pkgx http POST \
+    http://localhost:9091/profile.v1beta1.ProfileService/GetProfile <<<'
+    {
+      "id": "8816d06a-32da-4b54-8e71-3e4ca9422058"
+    }
+    '
+  ```
+  </TabItem>
+  <TabItem label="curl">
+  ```shell
+  curl -v http://localhost:9091/profile.v1beta1.ProfileService/GetProfile \
+    -H "Content-Type: application/json" \
+    --data-binary @- <<EOF
+    {
+      "id": "8816d06a-32da-4b54-8e71-3e4ca9422058"
+    }
+  EOF
+  ```
+  </TabItem>
+  <TabItem label="grpcurl">
+  ```shell
+  pkgx grpcurl \
+    -use-reflection \
+    -plaintext \
+    -d @ localhost:9091 \
+    profile.v1beta1.ProfileService/GetProfile <<EOM
+  {
+    "id": "8816d06a-32da-4b54-8e71-3e4ca9422058"
+  }
+  EOM
+  ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+```json
+{
+  "profile": {
+    "fullName": "Kevin Chen",
+    "id": "8816d06a-32da-4b54-8e71-3e4ca9422058",
+    "orgId": "9997faf2-b1f1-4982-8c75-8d05a73d88f4"
+  }
+}
+
+```
+
+### REST
+
+<Tabs>
+  <TabItem label="HTTPie">
+  ```shell
+  pkgx http \
+    http://localhost:9091/profiles/8816d06a-32da-4b54-8e71-3e4ca9422058
+  ```
+  </TabItem>
+  <TabItem label="curl">
+  ```shell
+  curl -v http://localhost:9091/profiles/8816d06a-32da-4b54-8e71-3e4ca9422058
+  ```
+  </TabItem>
+</Tabs>

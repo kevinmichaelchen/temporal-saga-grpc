@@ -3,6 +3,7 @@ title: Org API
 description: An overview of the Org API
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## GetOrg
 
@@ -18,3 +19,69 @@ query GetOrg {
   }
 }
 ```
+
+### Connect
+
+<Tabs>
+  <TabItem label="HTTPie">
+  ```shell
+  pkgx http POST \
+    http://localhost:9090/org.v1beta1.OrgService/GetOrg <<<'
+    {
+      "id": "9997faf2-b1f1-4982-8c75-8d05a73d88f4"
+    }
+    '
+  ```
+  </TabItem>
+  <TabItem label="curl">
+  ```shell
+  curl -v http://localhost:9090/org.v1beta1.OrgService/GetOrg \
+    -H "Content-Type: application/json" \
+    --data-binary @- <<EOF
+    {
+      "id": "9997faf2-b1f1-4982-8c75-8d05a73d88f4"
+    }
+  EOF
+  ```
+  </TabItem>
+  <TabItem label="grpcurl">
+  ```shell
+  pkgx grpcurl \
+    -use-reflection \
+    -plaintext \
+    -d @ localhost:9090 \
+    org.v1beta1.OrgService/GetOrg <<EOM
+  {
+    "id": "9997faf2-b1f1-4982-8c75-8d05a73d88f4"
+  }
+  EOM
+  ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+```json
+{
+  "org": {
+    "id": "9997faf2-b1f1-4982-8c75-8d05a73d88f4",
+    "name": "Org 1"
+  }
+}
+```
+
+### REST
+
+<Tabs>
+  <TabItem label="HTTPie">
+  ```shell
+  pkgx http \
+    http://localhost:9090/orgs/9997faf2-b1f1-4982-8c75-8d05a73d88f4
+  ```
+  </TabItem>
+  <TabItem label="curl">
+  ```shell
+  curl -v http://localhost:9090/orgs/9997faf2-b1f1-4982-8c75-8d05a73d88f4
+  ```
+  </TabItem>
+</Tabs>

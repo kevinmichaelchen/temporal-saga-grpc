@@ -9,6 +9,16 @@ With one request, you can create a Temporal Workflow which will durably, atomica
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
+### GraphQL
+
+```graphql
+mutation CreateOnboardingWorkflow {
+
+}
+```
+
+### Connect
+
 <Tabs>
   <TabItem label="HTTPie">
   ```shell
@@ -78,3 +88,39 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 Notice that you don't need to generate IDs for the resources you're creating. The Temporal Workflow we've coded will do that automatically for you, and the primary keys will be returned to you in the response.
 
 :::
+
+
+#### Response
+
+```json
+{
+  "licenseId": "0f19c913-19fe-4aa1-9fc9-b4ab05cc4978",
+  "orgId": "9997faf2-b1f1-4982-8c75-8d05a73d88f4",
+  "profileId": "8816d06a-32da-4b54-8e71-3e4ca9422058",
+  "workflowId": "ff2b522c-e284-4357-b806-67b25ba64b55"
+}
+```
+
+### REST
+
+<Tabs>
+  <TabItem label="HTTPie">
+  ```shell
+  pkgx http POST \
+    http://localhost:8081/temporal/workflows/onboarding <<<'
+    {
+      "license": {
+        "start": "2023-11-16T12:00:00Z",
+        "end": "2024-01-16T12:00:00Z"
+      },
+      "org": {
+        "name": "Org 1"
+      },
+      "profile": {
+        "full_name": "Kevin Chen"
+      }
+    }
+    '
+  ```
+  </TabItem>
+</Tabs>
