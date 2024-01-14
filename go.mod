@@ -3,12 +3,12 @@ module github.com/kevinmichaelchen/temporal-saga-grpc
 go 1.21.5
 
 require (
-	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.14.0-20240113210601-3a1062d65238.1
-	buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.32.0-20240113210601-3a1062d65238.1
-	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.14.0-20240113210602-1aee78cd8615.1
-	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.32.0-20240113210602-1aee78cd8615.1
-	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20240113210603-ed518594bf06.1
-	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240113210603-ed518594bf06.1
+	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.14.0-20240114014934-c814bb63a0b5.1
+	buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.32.0-20240114014934-c814bb63a0b5.1
+	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.14.0-20240114014935-7a4a75e13959.1
+	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.32.0-20240114014935-7a4a75e13959.1
+	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20240114014936-fe9fc00da5f7.1
+	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240114014936-fe9fc00da5f7.1
 	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20240113211018-c2d66c74813b.1
 	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20240113211018-c2d66c74813b.1
 	connectrpc.com/connect v1.14.0
