@@ -73,7 +73,14 @@ func (s *Service) CreateLicense(
 		return nil, fmt.Errorf("unable to insert record: %w", err)
 	}
 
-	res := &licensev1beta1.CreateLicenseResponse{}
+	res := &licensev1beta1.CreateLicenseResponse{
+		License: &licensev1beta1.License{
+			Id:     license.ID,
+			Start:  timestamppb.New(license.StartTime),
+			End:    timestamppb.New(license.EndTime),
+			UserId: license.UserID,
+		},
+	}
 
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")

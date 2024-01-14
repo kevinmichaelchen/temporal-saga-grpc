@@ -30,7 +30,9 @@ message CreateOrgRequest {
   string name = 2 [(buf.validate.field).string.min_len = 1];
 }
 
-message CreateOrgResponse {}
+message CreateOrgResponse {
+  Org org = 1;
+}
 
 message Org {
   string id = 1;

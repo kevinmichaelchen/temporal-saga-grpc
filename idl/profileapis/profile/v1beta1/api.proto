@@ -31,7 +31,9 @@ message CreateProfileRequest {
   string org_id = 3;
 }
 
-message CreateProfileResponse {}
+message CreateProfileResponse {
+  Profile profile = 1;
+}
 
 message Profile {
   string id = 1;

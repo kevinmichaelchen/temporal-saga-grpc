@@ -40,7 +40,9 @@ message CreateLicenseRequest {
   string user_id = 4;
 }
 
-message CreateLicenseResponse {}
+message CreateLicenseResponse {
+  License license = 1;
+}
 
 message License {
   string id = 1;
