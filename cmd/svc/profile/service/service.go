@@ -49,7 +49,7 @@ func (s *Service) CreateProfile(
 		OrgID:    req.Msg.GetOrgId(),
 	}
 
-	err := profile.Insert(ctx, s.db, boil.Infer())
+	err := profile.Upsert(ctx, s.db, true, []string{models.ProfileColumns.ID}, boil.Infer(), boil.Infer())
 	if err != nil {
 		return nil, fmt.Errorf("unable to insert record: %w", err)
 	}
