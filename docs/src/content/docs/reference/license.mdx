@@ -2,3 +2,87 @@
 title: License API
 description: An overview of the License API
 ---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+## GetLicense
+
+### GraphQL
+
+```graphql
+query GetLicense {
+  license(id: "220d4191-6bb0-49de-a912-31b4d43e14b5") {
+    license {
+      id
+    }
+  }
+}
+```
+
+### Connect
+
+<Tabs>
+  <TabItem label="HTTPie">
+  ```shell
+  pkgx http POST \
+    http://localhost:9092/license.v1beta1.LicenseService/GetLicense <<<'
+    {
+      "id": "220d4191-6bb0-49de-a912-31b4d43e14b5"
+    }
+    '
+  ```
+  </TabItem>
+  <TabItem label="curl">
+  ```shell
+  curl -v http://localhost:9092/license.v1beta1.LicenseService/GetLicense \
+    -H "Content-Type: application/json" \
+    --data-binary @- <<EOF
+    {
+      "id": "220d4191-6bb0-49de-a912-31b4d43e14b5"
+    }
+  EOF
+  ```
+  </TabItem>
+  <TabItem label="grpcurl">
+  ```shell
+  pkgx grpcurl \
+    -use-reflection \
+    -plaintext \
+    -d @ localhost:9092 \
+    license.v1beta1.LicenseService/GetLicense <<EOM
+  {
+    "id": "220d4191-6bb0-49de-a912-31b4d43e14b5"
+  }
+  EOM
+  ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+```json
+{
+  "license": {
+    "end": "2024-01-16T12:00:00Z",
+    "id": "220d4191-6bb0-49de-a912-31b4d43e14b5",
+    "start": "2023-11-16T12:00:00Z",
+    "userId": "4759a80d-4665-45d6-a87a-9ae1b4c4c873"
+  }
+}
+```
+
+### REST
+
+<Tabs>
+  <TabItem label="HTTPie">
+  ```shell
+  pkgx http \
+    http://localhost:9092/licenses/220d4191-6bb0-49de-a912-31b4d43e14b5
+  ```
+  </TabItem>
+  <TabItem label="curl">
+  ```shell
+  curl -v http://localhost:9092/licenses/220d4191-6bb0-49de-a912-31b4d43e14b5
+  ```
+  </TabItem>
+</Tabs>
