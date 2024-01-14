@@ -1,0 +1,35 @@
+type Timestamp {
+  seconds: Int!
+  nanos: Int!
+}
+
+input TimestampInput {
+  seconds: Int!
+  nanos: Int!
+}
+
+type License {
+  id: ID!
+  start: Timestamp!
+  end: Timestamp!
+  userId: String!
+}
+
+input GetLicenseRequest {
+  id: String!
+}
+
+type GetLicenseResponse {
+  license: License!
+}
+
+input CreateLicenseInput {
+  id: ID!
+  start: TimestampInput!
+  end: TimestampInput!
+  userId: String!
+}
+
+type CreateLicenseResponse {
+  license: License!
+}

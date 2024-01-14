@@ -40,7 +40,7 @@ func (s *Service) CreateProfile(
 	log.Info("Creating Profile...",
 		"id", req.Msg.GetId(),
 		"org_id", req.Msg.GetOrgId(),
-		"name", req.Msg.GetFullName(),
+		"full_name", req.Msg.GetFullName(),
 	)
 
 	profile := models.Profile{
@@ -51,8 +51,19 @@ func (s *Service) CreateProfile(
 
 	err := profile.Upsert(ctx, s.db, true, []string{models.ProfileColumns.ID}, boil.Infer(), boil.Infer())
 	if err != nil {
+		log.Error("Failed to create Profile",
+			"id", req.Msg.GetId(),
+			"err", err,
+		)
+
 		return nil, fmt.Errorf("unable to insert record: %w", err)
 	}
+
+	log.Info("Successfully created Profile.",
+		"id", req.Msg.GetId(),
+		"org_id", req.Msg.GetOrgId(),
+		"full_name", req.Msg.GetFullName(),
+	)
 
 	res := &profilePB.CreateProfileResponse{
 		Profile: &profilePB.Profile{

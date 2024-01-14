@@ -1,0 +1,23 @@
+type Profile {
+  id: ID!
+  fullName: String!
+  orgId: String!
+}
+
+input GetProfileRequest {
+  id: String!
+}
+
+type GetProfileResponse {
+  profile: Profile!
+}
+
+input CreateProfileInput {
+  id: ID!
+  fullName: String!
+  orgId: String!
+}
+
+type CreateProfileResponse {
+  profile: Profile!
+}

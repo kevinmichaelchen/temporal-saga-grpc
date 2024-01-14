@@ -21,6 +21,18 @@ type Query {
       baseURL: "http://localhost:9090"
       path: "/orgs/{{args.id}}"
     )
+
+  profile(id: ID!): GetProfileResponse!
+    @http(
+      baseURL: "http://localhost:9091"
+      path: "/profiles/{{args.id}}"
+    )
+
+  license(id: ID!): GetLicenseResponse!
+    @http(
+      baseURL: "http://localhost:9092"
+      path: "/licenses/{{args.id}}"
+    )
 }
 
 type Mutation {
@@ -29,6 +41,22 @@ type Mutation {
       baseURL: "http://localhost:9090"
       method: "POST"
       path: "/orgs/{{args.input.id}}"
+      body: "{{args.input}}"
+    )
+
+  createProfile(input: CreateProfileInput!): CreateProfileResponse!
+    @http(
+      baseURL: "http://localhost:9091"
+      method: "POST"
+      path: "/profiles/{{args.input.id}}"
+      body: "{{args.input}}"
+    )
+
+  createLicense(input: CreateLicenseInput!): CreateLicenseResponse!
+    @http(
+      baseURL: "http://localhost:9092"
+      method: "POST"
+      path: "/licenses/{{args.input.id}}"
       body: "{{args.input}}"
     )
 }
