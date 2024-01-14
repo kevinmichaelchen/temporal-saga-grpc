@@ -3,33 +3,17 @@ title: Architectural Overview
 description: A guide to the overall architecture here.
 ---
 
-:::caution[Be warned]
+It started from my exploration into _sagas_, a pattern for orchestrating distributed transactions that span across multiple services and databases. After discovering [Temporal][temporal], I wanted a go-to sandbox where I could learn about _durable workflows_. Instead of the typical car-hotel-flight example you find in microservices literature, I chose domains more applicable to SaaS products: an Org, a User, and a License.
 
-This project is by no means a production-ready application. Nor does it attempt to model anything of real-world substance.
+:::note[Evolution of this project]
 
-:::
-
-It is on par to many “demo applications” you'll find in microservices literature that use the common “book a car, book a hotel, book a flight” scenario.
-
-The only difference being that here I'm using a different scenario, one that SaaS products might be more familiar with: “create an Org, create a User, create a License”.
-
-The question many ask is: “How do you perform these steps atomically across microservices?”
-
-In the literature, you'll see solutions for this scenarios commonly referred to as “distributed transactions” or “sagas”. That's where my interest here started. I wanted to explore the most cutting-edge way of implementing such patterns, that avoided the complexity and effort of solutions of old, such as Two-Phase Commits and [Transactional Outboxes][outbox].
-
-[outbox]: https://microservices.io/patterns/data/transactional-outbox.html
-
-Then I stumbled upon [Temporal][temporal] — an ideal solution for implementing not only “distributed transactions” that span across multiple microservices, but also most asynchronous, relatively long-lived processes, especially ones that involve human interaction.
-
-:::note
-
-Over time, I kept adding more and more cool tools and libraries. An apt name for the project is no longer `temporal-saga-grpc`, but rather `kevins-ideal-tech-stack`.
+Over time, this project grew beyond just Temporal, into an amalgamation of valuable tools, libraries, frameworks, and patterns.
 
 :::
 
 ## What's in the box?
 
-Enough chatter. What's the tech stack look like?
+Enough chatter. What does the tech stack look like?
 
 ### 🧰 Running things
 
@@ -60,6 +44,7 @@ Combine both for an optimal local DevEx (seamless, portable, invisible).
 
 ### 🎨 Frontend
 
+- [**Bun**][bun] — an all-in-one JS runtime and toolkit
 - [**NextJS**][nextjs] as the React framework
 - [**`shadcn/ui`**][shadcn-ui] for beautiful [Radix][radix]/[Tailwind][tailwind] components.
 
@@ -71,6 +56,7 @@ Combine both for an optimal local DevEx (seamless, portable, invisible).
 
 [atlas]: https://atlasgo.io/
 [buf]: https://buf.build/
+[bun]: https://bun.sh/
 [connect]: https://connectrpc.com/
 [di]: https://en.wikipedia.org/wiki/Dependency_injection
 [docker]: https://www.docker.com/

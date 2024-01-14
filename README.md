@@ -27,14 +27,9 @@ make
 
 > [!NOTE]
 >
-> Under the hood, we use [pkgx][pkgx] to run a bunch of internal tools,
-> including Temporal's [dev server][temporal-cli]. We use Docker to run the
-> infrastructure components, such as Postgres and [Jaeger][jaeger] (a telemetry
-> backend).
+> Under the hood, we use a bunch of tools (which you can read about [here][tech-stack]), but to run things seamlessly locally, the one tool you will need is [pkgx][pkgx].
 
-[temporal-cli]: https://github.com/temporalio/cli
-[pkgx]: https://pkgx.sh/
-[jaeger]: https://www.jaegertracing.io
+[tech-stack]: https://kevinmichaelchen.github.io/temporal-saga-grpc/architecture/overview/
 
 ### Step 2: Observe the workflow
 
@@ -47,8 +42,6 @@ Let's get ready to observe this thing in action!
 [jaeger-ui]: http://localhost:16686
 
 ### Step 3: Start a Temporal Workflow
-
-With `curl`:
 
 ```shell
 curl -v http://localhost:8081/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow \
@@ -67,49 +60,6 @@ curl -v http://localhost:8081/temporal.v1beta1.TemporalService/CreateOnboardingW
     }
   }
 EOF
-```
-
-With [`HTTPie`](https://httpie.io/):
-
-```shell
-pkgx http POST \
-  http://localhost:8081/temporal.v1beta1.TemporalService/CreateOnboardingWorkflow <<<'
-  {
-    "license": {
-      "start": "2023-11-16T12:00:00Z",
-      "end": "2024-01-16T12:00:00Z"
-    },
-    "org": {
-      "name": "Org 1"
-    },
-    "profile": {
-      "full_name": "Kevin Chen"
-    }
-  }
-  '
-```
-
-With [`grpcurl`](https://github.com/fullstorydev/grpcurl):
-
-```shell
-pkgx grpcurl \
-  -use-reflection \
-  -plaintext \
-  -d @ localhost:8081 \
-  temporal.v1beta1.TemporalService/CreateOnboardingWorkflow <<EOM
-{
-  "license": {
-    "start": "2023-11-16T12:00:00Z",
-    "end": "2024-01-16T12:00:00Z"
-  },
-  "org": {
-    "name": "Org 1"
-  },
-  "profile": {
-    "full_name": "Kevin Chen"
-  }
-}
-EOM
 ```
 
 ## GraphQL

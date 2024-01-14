@@ -52,11 +52,5 @@ type Mutation {
       body: "{{args.input}}"
     )
 
-  createLicense(input: CreateLicenseInput!): CreateLicenseResponse!
-    @http(
-      baseURL: "http://localhost:9092"
-      method: "POST"
-      path: "/licenses/{{args.input.id}}"
-      body: "{{args.input}}"
-    )
+
 }

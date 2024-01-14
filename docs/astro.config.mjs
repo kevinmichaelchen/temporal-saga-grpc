@@ -37,8 +37,29 @@ export default defineConfig({
           ],
         },
         {
-          label: "Reference",
-          autogenerate: { directory: "reference" },
+          label: "API Reference",
+          items: [
+            {
+              label: "Overview",
+              link: "/reference/overview/",
+            },
+            {
+              label: "Temporal API",
+              link: "/reference/temporal/",
+            },
+            {
+              label: "Org API",
+              link: "/reference/org/",
+            },
+            {
+              label: "User Profile API",
+              link: "/reference/profile/",
+            },
+            {
+              label: "License API",
+              link: "/reference/license/",
+            },
+          ],
         },
       ],
     }),
