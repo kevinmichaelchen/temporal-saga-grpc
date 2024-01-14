@@ -65,7 +65,12 @@ func (s *Service) CreateOrg(
 		"name", req.Msg.GetName(),
 	)
 
-	res := &orgPB.CreateOrgResponse{}
+	res := &orgPB.CreateOrgResponse{
+		Org: &orgPB.Org{
+			Id:   org.ID,
+			Name: org.Name.String,
+		},
+	}
 
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")

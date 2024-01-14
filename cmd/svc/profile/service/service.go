@@ -54,7 +54,13 @@ func (s *Service) CreateProfile(
 		return nil, fmt.Errorf("unable to insert record: %w", err)
 	}
 
-	res := &profilePB.CreateProfileResponse{}
+	res := &profilePB.CreateProfileResponse{
+		Profile: &profilePB.Profile{
+			Id:       profile.ID,
+			FullName: profile.FullName.String,
+			OrgId:    profile.OrgID,
+		},
+	}
 
 	out := connect.NewResponse(res)
 	out.Header().Set("API-Version", "v1beta1")
