@@ -8,6 +8,10 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "temporal-saga-grpc",
+      customCss: [
+        // Relative path to your custom CSS file
+        "./src/styles/custom.css",
+      ],
       social: {
         github: "https://github.com/kevinmichaelchen/temporal-saga-grpc",
       },
