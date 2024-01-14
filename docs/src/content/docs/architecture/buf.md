@@ -5,10 +5,11 @@ description: Using Buf for developing with Protocol Buffers
 
 ## What is Buf?
 
-[Buf][buf] is a tool that makes working with [Protocol Buffers][protobuf] a lot nicer.
+[Buf][buf] is a tool that makes working with [Protocol Buffers][protobuf] a lot nicer. (I would add a section called “Why Protobuf?” here, but this [blog post][why-protobuf] more than suffices).
 
 [buf]: https://buf.build/
 [protobuf]: https://protobuf.dev/
+[why-protobuf]: https://buf.build/blog/the-real-reason-to-use-protobuf
 
 It provides value in two forms:
 
