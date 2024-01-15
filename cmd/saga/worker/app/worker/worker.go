@@ -16,7 +16,6 @@ import (
 	"go.temporal.io/sdk/worker"
 	"go.uber.org/fx"
 
-	pkgConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
 )
 
@@ -64,35 +63,44 @@ func NewController(
 }
 
 // NewLicenseClient - Returns a new Connect client for the License service.
-func NewLicenseClient(cfg *Config) licensev1beta1connect.LicenseServiceClient {
+func NewLicenseClient(
+	cfg *Config,
+	interceptors []connect.Interceptor,
+) licensev1beta1connect.LicenseServiceClient {
 	addr := fmt.Sprintf("http://localhost:%d", cfg.PortAPILicense)
 
 	return licensev1beta1connect.NewLicenseServiceClient(
 		http.DefaultClient,
 		addr,
-		connect.WithInterceptors(pkgConnect.Interceptors()...),
+		connect.WithInterceptors(interceptors...),
 	)
 }
 
 // NewOrgClient - Returns a new Connect client for the Org service.
-func NewOrgClient(cfg *Config) orgv1beta1connect.OrgServiceClient {
+func NewOrgClient(
+	cfg *Config,
+	interceptors []connect.Interceptor,
+) orgv1beta1connect.OrgServiceClient {
 	addr := fmt.Sprintf("http://localhost:%d", cfg.PortAPIOrg)
 
 	return orgv1beta1connect.NewOrgServiceClient(
 		http.DefaultClient,
 		addr,
-		connect.WithInterceptors(pkgConnect.Interceptors()...),
+		connect.WithInterceptors(interceptors...),
 	)
 }
 
 // NewProfileClient - Returns a new Connect client for the Profile service.
-func NewProfileClient(cfg *Config) profilev1beta1connect.ProfileServiceClient {
+func NewProfileClient(
+	cfg *Config,
+	interceptors []connect.Interceptor,
+) profilev1beta1connect.ProfileServiceClient {
 	addr := fmt.Sprintf("http://localhost:%d", cfg.PortAPIProfile)
 
 	return profilev1beta1connect.NewProfileServiceClient(
 		http.DefaultClient,
 		addr,
-		connect.WithInterceptors(pkgConnect.Interceptors()...),
+		connect.WithInterceptors(interceptors...),
 	)
 }
 

@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect/interceptor"
 	"net"
 	"net/http"
 	"time"
@@ -39,6 +40,7 @@ func CreateModule(opts *ModuleOptions) fx.Option {
 				NewTranscoder,
 				fx.ResultTags(`name:"vanguard"`),
 			),
+			interceptor.Module,
 		),
 		fx.Invoke(
 			RegisterConnectHandler,
