@@ -2,9 +2,10 @@
 package connect
 
 import (
+	"fmt"
+
 	"connectrpc.com/connect"
 	"connectrpc.com/otelconnect"
-	"fmt"
 )
 
 // Interceptors - Interceptors for Connect Go servers.
@@ -18,7 +19,7 @@ func Interceptors() ([]connect.Interceptor, error) {
 		otelconnect.WithoutServerPeerAttributes(),
 	)
 	if err != nil {
-		return nil, fmt.Errorf("unable to construct otelconnect interceptor")
+		return nil, fmt.Errorf("unable to construct otelconnect interceptor: %w", err)
 	}
 
 	return []connect.Interceptor{

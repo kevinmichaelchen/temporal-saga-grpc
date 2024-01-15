@@ -2,10 +2,10 @@
 package app
 
 import (
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect/interceptor"
 	"go.uber.org/fx"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/saga/worker/app/worker"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect/interceptor"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/logging"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/otel"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/temporal"

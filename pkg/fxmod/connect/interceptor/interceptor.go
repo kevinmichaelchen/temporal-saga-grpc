@@ -1,11 +1,14 @@
+// Package interceptor provides an FX module for Connect interceptors.
 package interceptor
 
 import (
 	"connectrpc.com/connect"
-	pkgConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect"
 	"go.uber.org/fx"
+
+	pkgConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect"
 )
 
+// Module - An FX module for Connect interceptors.
 var Module = fx.Module("connect/interceptor",
 	fx.Provide(
 		NewInterceptors(),
