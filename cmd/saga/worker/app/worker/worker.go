@@ -4,6 +4,7 @@ package worker
 import (
 	"context"
 	"fmt"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect/interceptor"
 	"net/http"
 
 	"buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go/license/v1beta1/licensev1beta1connect"
@@ -21,6 +22,7 @@ import (
 
 // Module - An FX module for a Temporal worker.
 var Module = fx.Module("worker",
+	fx.Options(interceptor.Module),
 	fx.Provide(
 		NewConfig,
 		NewController,

@@ -11,7 +11,7 @@ import (
 // Module - An FX module for Connect interceptors.
 var Module = fx.Module("connect/interceptor",
 	fx.Provide(
-		NewInterceptors(),
+		NewInterceptors,
 	),
 )
 
