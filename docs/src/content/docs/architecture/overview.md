@@ -50,6 +50,7 @@ Combine both for an optimal local DevEx (seamless, portable, invisible).
 
 ### 🤷 Misc
 
+- [**D2**][d2] for declarative diagramming
 - [**Docker**][docker]
 - [**`uber-go/fx`**][fx] for [dependency injection][di]
 - [**Golang**][golang]
@@ -58,6 +59,7 @@ Combine both for an optimal local DevEx (seamless, portable, invisible).
 [buf]: https://buf.build/
 [bun]: https://bun.sh/
 [connect]: https://connectrpc.com/
+[d2]: https://d2lang.com/
 [di]: https://en.wikipedia.org/wiki/Dependency_injection
 [docker]: https://www.docker.com/
 [fx]: https://github.com/uber-go/fx
