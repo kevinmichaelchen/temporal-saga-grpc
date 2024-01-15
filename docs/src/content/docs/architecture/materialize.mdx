@@ -1,0 +1,24 @@
+---
+title: Why Materialize?
+description: Why you might want to adopt Materialize
+---
+
+Why use [Materialize][materialize]?
+
+[materialize]: https://materialize.com/
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+<Card title="Check these resources out">Hear from Materialize folks directly.</Card>
+
+<CardGrid>
+  <LinkCard title="CDC Part 1" description="Here we set the context for and propose a change data capture protocol: a means of writing down and reading back changes to data." href="https://materialize.com/blog/change-data-capture-part-1" target="_blank" />
+  <LinkCard title="CDC 2" description="Change Data Capture (CDC) is finally gaining widespread adoption as a architectural primitive. Why now?" href="https://materialize.com/blog/change-data-capture-is-having-a-moment-why" target="_blank" />
+  <LinkCard title="CDC 3" description="An illustration of the unexpectedly high downstream cost of clever optimizations to change data capture." href="https://materialize.com/blog/capturing-cdc-data/" target="_blank" />
+  <LinkCard title="Why use a Materialized View?" description="Materialized views offer cost-efficient querying by storing results in memory & updating only as needed, perfect for optimized data management." href="https://materialize.com/blog/why-use-a-materialized-view" target="_blank" />
+  <LinkCard title="Kafka is not a database" description="In principle, it is possible to use Kafka as a database. But in doing so you will confront every hard problem that database management systems have faced for decades." href="https://materialize.com/blog/kafka-is-not-a-database" target="_blank" />
+  <LinkCard title="Four ACID Questions" description="Four questions, and their answers, to explain ACID transactions and how they are handled within Materialize." href="https://materialize.com/blog/the-four-acid-questions" target="_blank" />
+  <LinkCard title="Eventual Consistency isn't for streaming" description="Understand why eventual consistency isn't suitable for streaming systems & the systematic errors it can cause with Materialize's insights." href="https://materialize.com/blog/eventual-consistency-isnt-for-streaming" target="_blank" />
+  <LinkCard title="Materialize + NYC Taxi Data" description="A real-world application" href="https://materialize.com/blog/taking-materialize-for-a-spin-on-nyc-taxi-data" target="_blank" />
+  <LinkCard title="View Maintenance" description="Materialize's approach to data processing & view maintenance offers real-time insights for immediate action on live data." href="https://materialize.com/blog/olvm" target="_blank" />
+</CardGrid>
