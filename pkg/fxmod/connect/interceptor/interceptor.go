@@ -2,9 +2,10 @@
 package interceptor
 
 import (
+	"fmt"
+
 	"connectrpc.com/connect"
 	"connectrpc.com/otelconnect"
-	"fmt"
 	"go.uber.org/fx"
 )
 
