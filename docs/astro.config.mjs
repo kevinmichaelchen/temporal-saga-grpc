@@ -38,6 +38,14 @@ export default defineConfig({
               label: "Why Buf?",
               link: "/architecture/buf/",
             },
+            {
+              label: "Why Atlas?",
+              link: "/architecture/atlas/",
+            },
+            {
+              label: "Why Materialize?",
+              link: "/architecture/materialize/",
+            },
           ],
         },
         {
