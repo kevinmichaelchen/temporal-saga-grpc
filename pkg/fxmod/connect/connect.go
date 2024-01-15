@@ -21,12 +21,14 @@ import (
 	"golang.org/x/net/http2/h2c"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/cors"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect/interceptor"
 )
 
 // CreateModule - The primary function for building an FX module for Connect Go
 // APIs.
 func CreateModule(opts *ModuleOptions) fx.Option {
 	return fx.Module("connect",
+		fx.Options(interceptor.Module),
 		fx.Provide(
 			opts.HandlerProvider,
 			func() *ModuleOptions {

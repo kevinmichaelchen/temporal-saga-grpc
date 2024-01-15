@@ -8,7 +8,6 @@ import (
 
 	modService "github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/app/service"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/cmd/svc/org/service"
-	pkgConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/connect"
 	modConnect "github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/logging"
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/otel"
@@ -18,11 +17,11 @@ import (
 // Module - An FX module for the application.
 var Module = fx.Options(
 	modConnect.CreateModule(&modConnect.ModuleOptions{
-		HandlerProvider: func(svc *service.Service) modConnect.HandlerOutput {
+		HandlerProvider: func(svc *service.Service, interceptors []connect.Interceptor) modConnect.HandlerOutput {
 			// Register our Connect-Go server
 			path, handler := orgConnect.NewOrgServiceHandler(
 				svc,
-				connect.WithInterceptors(pkgConnect.Interceptors()...),
+				connect.WithInterceptors(interceptors...),
 			)
 
 			return modConnect.HandlerOutput{
