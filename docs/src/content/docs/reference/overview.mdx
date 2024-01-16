@@ -17,6 +17,95 @@ description: An overview of API references
 
 - Tailcall GraphQL Mesh on port 8000
 - Workflow “Starter” on port 8081
-- Org Service on port 9090
-- User Profile Service on port 9091
-- License Service on port 9092
+- Domain microservices
+  - Org µService on port 9090
+  - User Profile µService on port 9091
+  - License µService on port 9092
+
+Each µService (“microservice”) supports basic CRUD operations.
+
+## Mutations
+
+The recommended way of creating resources in batch is by using a Temporal workflow. GraphQL provides the faintest illusion of ACID properties, since it allows clients to issue multiple writes in one HTTP request; however, per the [GraphQL spec][graphql-spec], the selection set is executed serially. It is for this reason we recommend creating data through a Temporal workflow.
+
+[graphql-spec]: https://spec.graphql.org/October2021/#sec-Mutation
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+<Tabs>
+  <TabItem label="Good">
+
+  ```graphql
+  mutation CreateWorkflow {
+    createOnboardingWorkflow(
+      input: {
+        org: {
+          name: "Kevin's Org"
+        }
+        profile: {
+          fullName: "Kevin Chen"
+        }
+        license: {
+          start: "2024-01-01T15:50-04:00"
+          end: "2024-01-07T15:50-04:00"
+        }
+      }
+    ) {
+      workflowId
+      orgId
+      profileId
+      licenseId
+    }
+  }
+  ```
+  </TabItem>
+  <TabItem label="Bad">
+
+  ```graphql
+  mutation CreateData {
+    createOrg(
+      input: {
+        id: "00000000-0000-0000-0000-000000000000"
+        name: "Kevin's Org"
+      }
+    ) {
+      org {
+        id
+        name
+      }
+    }
+
+    createProfile(
+      input: {
+        id: "00000000-0000-0000-0000-000000000000"
+        fullName: "Kevin Chen"
+        orgId: "00000000-0000-0000-0000-000000000000"
+      }
+    ) {
+      profile {
+        id
+        fullName
+        orgId
+      }
+    }
+
+    createLicense(
+      input: {
+        id: "00000000-0000-0000-0000-000000000000"
+        start: "2024-01-01T15:50-04:00"
+        end: "2024-01-07T15:50-04:00"
+        userId: "00000000-0000-0000-0000-000000000000"
+      }
+    ) {
+      license {
+        id
+        start
+        end
+        userId
+      }
+    }
+  }
+  ```
+
+  </TabItem>
+</Tabs>
