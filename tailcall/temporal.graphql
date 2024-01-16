@@ -1,0 +1,30 @@
+input CreateOnboardingWorkflowInput {
+  workflowOptions: WorkflowOptions
+  license: LicenseInput!
+  org: OrgInput!
+  profile: ProfileInput!
+}
+
+type CreateOnboardingWorkflowResponse {
+  workflowId: String!
+  orgId: String!
+  profileId: String!
+  licenseId: String!
+}
+
+input WorkflowOptions {
+  workflowId: String
+}
+
+input LicenseInput {
+  start: String!
+  end: String!
+}
+
+input OrgInput {
+  name: String!
+}
+
+input ProfileInput {
+  fullName: String!
+}

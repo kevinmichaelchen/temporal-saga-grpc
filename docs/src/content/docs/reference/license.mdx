@@ -125,9 +125,29 @@ mutation CreateLicense {
 
 ```graphql
 query GetLicense {
-  license(id: "220d4191-6bb0-49de-a912-31b4d43e14b5") {
+  getLicense: license(id: "220d4191-6bb0-49de-a912-31b4d43e14b5") {
     license {
       id
+      userId
+      start
+      end
+    }
+  }
+}
+```
+
+#### Response
+
+```json
+{
+  "data": {
+    "getLicense": {
+      "license": {
+        "id": "220d4191-6bb0-49de-a912-31b4d43e14b5",
+        "userId": "4759a80d-4665-45d6-a87a-9ae1b4c4c873",
+        "start": "2023-11-16T12:00:00Z",
+        "end": "2024-01-16T12:00:00Z"
+      }
     }
   }
 }

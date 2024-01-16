@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 vars:
   SCHEMA_ORG: org.hcl
@@ -14,6 +14,18 @@ tasks:
       - task: service-license
       - task: service-org
       - task: service-profile
+      #- task: tailcall
+
+  tailcall:
+    desc: "Starts Tailcall GraphQL server"
+    cmds:
+      - pkgx killport 8000
+      - |
+        pkgx tailcall start \
+          ./tailcall/server.graphql \
+          ./tailcall/org.graphql \
+          ./tailcall/profile.graphql \
+          ./tailcall/license.graphql
 
   infra:
     run: once
