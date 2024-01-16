@@ -1,8 +1,3 @@
-input TimestampInput {
-  seconds: Int!
-  nanos: Int!
-}
-
 type License {
   id: ID!
   start: String!
@@ -20,8 +15,8 @@ type GetLicenseResponse {
 
 input CreateLicenseInput {
   id: ID!
-  start: TimestampInput!
-  end: TimestampInput!
+  start: String!
+  end: String!
   userId: String!
 }
 
