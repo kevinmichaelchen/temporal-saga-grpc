@@ -30,21 +30,30 @@ export default defineConfig({
               label: "Overview",
               link: "/architecture/overview/",
             },
+          ],
+        },
+        {
+          label: "Tech Stack",
+          items: [
+            {
+              label: "Overview",
+              link: "/tech-stack/overview/",
+            },
             {
               label: "Why Temporal?",
-              link: "/architecture/temporal/",
+              link: "/tech-stack/temporal/",
             },
             {
               label: "Why Buf?",
-              link: "/architecture/buf/",
+              link: "/tech-stack/buf/",
             },
             {
               label: "Why Atlas?",
-              link: "/architecture/atlas/",
+              link: "/tech-stack/atlas/",
             },
             {
               label: "Why Materialize?",
-              link: "/architecture/materialize/",
+              link: "/tech-stack/materialize/",
             },
           ],
         },
