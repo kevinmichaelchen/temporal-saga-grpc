@@ -39,6 +39,7 @@ Combine both for an optimal local DevEx (seamless, portable, invisible).
 - [**Bun**][bun] — an all-in-one JS runtime and toolkit
 - [**NextJS**][nextjs] as the React framework
 - [**`shadcn/ui`**][shadcn-ui] for beautiful [Radix][radix]/[Tailwind][tailwind] components.
+- [**Astro**][astro] and [**Starlight**][starlight] for docs
 
 ### 🤷 Misc
 
@@ -47,6 +48,7 @@ Combine both for an optimal local DevEx (seamless, portable, invisible).
 - [**`uber-go/fx`**][fx] for [dependency injection][di]
 - [**Golang**][golang]
 
+[astro]: https://astro.build/
 [atlas]: https://atlasgo.io/
 [buf]: https://buf.build/
 [bun]: https://bun.sh/
@@ -67,6 +69,7 @@ Combine both for an optimal local DevEx (seamless, portable, invisible).
 [radix]: https://www.radix-ui.com/
 [shadcn-ui]: https://ui.shadcn.com/
 [sqlboiler]: https://github.com/volatiletech/sqlboiler
+[starlight]: https://starlight.astro.build/
 [tailcall]: https://tailcall.run/
 [tailwind]: https://tailwindcss.com/
 [taskfile]: https://taskfile.dev/
