@@ -13,7 +13,25 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ```graphql
 mutation CreateOnboardingWorkflow {
-
+  createOnboardingWorkflow(
+    input: {
+      license: {
+        start: "2023-11-16T12:00:00Z"
+        end: "2024-01-16T12:00:00Z"
+      }
+      org: {
+        name: "Org 1"
+      }
+      profile: {
+        fullName: "Kevin Chen"
+      }
+    }
+  ) {
+    workflowId
+    orgId
+    profileId
+    licenseId
+  }
 }
 ```
 
