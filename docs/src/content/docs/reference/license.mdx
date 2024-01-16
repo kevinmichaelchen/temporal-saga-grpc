@@ -5,6 +5,120 @@ description: An overview of the License API
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
+## CreateLicense
+
+### GraphQL
+
+```graphql
+mutation CreateLicense {
+  createLicense(
+    input: {
+      id: "00000000-0000-0000-0000-000000000000"
+      userId: "00000000-0000-0000-0000-000000000000"
+      start: "2023-11-16T12:00:00Z"
+      end: "2024-01-16T12:00:00Z"
+    }
+  ) {
+    license {
+      id
+      userId
+      start
+      end
+    }
+  }
+}
+```
+
+### Connect
+
+<Tabs>
+  <TabItem label="HTTPie">
+  ```shell
+  pkgx http POST \
+    http://localhost:9092/license.v1beta1.LicenseService/CreateLicense <<<'
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "userId": "00000000-0000-0000-0000-000000000000",
+      "start": "2023-11-16T12:00:00Z",
+      "end": "2024-01-16T12:00:00Z"
+    }
+    '
+  ```
+  </TabItem>
+  <TabItem label="curl">
+  ```shell
+  curl -v http://localhost:9092/license.v1beta1.LicenseService/CreateLicense \
+    -H "Content-Type: application/json" \
+    --data-binary @- <<EOF
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "userId": "00000000-0000-0000-0000-000000000000",
+      "start": "2023-11-16T12:00:00Z",
+      "end": "2024-01-16T12:00:00Z"
+    }
+  EOF
+  ```
+  </TabItem>
+  <TabItem label="grpcurl">
+  ```shell
+  pkgx grpcurl \
+    -use-reflection \
+    -plaintext \
+    -d @ localhost:9092 \
+    license.v1beta1.LicenseService/CreateLicense <<EOM
+  {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "userId": "00000000-0000-0000-0000-000000000000",
+    "start": "2023-11-16T12:00:00Z",
+    "end": "2024-01-16T12:00:00Z"
+  }
+  EOM
+  ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+```json
+{
+  "license": {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "userId": "00000000-0000-0000-0000-000000000000",
+    "start": "2023-11-16T12:00:00Z",
+    "end": "2024-01-16T12:00:00Z"
+  }
+}
+```
+
+### REST
+
+<Tabs>
+  <TabItem label="HTTPie">
+  ```shell
+  pkgx http \
+    http://localhost:9092/licenses/00000000-0000-0000-0000-000000000000 \
+      id="00000000-0000-0000-0000-000000000000" \
+      userId="00000000-0000-0000-0000-000000000000" \
+      start="2023-11-16T12:00:00Z" \
+      end="2024-01-16T12:00:00Z"
+  ```
+  </TabItem>
+  <TabItem label="curl">
+  ```shell
+  curl -v http://localhost:9092/licenses/00000000-0000-0000-0000-000000000000 \
+    -H "Content-Type: application/json" \
+    --data-binary @- <<EOF
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "userId": "00000000-0000-0000-0000-000000000000",
+      "start": "2023-11-16T12:00:00Z",
+      "end": "2024-01-16T12:00:00Z"
+    }
+  EOF
+  ```
+  </TabItem>
+</Tabs>
+
 ## GetLicense
 
 ### GraphQL

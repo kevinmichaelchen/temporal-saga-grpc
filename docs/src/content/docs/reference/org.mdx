@@ -5,6 +5,104 @@ description: An overview of the Org API
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
+## CreateOrg
+
+### GraphQL
+
+```graphql
+mutation CreateOrg {
+  createOrg(
+    input: {
+      id: "00000000-0000-0000-0000-000000000000"
+      name: "My Org"
+    }
+  ) {
+    org {
+      id
+      name
+    }
+  }
+}
+```
+
+### Connect
+
+<Tabs>
+  <TabItem label="HTTPie">
+  ```shell
+  pkgx http POST \
+    http://localhost:9090/org.v1beta1.OrgService/CreateOrg <<<'
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "name": "My Org"
+    }
+    '
+  ```
+  </TabItem>
+  <TabItem label="curl">
+  ```shell
+  curl -v http://localhost:9090/org.v1beta1.OrgService/CreateOrg \
+    -H "Content-Type: application/json" \
+    --data-binary @- <<EOF
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "name": "My Org"
+    }
+  EOF
+  ```
+  </TabItem>
+  <TabItem label="grpcurl">
+  ```shell
+  pkgx grpcurl \
+    -use-reflection \
+    -plaintext \
+    -d @ localhost:9090 \
+    org.v1beta1.OrgService/CreateOrg <<EOM
+  {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "name": "My Org"
+  }
+  EOM
+  ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+```json
+{
+  "org": {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "name": "My Org"
+  }
+}
+```
+
+### REST
+
+<Tabs>
+  <TabItem label="HTTPie">
+  ```shell
+  pkgx http \
+    http://localhost:9090/orgs/00000000-0000-0000-0000-000000000000 \
+      id="00000000-0000-0000-0000-000000000000" \
+      name="My Org"
+  ```
+  </TabItem>
+  <TabItem label="curl">
+  ```shell
+  curl -v http://localhost:9090/orgs/00000000-0000-0000-0000-000000000000 \
+    -H "Content-Type: application/json" \
+    --data-binary @- <<EOF
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "name": "My Org"
+    }
+  EOF
+  ```
+  </TabItem>
+</Tabs>
+
 ## GetOrg
 
 ### GraphQL

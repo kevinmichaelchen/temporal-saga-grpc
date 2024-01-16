@@ -5,6 +5,112 @@ description: An overview of the User Profile API
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
+## CreateProfile
+
+### GraphQL
+
+```graphql
+mutation CreateProfile {
+  createProfile(
+    input: {
+      id: "00000000-0000-0000-0000-000000000000"
+      fullName: "Kevin Chen"
+      orgId: "00000000-0000-0000-0000-000000000000"
+    }
+  ) {
+    profile {
+      id
+      fullName
+      orgId
+    }
+  }
+}
+```
+
+### Connect
+
+<Tabs>
+  <TabItem label="HTTPie">
+  ```shell
+  pkgx http POST \
+    http://localhost:9091/profile.v1beta1.ProfileService/CreateProfile <<<'
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "fullName": "Kevin Chen",
+      "orgId": "00000000-0000-0000-0000-000000000000"
+    }
+    '
+  ```
+  </TabItem>
+  <TabItem label="curl">
+  ```shell
+  curl -v http://localhost:9091/profile.v1beta1.ProfileService/CreateProfile \
+    -H "Content-Type: application/json" \
+    --data-binary @- <<EOF
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "fullName": "Kevin Chen",
+      "orgId": "00000000-0000-0000-0000-000000000000"
+    }
+  EOF
+  ```
+  </TabItem>
+  <TabItem label="grpcurl">
+  ```shell
+  pkgx grpcurl \
+    -use-reflection \
+    -plaintext \
+    -d @ localhost:9091 \
+    profile.v1beta1.ProfileService/CreateProfile <<EOM
+  {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "fullName": "Kevin Chen",
+    "orgId": "00000000-0000-0000-0000-000000000000"
+  }
+  EOM
+  ```
+  </TabItem>
+</Tabs>
+
+#### Response
+
+```json
+{
+  "profile": {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "fullName": "Kevin Chen",
+    "orgId": "00000000-0000-0000-0000-000000000000"
+  }
+}
+```
+
+### REST
+
+<Tabs>
+  <TabItem label="HTTPie">
+  ```shell
+  pkgx http \
+    http://localhost:9091/profiles/00000000-0000-0000-0000-000000000000 \
+      id="00000000-0000-0000-0000-000000000000" \
+      fullName="Kevin Chen" \
+      orgId="00000000-0000-0000-0000-000000000000"
+  ```
+  </TabItem>
+  <TabItem label="curl">
+  ```shell
+  curl -v http://localhost:9091/profiles/00000000-0000-0000-0000-000000000000 \
+    -H "Content-Type: application/json" \
+    --data-binary @- <<EOF
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "fullName": "Kevin Chen",
+      "orgId": "00000000-0000-0000-0000-000000000000"
+    }
+  EOF
+  ```
+  </TabItem>
+</Tabs>
+
 ## GetProfile
 
 ### GraphQL
