@@ -16,4 +16,4 @@ Over time, this project grew beyond just Temporal, into an amalgamation of valua
 :::
 
 
-![/public/diagrams/architecture.svg](/public/diagrams/architecture.svg)
+![/temporal-saga-grpc/public/diagrams/architecture.svg](/temporal-saga-grpc/public/diagrams/architecture.svg)
