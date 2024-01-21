@@ -1,17 +1,3 @@
-input CreateOnboardingWorkflowInput {
-  workflowOptions: WorkflowOptions
-  license: LicenseInput!
-  org: OrgInput!
-  profile: ProfileInput!
-}
-
-type CreateOnboardingWorkflowResponse {
-  workflowId: String!
-  orgId: String!
-  profileId: String!
-  licenseId: String!
-}
-
 input WorkflowOptions {
   workflowId: String
 }
@@ -27,4 +13,18 @@ input OrgInput {
 
 input ProfileInput {
   fullName: String!
+}
+
+input CreateOnboardingWorkflowInput {
+  workflowOptions: WorkflowOptions
+  license: LicenseInput!
+  org: OrgInput!
+  profile: ProfileInput!
+}
+
+type CreateOnboardingWorkflowResponse {
+  workflowId: String!
+  orgId: String!
+  profileId: String!
+  licenseId: String!
 }

@@ -25,7 +25,8 @@ tasks:
           ./tailcall/server.graphql \
           ./tailcall/org.graphql \
           ./tailcall/profile.graphql \
-          ./tailcall/license.graphql
+          ./tailcall/license.graphql \
+          ./tailcall/temporal.graphql
 
   infra:
     run: once

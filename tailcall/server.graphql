@@ -37,6 +37,14 @@ type Query {
 
 type Mutation {
 
+  createOnboardingWorkflow(input: CreateOnboardingWorkflowInput!): CreateOnboardingWorkflowResponse!
+    @http(
+      baseURL: "http://localhost:8081"
+      method: "POST"
+      path: "/temporal/workflows/onboarding"
+      body: "{{args.input}}"
+    )
+
   createOrg(input: CreateOrgInput!): CreateOrgResponse!
     @http(
       baseURL: "http://localhost:9090"
