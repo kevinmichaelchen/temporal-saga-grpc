@@ -82,6 +82,10 @@ export default defineConfig({
             },
           ],
         },
+        {
+          label: "Running Locally",
+          link: "/running-locally/",
+        },
       ],
     }),
   ],

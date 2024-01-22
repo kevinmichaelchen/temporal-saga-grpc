@@ -25,7 +25,7 @@ plugins:
       - paths=source_relative
       - require_unimplemented_servers=false
   # https://github.com/bufbuild/plugins/tree/main/plugins/bufbuild/validate-go
-  - plugin: buf.build/bufbuild/validate-go:v1.0.2
+  - plugin: buf.build/bufbuild/validate-go:v1.0.4
     out: internal/idl
     opt:
       - paths=source_relative
