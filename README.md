@@ -30,6 +30,7 @@ make
 > Under the hood, we use a bunch of tools (which you can read about [here][tech-stack]), but to run things seamlessly locally, the one tool you will need is [pkgx][pkgx].
 
 [tech-stack]: https://kevinmichaelchen.github.io/temporal-saga-grpc/architecture/overview/
+[pkgx]: https://pkgx.sh/
 
 ### Step 2: Observe the workflow
 
