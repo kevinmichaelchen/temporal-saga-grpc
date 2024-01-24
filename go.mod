@@ -19,7 +19,7 @@ require (
 	github.com/bufbuild/protovalidate-go v0.4.3
 	github.com/charmbracelet/log v0.3.1
 	github.com/friendsofgo/errors v0.9.2
-	github.com/google/uuid v1.5.0
+	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.5.2
 	github.com/rs/cors v1.10.1
 	github.com/sethvargo/go-envconfig v1.0.0
