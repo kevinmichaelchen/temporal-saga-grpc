@@ -20,7 +20,7 @@ func NewCORS() *cors.Cors {
 			http.MethodPatch,
 			http.MethodDelete,
 		},
-		AllowOriginFunc: func(origin string) bool {
+		AllowOriginFunc: func(_ string) bool {
 			// Allow all origins, which effectively disables CORS.
 			return true
 		},

@@ -274,6 +274,13 @@ linters-settings:
   funlen:
     lines: 80
     statements: 40
+  revive:
+    rules:
+      - name: unused-parameter
+        severity: warning
+        disabled: false
+        arguments:
+          - allowRegex: "ctx"
 
 #  gci:
 # put imports beginning with prefix after 3rd-party packages;
@@ -359,9 +366,6 @@ goimports:
   # it's a comma-separated list of prefixes
   local-prefixes: github.com/kevinmichaelchen/temporal-saga-grpc
 
-revive:
-  # minimal confidence for issues, default is 0.8
-  min-confidence: 0.8
 gomnd:
   settings:
     mnd:
