@@ -30,7 +30,7 @@ require (
 	github.com/volatiletech/strmangle v0.0.6
 	go.opentelemetry.io/otel v1.23.1
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.22.0
-	go.opentelemetry.io/otel/sdk v1.22.0
+	go.opentelemetry.io/otel/sdk v1.23.1
 	go.temporal.io/sdk v1.25.1
 	go.temporal.io/sdk/contrib/opentelemetry v0.3.0
 	go.uber.org/fx v1.20.1
