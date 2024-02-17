@@ -3,20 +3,20 @@ module github.com/kevinmichaelchen/temporal-saga-grpc
 go 1.21.5
 
 require (
-	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.14.0-20240114014934-c814bb63a0b5.1
+	buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go v1.15.0-20240114014934-c814bb63a0b5.1
 	buf.build/gen/go/kevinmichaelchen/licenseapis/protocolbuffers/go v1.32.0-20240114014934-c814bb63a0b5.1
-	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.14.0-20240114014935-7a4a75e13959.1
+	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.15.0-20240114014935-7a4a75e13959.1
 	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.32.0-20240114014935-7a4a75e13959.1
-	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.14.0-20240114014936-fe9fc00da5f7.1
+	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.15.0-20240114014936-fe9fc00da5f7.1
 	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240114014936-fe9fc00da5f7.1
-	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.14.0-20240113211018-c2d66c74813b.1
+	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.15.0-20240113211018-c2d66c74813b.1
 	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20240113211018-c2d66c74813b.1
-	connectrpc.com/connect v1.14.0
+	connectrpc.com/connect v1.15.0
 	connectrpc.com/grpchealth v1.3.0
 	connectrpc.com/grpcreflect v1.2.0
 	connectrpc.com/otelconnect v0.7.0
 	connectrpc.com/vanguard v0.1.0
-	github.com/bufbuild/protovalidate-go v0.5.1
+	github.com/bufbuild/protovalidate-go v0.5.2
 	github.com/charmbracelet/log v0.3.1
 	github.com/friendsofgo/errors v0.9.2
 	github.com/google/uuid v1.6.0
@@ -26,7 +26,7 @@ require (
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.8.4
 	github.com/volatiletech/null/v8 v8.1.2
-	github.com/volatiletech/sqlboiler/v4 v4.16.1
+	github.com/volatiletech/sqlboiler/v4 v4.16.2
 	github.com/volatiletech/strmangle v0.0.6
 	go.opentelemetry.io/otel v1.23.1
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.22.0
@@ -39,7 +39,7 @@ require (
 )
 
 require (
-	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.32.0-20231115204500-e097f827e652.1 // indirect
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.32.0-20240212200630-3014d81c3a48.1 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
@@ -55,7 +55,7 @@ require (
 	github.com/gogo/status v1.1.1 // indirect
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
-	github.com/google/cel-go v0.18.2 // indirect
+	github.com/google/cel-go v0.19.0 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.19.0 // indirect
