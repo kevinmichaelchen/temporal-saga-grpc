@@ -3,7 +3,7 @@ title: Tour of Code
 description: A tour through the code
 ---
 
-![/temporal-saga-grpc/diagrams/architecture.svg](/temporal-saga-grpc/public/diagrams/architecture.svg)
+![/temporal-saga-grpc/diagrams/architecture.svg](/temporal-saga-grpc/diagrams/architecture.svg)
 
 There are 5 Go services total: [3 “microservices”][domain-services] responsible for
 domain data, and [2 services][temporal-services] which interact with Temporal.
