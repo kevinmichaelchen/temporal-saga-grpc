@@ -30,6 +30,10 @@ export default defineConfig({
               label: "Overview",
               link: "/architecture/overview/",
             },
+            {
+              label: "Tour of Code",
+              link: "/architecture/tour-of-code/",
+            },
           ],
         },
         {
