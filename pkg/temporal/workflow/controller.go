@@ -1,5 +1,5 @@
-// Package saga provides a controller for our Temporal workflow.
-package saga
+// Package workflow provides a controller for our Temporal workflow.
+package workflow
 
 import (
 	"buf.build/gen/go/kevinmichaelchen/licenseapis/connectrpc/go/license/v1beta1/licensev1beta1connect"

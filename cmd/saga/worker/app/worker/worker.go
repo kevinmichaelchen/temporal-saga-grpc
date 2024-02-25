@@ -17,7 +17,7 @@ import (
 	"go.uber.org/fx"
 
 	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/fxmod/connect/interceptor"
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal/workflow"
 )
 
 // Module - An FX module for a Temporal worker.
@@ -60,8 +60,8 @@ func NewController(
 	licenseClient licensev1beta1connect.LicenseServiceClient,
 	orgClient orgv1beta1connect.OrgServiceClient,
 	profileClient profilev1beta1connect.ProfileServiceClient,
-) *saga.Controller {
-	return saga.NewController(licenseClient, orgClient, profileClient)
+) *workflow.Controller {
+	return workflow.NewController(licenseClient, orgClient, profileClient)
 }
 
 // NewLicenseClient - Returns a new Connect client for the License service.
@@ -110,10 +110,10 @@ func NewProfileClient(
 func NewWorker(
 	lifecycle fx.Lifecycle,
 	c client.Client,
-	ctrl *saga.Controller,
+	ctrl *workflow.Controller,
 ) (*worker.Worker, error) {
 	// This worker hosts both Workflow and Activity functions
-	temporalWorker := worker.New(c, saga.CreateLicenseTaskQueue, worker.Options{
+	temporalWorker := worker.New(c, workflow.CreateLicenseTaskQueue, worker.Options{
 		// worker.Start() only return errors on start, so we need to catch
 		// errors during run
 		OnFatalError: func(err error) {
@@ -123,7 +123,7 @@ func NewWorker(
 
 	// TODO can we move calls to RegisterWorkflow and RegisterActivity into an fx.Invoke block
 
-	temporalWorker.RegisterWorkflow(saga.CreateLicense)
+	temporalWorker.RegisterWorkflow(workflow.CreateLicense)
 
 	// RegisterActivity - register an activity function or a pointer to a
 	// structure with the worker.

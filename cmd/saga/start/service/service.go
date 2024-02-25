@@ -13,7 +13,7 @@ import (
 	"github.com/google/uuid"
 	"go.temporal.io/sdk/client"
 
-	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/saga"
+	"github.com/kevinmichaelchen/temporal-saga-grpc/pkg/temporal/workflow"
 )
 
 var _ temporalConnect.TemporalServiceHandler = (*Service)(nil)
@@ -51,24 +51,24 @@ func (s *Service) CreateOnboardingWorkflow(
 
 	options := client.StartWorkflowOptions{
 		ID:        workflowID,
-		TaskQueue: saga.CreateLicenseTaskQueue,
+		TaskQueue: workflow.CreateLicenseTaskQueue,
 	}
 
 	orgID := uuid.New().String()
 	profileID := uuid.New().String()
 	licenseID := uuid.New().String()
 
-	args := saga.CreateLicenseInputArgs{
-		Org: saga.Org{
+	args := workflow.CreateLicenseInputArgs{
+		Org: workflow.Org{
 			ID:   orgID,
 			Name: req.Msg.GetOrg().GetName(),
 		},
-		Profile: saga.Profile{
+		Profile: workflow.Profile{
 			ID:       profileID,
 			FullName: req.Msg.GetProfile().GetFullName(),
 			OrgID:    orgID,
 		},
-		License: saga.License{
+		License: workflow.License{
 			ID:     licenseID,
 			Start:  req.Msg.GetLicense().GetStart().AsTime(),
 			End:    req.Msg.GetLicense().GetEnd().AsTime(),
@@ -79,7 +79,7 @@ func (s *Service) CreateOnboardingWorkflow(
 	workflow, err := temporalClient.ExecuteWorkflow(
 		ctx,
 		options,
-		saga.CreateLicense,
+		workflow.CreateLicense,
 		args,
 	)
 	if err != nil {
@@ -101,7 +101,7 @@ func (s *Service) CreateOnboardingWorkflow(
 	return out, nil
 }
 
-func printResults(args saga.CreateLicenseInputArgs, workflowID, runID string) {
+func printResults(args workflow.CreateLicenseInputArgs, workflowID, runID string) {
 	log.Info("Successfully completed Workflow",
 		"org_name", args.Org.Name,
 		"profile_name", args.Profile.FullName,
