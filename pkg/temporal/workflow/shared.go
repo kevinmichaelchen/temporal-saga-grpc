@@ -2,11 +2,11 @@ package workflow
 
 import "time"
 
-// CreateLicenseTaskQueue - Queue name for workflow tasks.
-const CreateLicenseTaskQueue = "CREATE_LICENSE_TASK_QUEUE"
+// TaskQueue - Queue name for workflow tasks.
+const TaskQueue = "CREATE_LICENSE_TASK_QUEUE"
 
-// CreateLicenseInputArgs - Arguments to kick off the Temporal workflow.
-type CreateLicenseInputArgs struct {
+// InputArgs - Arguments to kick off the Temporal workflow.
+type InputArgs struct {
 	Org     Org
 	Profile Profile
 	License License

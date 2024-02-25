@@ -9,7 +9,7 @@ import (
 )
 
 // CreateLicense - A Temporal workflow to create a license, org, and profile.
-func CreateLicense(ctx workflow.Context, args CreateLicenseInputArgs) error {
+func CreateLicense(ctx workflow.Context, args InputArgs) error {
 	retryPolicy := &temporal.RetryPolicy{
 		InitialInterval:    time.Second,
 		BackoffCoefficient: 2.0,

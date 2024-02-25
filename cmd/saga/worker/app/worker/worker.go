@@ -110,10 +110,10 @@ func NewProfileClient(
 func NewWorker(
 	lifecycle fx.Lifecycle,
 	c client.Client,
-	ctrl *workflow.Controller,
+	activityController *workflow.Controller,
 ) (*worker.Worker, error) {
 	// This worker hosts both Workflow and Activity functions
-	temporalWorker := worker.New(c, workflow.CreateLicenseTaskQueue, worker.Options{
+	temporalWorker := worker.New(c, workflow.TaskQueue, worker.Options{
 		// worker.Start() only return errors on start, so we need to catch
 		// errors during run
 		OnFatalError: func(err error) {
@@ -121,15 +121,11 @@ func NewWorker(
 		},
 	})
 
-	// TODO can we move calls to RegisterWorkflow and RegisterActivity into an fx.Invoke block
-
 	temporalWorker.RegisterWorkflow(workflow.CreateLicense)
 
-	// RegisterActivity - register an activity function or a pointer to a
-	// structure with the worker.
-	// The activity struct is a structure with all its exported methods treated
-	// as activities. The default name of each activity is the method name.
-	temporalWorker.RegisterActivity(ctrl)
+	// Per the RegisterActivity docs, the registered activity doesn't need to be
+	// a function, it can also be a struct with receiver functions.
+	temporalWorker.RegisterActivity(activityController)
 
 	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {

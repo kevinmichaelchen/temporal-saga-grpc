@@ -51,14 +51,14 @@ func (s *Service) CreateOnboardingWorkflow(
 
 	options := client.StartWorkflowOptions{
 		ID:        workflowID,
-		TaskQueue: workflow.CreateLicenseTaskQueue,
+		TaskQueue: workflow.TaskQueue,
 	}
 
 	orgID := uuid.New().String()
 	profileID := uuid.New().String()
 	licenseID := uuid.New().String()
 
-	args := workflow.CreateLicenseInputArgs{
+	args := workflow.InputArgs{
 		Org: workflow.Org{
 			ID:   orgID,
 			Name: req.Msg.GetOrg().GetName(),
@@ -101,7 +101,7 @@ func (s *Service) CreateOnboardingWorkflow(
 	return out, nil
 }
 
-func printResults(args workflow.CreateLicenseInputArgs, workflowID, runID string) {
+func printResults(args workflow.InputArgs, workflowID, runID string) {
 	log.Info("Successfully completed Workflow",
 		"org_name", args.Org.Name,
 		"profile_name", args.Profile.FullName,
