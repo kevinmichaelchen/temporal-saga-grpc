@@ -1,4 +1,4 @@
-package saga
+package workflow
 
 import (
 	"fmt"
