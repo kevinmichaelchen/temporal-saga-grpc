@@ -20,7 +20,7 @@ require (
 	github.com/charmbracelet/log v0.3.1
 	github.com/friendsofgo/errors v0.9.2
 	github.com/google/uuid v1.6.0
-	github.com/jackc/pgx/v5 v5.5.3
+	github.com/jackc/pgx/v5 v5.5.4
 	github.com/rs/cors v1.10.1
 	github.com/sethvargo/go-envconfig v1.0.0
 	github.com/sirupsen/logrus v1.9.3
