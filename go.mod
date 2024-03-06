@@ -8,7 +8,7 @@ require (
 	buf.build/gen/go/kevinmichaelchen/orgapis/connectrpc/go v1.15.0-20240114014935-7a4a75e13959.1
 	buf.build/gen/go/kevinmichaelchen/orgapis/protocolbuffers/go v1.32.0-20240114014935-7a4a75e13959.1
 	buf.build/gen/go/kevinmichaelchen/profileapis/connectrpc/go v1.15.0-20240114014936-fe9fc00da5f7.1
-	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.32.0-20240114014936-fe9fc00da5f7.1
+	buf.build/gen/go/kevinmichaelchen/profileapis/protocolbuffers/go v1.33.0-20240114014936-fe9fc00da5f7.1
 	buf.build/gen/go/kevinmichaelchen/temporalapis/connectrpc/go v1.15.0-20240113211018-c2d66c74813b.1
 	buf.build/gen/go/kevinmichaelchen/temporalapis/protocolbuffers/go v1.32.0-20240113211018-c2d66c74813b.1
 	connectrpc.com/connect v1.15.0
@@ -35,11 +35,11 @@ require (
 	go.temporal.io/sdk/contrib/opentelemetry v0.3.0
 	go.uber.org/fx v1.20.1
 	golang.org/x/net v0.22.0
-	google.golang.org/protobuf v1.32.0
+	google.golang.org/protobuf v1.33.0
 )
 
 require (
-	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.32.0-20240221180331-f05a6f4403ce.1 // indirect
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.33.0-20231115204500-e097f827e652.1 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
