@@ -21,7 +21,7 @@ tasks:
     cmds:
       - pkgx killport 8000
       - |
-        pkgx tailcall start \
+        pkgx tailcall@latest start \
           ./tailcall/server.graphql \
           ./tailcall/org.graphql \
           ./tailcall/profile.graphql \

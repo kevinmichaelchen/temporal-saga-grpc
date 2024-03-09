@@ -38,6 +38,9 @@ func (s *Service) CreateOnboardingWorkflow(
 	ctx context.Context,
 	req *connect.Request[temporalPB.CreateOnboardingWorkflowRequest],
 ) (*connect.Response[temporalPB.CreateOnboardingWorkflowResponse], error) {
+
+	log.Info("received request", "headers", req.Header())
+
 	temporalClient := s.client
 
 	// Validate the request
